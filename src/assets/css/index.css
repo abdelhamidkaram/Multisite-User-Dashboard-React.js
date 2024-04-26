@@ -1,0 +1,72 @@
+@import "./fonts";
+@import "./animation";
+@import './table';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  text-transform: none;
+  text-decoration: none;
+  line-height: normal;
+}
+
+::-webkit-scrollbar {
+  @apply bg-blue-light w-[8px] h-[8px] ;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-dark;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  body {
+    @apply font-base text-base  overflow-x-hidden bg-gray-50;
+  }
+}
+
+.video-icon {
+  animation: pules infinite 2s;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  background-color: rgba(255, 1, 0, 0.1);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(165, 42, 42, 0.437);
+  transform: scale(1);
+}
+.side-item {
+  padding-inline-start: 0.3rem;
+  padding-inline-end: 0.3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.side-item:hover,
+.side-item-active {
+  background: linear-gradient(
+    -118deg,
+    rgba(92, 150, 252, 1),
+    rgba(92, 150, 252, 0.7)
+  );
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+h4 {
+  @apply font-bold text-blue-dark;
+}

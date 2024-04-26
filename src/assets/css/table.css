@@ -1,0 +1,27 @@
+@tailwind base;
+
+.table-wrap{
+  @apply w-full min-w-[574px] shadow-md border my-6  rounded-xl overflow-x-scroll ;
+
+}
+table {
+@apply w-full ;
+}
+thead td {
+    @apply  text-sm font-semibold ;
+
+}
+thead tr{
+    @apply bg-slate-50
+}
+tr {
+  @apply h-14 border-b overflow-scroll bg-white ;
+}
+tr:hover{
+  @apply bg-slate-50;
+}
+
+td {
+  @apply px-3 text-sm min-h-fit;
+}
+
