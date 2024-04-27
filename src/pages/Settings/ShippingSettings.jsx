@@ -15,7 +15,7 @@ const ShippingSettings = () => {
     changeName("shippingZone");
     toggle();
   };
-  
+
   const methodEditHandler = () => {
     changeName("method");
     toggle();
@@ -76,9 +76,7 @@ const ShippingSettings = () => {
           <MethodItem key={i} item={item} editHandler={methodEditHandler} />
         ))}
         <MainButton ClickHandler={saveEditHandler} text={"حفظ التغييرات"} />
-
       </div>
-      
     </div>
   );
 };
@@ -115,7 +113,7 @@ function PlaceItem({ item, editHandler, handleDelete, methods }) {
     </div>
   );
 }
-function MethodItem({ item, editHandler}) {
+function MethodItem({ item, editHandler }) {
   return (
     <div className="border-2 border-slate-100 p-5 m-5 rounded-md flex justify-between items-center">
       <p className="text-lg">{item.name} </p>

@@ -72,6 +72,7 @@ className={` grid w-full py-2 px-5 ${
                   "linear-gradient(-118deg,rgba(92,150,252,1),rgba(92,150,252,1))",
                 minWidth: "280px",
                 minHeight: "70px",
+                color:'white'
               },
             },
           }}
