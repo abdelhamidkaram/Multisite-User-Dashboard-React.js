@@ -1,28 +1,35 @@
 import CloseIcon from "../../../assets/icons/close.svg";
 import useModal from "../../../store/useModal";
-import FacebookModal from "./FacebookModal";
+import CouponsModal from "./Markting/CouponsModal";
+import FacebookModal from "./Markting/FacebookModal";
+import GoogleModal from "./Markting/GoogleMosal";
+import LinkedinModal from "./Markting/LinkedinModal";
+import ReviewsModal from "./Markting/ReviewsModal";
+import SnapModal from "./Markting/SnapModal";
 import UserModal from "./UserModal";
 const Modal = ({ onClose }) => {
-  const { isOpen, toggle, name  } = useModal();
+  const { isOpen, toggle, name } = useModal();
   const modals = {
     //TODO:
+    //START MARKETING PAGE MODAL====================
     facebook: <FacebookModal />,
-    snapchat: <p>snapchat</p>,
-    google: <p>google</p>,
-    linkedin: <p>linkedin</p>,
-    coupons: <p>coupons</p>,
-    reviews: <p>reviews</p>,
+    snapchat: <SnapModal />,
+    google: <GoogleModal />,
+    linkedin: <LinkedinModal />,
+    coupons: <CouponsModal />,
+    reviews: <ReviewsModal />,
+    //END MARKETING PAGE MODAL======================
     menus: <p>menus</p>,
     mediaView: <p>mediaView</p>,
     pages: <p>pages</p>,
     apps: <p>Apps</p>,
     user: <UserModal />,
-    shippingZone:<p>ShippingZone</p>,
-    method:<p>method</p>,
+    shippingZone: <p>ShippingZone</p>,
+    method: <p>method</p>,
   };
   const handleClose = () => {
     toggle(false);
-    onClose ? onClose() : null ;
+    onClose ? onClose() : null;
   };
 
   if (!isOpen) return null;
@@ -39,7 +46,7 @@ const Modal = ({ onClose }) => {
           className=" fixed flex  justify-between items-center bg-white  min-h-96 min-w-72 p-5 m-5 rounded-md shadow-2xl  text-slate-900 "
         >
           {modals[name]}
-         
+
           <button onClick={handleClose}>
             <img src={CloseIcon} className="w-6 absolute end-1 top-1  " />
           </button>
