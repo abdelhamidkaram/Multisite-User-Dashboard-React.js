@@ -14,7 +14,7 @@ import Settings from "../pages/Settings/Index";
 const RouterTree = () => {
   return createBrowserRouter([
      {
-      path: '/',
+      path: 'store-controll/',
       element:<MainLayout/>,
       errorElement:<ErrorPage />,
       children:[
@@ -23,31 +23,31 @@ const RouterTree = () => {
           element:<App />
         },
         {
-          path:'/orders',
+          path:'store-controll/orders',
           element:<Orders/>
         } , 
         {
-          path:'/products',
+          path:'store-controll/products',
           element:<Products/>
         }, 
         {
-          path:'/analytics',
+          path:'store-controll/analytics',
           element:<Analytics />
         },
         {
-          path:'/marketing',
+          path:'store-controll/marketing',
           element:<Marketing/>
         },
         {
-          path:'/store',
+          path:'store-controll/store',
           element:<Store/>
         },
         {
-          path:'/apps',
+          path:'store-controll/apps',
           element:<Apps/>
         },
         {
-          path:'/settings',
+          path:'store-controll/settings',
           element:<Settings />
         }
       ]
