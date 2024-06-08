@@ -88,7 +88,7 @@ function ReviewItem({
           <img src={DeleteIcon} alt="حذف" />
         </div>
         {/**
-        
+
              <div className="bg-blue-light p-1 rounded-full w-8 h-8 cursor-pointer">
               <img src={EditIcon} alt="تعديل" />
             </div>
