@@ -6,7 +6,12 @@ import GoogleModal from "./Markting/GoogleMosal";
 import LinkedinModal from "./Markting/LinkedinModal";
 import ReviewsModal from "./Markting/ReviewsModal";
 import SnapModal from "./Markting/SnapModal";
-import UserModal from "./UserModal";
+import UserModal from "../Modals/orders/UserModal";
+import OrderModal from "./orders/OrderModal";
+import ProductModal from "./Products/ProductModal";
+import AddProductModal from "./Products/AddProductModal";
+import CategoryModal from "./Products/CategoryModal";
+import AddCategoryModal from "./Products/AddCategories";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
@@ -18,12 +23,21 @@ const Modal = ({ onClose }) => {
     linkedin: <LinkedinModal />,
     coupons: <CouponsModal />,
     reviews: <ReviewsModal />,
-    //END MARKETING PAGE MODAL======================
+    // Order PAGE MODAL======================
+    order: <OrderModal/>,
+    user: <UserModal />,
+    // Product PAGE MODAL======================
+    product:<ProductModal/> ,
+    addProduct:<AddProductModal /> ,
+    // Categories
+    category:<CategoryModal />,
+    addCategory:<AddCategoryModal/>,
+    // Product PAGE MODAL======================
+
     menus: <p>menus</p>,
     mediaView: <p>mediaView</p>,
     pages: <p>pages</p>,
     apps: <p>Apps</p>,
-    user: <UserModal />,
     shippingZone: <p>ShippingZone</p>,
     method: <p>method</p>,
   };
