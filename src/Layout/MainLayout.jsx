@@ -1,5 +1,5 @@
 import { Fragment, Suspense, lazy, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import useSideBarToggle from "../store/ToggleSidebar.js";
 import { createPortal } from "react-dom";
@@ -7,18 +7,23 @@ import { createPortal } from "react-dom";
 const Header = lazy(() => import("../components/Header/index.jsx"));
 const SideBar = lazy(() => import("../components/SideBar/SideBar.jsx"));
 const Modal = lazy(() => import("../components/UIElements/Modals/Modal.jsx"));
-
 const MainLayout = () => {
   const [sideOpen, setsideOpen] = useState(true);
   const toggleSidebar = useSideBarToggle((state) => state.toggle);
   useEffect(() => {
-    if (!localStorage.getItem("starterSteps")) {
+    if (localStorage.getItem("starterSteps") == null ) {
       localStorage.setItem("starterSteps", 1);
     }
+    if(localStorage.getItem('path') === null ){
+      window.location.href = 'https://www.motkaml.online/home/';
+    }
+    
   }, []);
-
+  
   return (
+    
     <Fragment>
+     
       <div className="flex  ">
         <SideBar
           isOpen={sideOpen}

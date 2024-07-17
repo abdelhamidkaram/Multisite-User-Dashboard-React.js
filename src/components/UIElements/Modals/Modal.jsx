@@ -12,6 +12,12 @@ import ProductModal from "./Products/ProductModal";
 import AddProductModal from "./Products/AddProductModal";
 import CategoryModal from "./Products/CategoryModal";
 import AddCategoryModal from "./Products/AddCategories";
+import ThemeModal from "./Store/ThemeModal";
+import AddMenuModal from "./Store/AddMenuModal";
+import EditMenuModal from "./Store/EditMenuModal";
+import AddPageModal from "./Store/AddPageModal";
+import EditPageModal from "./Store/EditPageModal";
+import MediaModal from "./Store/MediaModal";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
@@ -23,20 +29,26 @@ const Modal = ({ onClose }) => {
     linkedin: <LinkedinModal />,
     coupons: <CouponsModal />,
     reviews: <ReviewsModal />,
-    // Order PAGE MODAL======================
+    // Order PAGE MODAL=================================
     order: <OrderModal/>,
     user: <UserModal />,
-    // Product PAGE MODAL======================
+    // Product PAGE MODAL===============================
     product:<ProductModal/> ,
     addProduct:<AddProductModal /> ,
     // Categories
     category:<CategoryModal />,
     addCategory:<AddCategoryModal/>,
-    // Product PAGE MODAL======================
-
-    menus: <p>menus</p>,
-    mediaView: <p>mediaView</p>,
-    pages: <p>pages</p>,
+    // Store PAGE MODAL================================
+    theme:<ThemeModal />,
+    //menus
+    menus: <EditMenuModal />,
+    addMenu:<AddMenuModal/>,
+    //pages 
+    pages: <EditPageModal/>,
+    addPage:<AddPageModal /> ,
+   
+    mediaView: <MediaModal />,
+   
     apps: <p>Apps</p>,
     shippingZone: <p>ShippingZone</p>,
     method: <p>method</p>,
@@ -59,7 +71,9 @@ const Modal = ({ onClose }) => {
           onClick={(e) => e.stopPropagation()}
           className=" fixed flex  justify-between items-center bg-white  min-h-96 min-w-72 p-5 m-5 rounded-md shadow-2xl  text-slate-900 "
         >
+          <div className="max-h-[80vh] overflow-y-scroll mt-5 min-w[350px]">
           {modals[name]}
+          </div>
 
           <button onClick={handleClose}>
             <img src={CloseIcon} className="w-6 absolute end-1 top-1  " />

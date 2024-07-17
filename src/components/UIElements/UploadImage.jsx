@@ -1,14 +1,39 @@
 import { useRef, useState } from "react";
 import MainButton from "./MainButton";
 import DeleteIcon from "../../assets/icons/delete.svg";
+import { $api } from "../../client";
 
 const UploadImage = () => {
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
   const [dragOver, setDragOver] = useState(false);
 
-  const handleUploadImage = () => {
-    //TODO:
+
+
+  const handleUploadImage = async () => {
+    if (files.length === 0) {
+      alert("No files selected for upload.");
+      return;
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
+
+    try {
+      const response = await $api.post("wp-json/store/v1/media/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Upload successful!");
+      console.log(response.data);
+      setFiles([]);
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      alert("Upload failed. Please try again.");
+    }
   };
 
   return (
