@@ -58,17 +58,17 @@ const SideBar = ({onClick }) => {
       <div className="bg-slate-500  h-px align-middle items-center mb-3 "></div>
 
       <ul className={"h-full  "}>
-        <SideNavLi name={"لوحة التحكم "} icon={HomeIcon} to={"/store-controll/"} />
-        <SideNavLi name={"المنتجات"} icon={BagIcon} to={"store-controll/products"} />
-        <SideNavLi name={"الطلبات"} icon={OrdersIcon} to={"store-controll/orders"} />
-        <SideNavLi name={"التسويق"} icon={Marketing} to={"store-controll/marketing"} />
-        <SideNavLi name={"المتجر"} icon={Store} to={"store-controll/store"} />
-        <SideNavLi name={"التطبيقات"} icon={Apps} to={"store-controll/apps"} />
-        <SideNavLi name={"الإحصائيات"} icon={Analytics} to={"store-controll/analytics"} />
+        <SideNavLi name={"لوحة التحكم "} icon={HomeIcon} to={"/"} />
+        <SideNavLi name={"المنتجات"} icon={BagIcon} to={"products"} />
+        <SideNavLi name={"الطلبات"} icon={OrdersIcon} to={"orders"} />
+        <SideNavLi name={"التسويق"} icon={Marketing} to={"marketing"} />
+        <SideNavLi name={"المتجر"} icon={Store} to={"store"} />
+        <SideNavLi name={"التطبيقات"} icon={Apps} to={"apps"} />
+        <SideNavLi name={"الإحصائيات"} icon={Analytics} to={"analytics"} />
         <SideNavLi
           name={"الإعدادات"}
           icon={Setting}
-          to={"store-controll/settings"}
+          to={"settings"}
           className={"fixed bottom-10"}
         />
       </ul>

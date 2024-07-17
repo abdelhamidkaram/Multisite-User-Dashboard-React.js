@@ -26,7 +26,7 @@ const Settings = () => {
       icon: null,
     },
     {
-      name: "التوصيل",
+      name: "الشحن",
       icon: null,
     },
   ];

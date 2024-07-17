@@ -1,12 +1,16 @@
+import useImageModal from "../../store/modals/ImageModal";
 import useModal from "../../store/useModal";
 
 const MediaItem = ({imgObj}) => {
+    const {changeImage} = useImageModal(); 
     const {isOPen , changeName  , toggle} = useModal();
     const {url  } = imgObj;
   return (
     <div onClick={
         ()=>{
-            changeName('mediaView') ; 
+          changeImage(imgObj);  
+          changeName('mediaView') ; 
+
             toggle(!isOPen);
         }
     } className="w-44 bg-black  rounded-md overflow-hidden shadow-md border ">

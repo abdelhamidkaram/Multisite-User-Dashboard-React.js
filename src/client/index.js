@@ -1,5 +1,6 @@
 import axios from "axios";
 import NProgress from "nprogress";
+const path = localStorage.getItem('path');
 
 const axiosInstance = (baseUrl) => {
 
@@ -30,4 +31,4 @@ const axiosInstance = (baseUrl) => {
   return instance;
 };
 
-export const $api = axiosInstance(import.meta.env.VITE_API_BASE_URL);
+export const $api = axiosInstance(path);

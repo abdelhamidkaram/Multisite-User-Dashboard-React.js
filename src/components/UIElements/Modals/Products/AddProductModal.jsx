@@ -16,13 +16,31 @@ const AddProductModal = () => {
       stock_status: '',
       short_description: '',
       categories: '',
+      images: null,
     }
   });
 
   const onSubmit = async (data) => {
-    data['categories'] = [data['categories']];
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('regular_price', data.regular_price);
+    formData.append('sale_price', data.sale_price);
+    formData.append('stock_status', data.stock_status);
+    formData.append('short_description', data.short_description);
+    formData.append('categories', JSON.stringify([data.categories]));
+
+    if (data.images && data.images.length > 0) {
+      for (let i = 0; i < data.images.length; i++) {
+        formData.append(`images[${i}]`, data.images[i]);
+      }
+    }
+
     let apiCall;
-    apiCall = $api.post('wp-json/products/v1/add-product', data);
+    apiCall = $api.post('wp-json/products/v1/add-product', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     PromiseToast(
       apiCall,
       "جاري إضافة المنتج...",
@@ -64,18 +82,22 @@ const AddProductModal = () => {
           error={errors.sale_price?.message}
         />
         <SelectField 
-        label="الحالة"
-        register={{...register('stock_status', { required: true })}}
-         items={['instock ', 'outofstock']}
-         error={errors.stock_status?.message}
-         value={'instock'}
+          label="الحالة"
+          register={{...register('stock_status', { required: true })}}
+          items={['instock', 'outofstock']}
+          error={errors.stock_status?.message}
+          value={'instock'}
         />
         <TextField
           label="التصنيف"
           register={{...register('categories', { required: true })}}
           error={errors.categories?.message}
         />
-
+        <input
+          type="file"
+          multiple
+          {...register('images', { required: true })}
+        />
         <MainButton text="إضافة" />
       </form>
     </div>
