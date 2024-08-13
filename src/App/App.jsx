@@ -52,7 +52,7 @@ const App = () => {
 
  
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 w-full  ">
       <StarterSteps />
       {/* Show analytics card with fetched data */}
       <AnalyticsCard itemsList={[{ id: 1, name: "عدد الطلبيات", num: totalOrders },

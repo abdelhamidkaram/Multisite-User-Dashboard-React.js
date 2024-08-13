@@ -22,7 +22,7 @@ const Store = () => {
    
   const handelClick = (num) => {
     if(num == 4 ){
-      open(`${import.meta.env.VITE_API_BASE_URL}/wp-admin/customize.php` , '_blank');
+      open(`${localStorage.getItem('path')}/wp-admin/customize.php` , '_blank');
       return;
  }
     setTabNumber(num);

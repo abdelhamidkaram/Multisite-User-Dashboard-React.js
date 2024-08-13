@@ -15,7 +15,7 @@ const CustomTable = ({
   addBTNClickHandler,
 }) => {
   const buildItem = (data) => {
-    return data.map((item, i) => (
+    return data.map != null ? data.map((item, i) => (
       <tr key={i}>
         {Object.keys(item).map((key) => {
           const value = item[key];
@@ -50,7 +50,7 @@ const CustomTable = ({
         ) : null}
         {ControllerComponent ? <td>{ControllerComponent}</td> : null}
       </tr>
-    ));
+    ) ) : null ;
   };
   const buildHeader = (
     <tr>

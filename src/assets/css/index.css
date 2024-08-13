@@ -41,6 +41,28 @@
   }
 }
 
+
+/* Ensure the app container takes full width */
+.app-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  width: 100%;
+}
+
+.analytics-card, .line-charts, .products-table, .orders-table {
+  grid-column: span 1;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
 .video-icon {
   animation: pules infinite 2s;
   width: 30px;

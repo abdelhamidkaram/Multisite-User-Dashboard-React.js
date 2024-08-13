@@ -7,7 +7,7 @@ const StarterSteps = () => {
   return (
     <div className="grid grid-flow-row lg:grid-cols-3  sm:grid-flow-col  gap-2  ">
       <StepsItem
-        to={'/products'}
+        to={'/app/products'}
         number={1}
         title={"أضف منتجاتك"}
         des={
@@ -16,7 +16,7 @@ const StarterSteps = () => {
         icon={Step1}
       />
       <StepsItem
-        to={'/products'}
+        to={'/app/products'}
         number={2}
         title={"اضف الفئات "}
         des={
@@ -26,7 +26,7 @@ const StarterSteps = () => {
         icon={Step2}
       />
       <StepsItem
-        to={'/store'}
+        to={'/app/store'}
         number={3}
         title={"تخصيص المتجر "}
         des={

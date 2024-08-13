@@ -25,23 +25,22 @@ const MainLayout = () => {
     <Fragment>
      
       <div className="flex  ">
-        <SideBar
+       { <SideBar
           isOpen={sideOpen}
           onClick={() => {
             setsideOpen(!sideOpen);
             toggleSidebar(!sideOpen);
           }}
-        />
+        />}
 
-        
           <main
 className={` grid w-full py-2 px-5 ${
-              sideOpen ? "ms-60" : "ms-20"
+              sideOpen ? "ms-0 md:ms-60" : "md:ms-20"
             } duration-700`}          >
             <Suspense>
               <Header />
             </Suspense>
-            <div className=" grid-cols-12 justify-self-center  container py-10 px-4 ">
+            <div className="grid-cols-12 justify-self-center  container py-10 px-4 ">
               <Outlet />
             </div>
           </main>
