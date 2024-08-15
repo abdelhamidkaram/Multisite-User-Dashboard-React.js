@@ -52,19 +52,17 @@ const App = () => {
 
  
   return (
-    <div className="grid gap-6 w-full  ">
+    <div className="lg:grid gap-6 w-full  ">
       <StarterSteps />
       {/* Show analytics card with fetched data */}
       <AnalyticsCard itemsList={[{ id: 1, name: "عدد الطلبيات", num: totalOrders },
       { id: 2, name: "عدد المنتجات", num: totalProducts },]} showTitle={true} />
 
-      {/* Show line chart with months and orders */}
+     
       <LineCharts months={months} orders={orders} />
 
-      {/* Show products table */}
-      <ProductsTable changeTitle={"اخر المنتجات"} showMorButton={true} />
+      <ProductsTable changeTitle={"اخر المنتجات"} showMorButton={true}  />
 
-      {/* Show orders table */}
       <OrdersTable changeTitle={"اخر الطلبات"} showMorButton={true} />
     </div>
   );

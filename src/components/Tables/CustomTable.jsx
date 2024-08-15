@@ -23,8 +23,7 @@ const CustomTable = ({
             return <td key={key + i}>{value}</td>;
           }
 
-          //TODO: handel object view
-        })}
+      })}
         {editHandler || deleteHandler ? (
           <td>
             <div className="flex gap-4">

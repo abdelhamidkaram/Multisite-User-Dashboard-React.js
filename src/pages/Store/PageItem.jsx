@@ -2,6 +2,7 @@ import useModal from "../../store/useModal";
 import EditIcon from "../../assets/icons/setting.svg";
 import DeleteIcon from "../../assets/icons/delete.svg";
 import usePageModal from "../../store/modals/PageModal";
+import { BiLink } from "react-icons/bi";
 
 const PageItem = ({pageObj , deleteHandler}) => {
   const {changePage} = usePageModal();
@@ -9,13 +10,13 @@ const PageItem = ({pageObj , deleteHandler}) => {
   const {isOpen ,toggle ,  changeName } = useModal();
     return (
     <div className="w-full flex justify-between gap-10 items-center bg-white rounded-lg mt-8 p-5 min-h-12 shadow-md">
-      <div className="flex justify-between w-full">
+      <div className="flex md:justify-between w-full">
         <div>
           <h4>{name}</h4>
         </div>
         <div className="flex gap-4">
         
-         <a className="text-blue-light text-left" href={url} target="_blank" >{url}</a>
+         <a className="text-blue-light text-left " href={url} target="_blank" ><BiLink/></a>
          
         </div>
       </div>

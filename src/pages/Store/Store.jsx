@@ -48,7 +48,7 @@ const Store = () => {
       ),
     },
     {
-      name: "اعدادات الواجهة",
+      name: "الواجهة",
       icon: (
         <img className="bg-blue-light size-6 p-1 rounded-full" src={Settings} />
       ),

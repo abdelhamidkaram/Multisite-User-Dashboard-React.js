@@ -9,7 +9,8 @@ export default {
      screens: {
       'sm': '0px',
       'md': '480px',
-      'lg': '1440px',
+      'lg': '1100px',
+      'md700':'700px'
     },
       colors: {
       transparent: 'transparent',

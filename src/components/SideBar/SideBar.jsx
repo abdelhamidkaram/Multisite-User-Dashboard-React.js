@@ -34,9 +34,9 @@ const SideBar = ({ onClick }) => {
   return (
     <div>
       <nav
-        className={`p-3 fixed z-50 bottom-0 md:start-0 end-0 ${
+        className={`p-3 fixed z-50 bottom-0 lg:start-0 end-0 ${
           isOpen ? "w-60" : "w-20"
-        } h-screen bg-blue-dark duration-700 hidden md:block`}
+        } h-screen bg-blue-dark duration-700 hidden lg:block`}
       >
         <img />
         <h1
@@ -47,7 +47,7 @@ const SideBar = ({ onClick }) => {
           متكامــل
         </h1>
         <img
-          className={`absolute md:end-0 cursor-pointer z-40 md:-me-3 -mt-9 rounded-full border-2 size-7 border-blue-dark bg-blue-dark ${
+          className={`absolute lg:end-0 cursor-pointer z-40 lg:-me-3 -mt-9 rounded-full border-2 size-7 border-blue-dark bg-blue-dark ${
             isOpen ? "rotate-180" : ""
           } duration-700`}
           src={Arrow}
@@ -74,7 +74,7 @@ const SideBar = ({ onClick }) => {
       </nav>
 
       <button
-        className="fixed bottom-5 right-5 z-50 md:hidden bg-blue-600 text-white p-3 rounded-full shadow-lg"
+        className="fixed bottom-5 right-5 z-50 lg:hidden bg-blue-600 text-white p-3 rounded-full shadow-lg"
         onClick={() => setMobileOpen(true)}
       >
         <AiOutlineMenu size={24} />
@@ -116,7 +116,7 @@ const SideItem = ({ name, icon, isActive }) => {
 
   return (
     <div
-      className={`${
+      className={`text-white ${
         isActive
           ? "side-item-active flex justify-between gap-3 text-white font-bold duration-75"
           : "flex gap-2 mb-2 side-item text-white"
@@ -129,7 +129,7 @@ const SideItem = ({ name, icon, isActive }) => {
             open ? "w-5" : "w-8"
           } ${isActive ? "w-[2rem] items-center duration-1000" : ""}`}
         />
-        <span>{open ? name : ""} </span>
+        <span className={`${open ? '' : 'lg:hidden'} block`}>{ name} </span>
       </div>
       {isActive ? (
         <img src={SelectedIcon} width={`${open ? "20px" : "5px"}`} />

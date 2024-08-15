@@ -20,14 +20,14 @@ const Header = () => {
           <h1 className="font-bold text-lg text-blue-dark">{pageTitle}</h1>
         </div>
 
-        <div className="block md:hidden">
+        <div className="block lg:hidden">
           <button onClick={() => setHamburgerOpen(!hamburgerOpen)}>
             {hamburgerOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
           </button>
         </div>
 
         <div className={`end-nav flex-row gap-8 justify-center items-center
-           md:flex hidden `}>
+           lg:flex hidden `}>
           <div className="video-box flex bg-green-50 flex-row gap-2">
             <div>
               <img src={Support} className="w-6" />

@@ -3,7 +3,7 @@ import { $api } from "../../client";
 import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useProductModal from "../../store/modals/ProductModal";
-const ProductsTable = ({ changeTitle, showMorButton }) => {
+const ProductsTable = ({ changeTitle, showMorButton , showAddBTN}) => {
   const { toggle, changeName } = useModal();
   const { changeProduct } = useProductModal();
 
@@ -101,7 +101,7 @@ const ProductsTable = ({ changeTitle, showMorButton }) => {
         deleteHandler={handleDeleteProduct}
         editHandler={handleEditProduct}
         addBTNClickHandler={openAddProductModal}
-        addBTNTitle={'اضافة منتج جديد'}
+        addBTNTitle={showAddBTN ? 'اضافة منتج جديد' : null }
       />
     </div>
   );

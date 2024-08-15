@@ -11,7 +11,7 @@ const SelectField = ({ ref , value, name, label, register, error, items }) => {
       <div className="w-full">
         <select
           ref={ref}
-          className="border  w-3/4 shadow-sm focus:border-blue-light p-3 rounded-md "
+          className="border w-full md:w-3/4 shadow-sm focus:border-blue-light p-3 rounded-md "
           name={name}
           defaultValue={value}
           {...register}

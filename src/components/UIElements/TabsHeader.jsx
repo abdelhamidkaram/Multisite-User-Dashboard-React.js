@@ -1,6 +1,6 @@
 const TabsHeader = ({ tabs, handelClick, tabNumber }) => {
   return (
-    <div className="flex justify-center flex-wrap gap-3 ">
+    <div className="flex md:justify-center flex-wrap gap-3 ">
       {tabs.map((item, i) => {
         return (
           <TabHeader
