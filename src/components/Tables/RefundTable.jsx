@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useOrderModal from "../../store/modals/OrderModal";
 
-const RefundTable = ({changeTitle }) => {
-    
- 
+const RefundTable = ({ changeTitle }) => {
   const { toggle, changeName } = useModal();
   const { changeOrder } = useOrderModal();
 
@@ -83,14 +81,13 @@ const RefundTable = ({changeTitle }) => {
     <div>
       <CustomTable
         data={orders}
-        title={changeTitle ?? "الطلبات"}
+        title={changeTitle ?? "المرتجعات"}
         CustomHeader={Headers}
         deleteHandler={handleDeleteOrder}
-        editHandler={handlerStatusOrder}       
+        editHandler={handlerStatusOrder}
       />
     </div>
   );
-
 };
 
 export default RefundTable;

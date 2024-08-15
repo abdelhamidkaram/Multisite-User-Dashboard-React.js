@@ -12,11 +12,11 @@ const ThemesItem = ({ themeObj }) => {
   const { imgUrl, title, description, is_active } = themeObj;
   return (
     <Fragment>
-      <div className="flex gap-10 items-center bg-white rounded-lg mt-8 p-5 shadow-md border-solid  border-gray-200 ">
-        <div className="w-2/5 shadow-md   rounded-lg overflow-hidden ">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-10 items-center bg-white rounded-lg mt-8 p-5 shadow-md border-solid  border-gray-200 ">
+        <div className="md:w-2/5 shadow-md   rounded-lg overflow-hidden ">
           <img src={imgUrl} />
         </div>
-        <div className="flex flex-col Theme-item-description w-3/5 gap-5 ">
+        <div className="flex flex-col Theme-item-description md:w-3/5 gap-5 ">
           <h3 className="font-bold text-blue-dark text-2xl "> {title} </h3>
           <p className="line-clamp-3 min-h-24">{description}</p>
           <div className="flex items-center gap-4 ">

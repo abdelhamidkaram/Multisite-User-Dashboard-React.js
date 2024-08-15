@@ -5,9 +5,9 @@ import Step3 from "../../assets/icons/step-3.svg"
 import { Link } from "react-router-dom";
 const StarterSteps = () => {
   return (
-    <div className="grid grid-flow-row lg:grid-cols-3  sm:grid-flow-col  gap-2  ">
+    <div className="md700:flex md700:gap-2 lg:grid lg:grid-flow-row lg:grid-cols-3 lg:gap-2  ">
       <StepsItem
-        to={'/products'}
+        to={'/app/products'}
         number={1}
         title={"أضف منتجاتك"}
         des={
@@ -16,7 +16,7 @@ const StarterSteps = () => {
         icon={Step1}
       />
       <StepsItem
-        to={'/products'}
+        to={'/app/products'}
         number={2}
         title={"اضف الفئات "}
         des={
@@ -26,7 +26,7 @@ const StarterSteps = () => {
         icon={Step2}
       />
       <StepsItem
-        to={'/store'}
+        to={'/app/store'}
         number={3}
         title={"تخصيص المتجر "}
         des={
@@ -46,7 +46,7 @@ const StepsItem = ({ title, des, number, icon , to }) => {
   return (
     <Link to={to} className=" cursor-pointer  " >
       <div
-        className={`p-3  min-h-52 flex flex-col items-start justify-around  border-solid ${
+        className={`p-3 mb-3 lg:m-0 min-h-52 md700:min-h-60 lg:min-h-52 flex flex-col items-start justify-around  border-solid ${
           isCompleted ? "  border-green-500" : "border-blue-light"
         } border-blue-light border-2 rounded-lg shadow-md hover:to-blue-50 hover:-mt-1 hover:mb-1 duration-300`}
       >

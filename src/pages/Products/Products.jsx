@@ -39,7 +39,7 @@ const Products = () => {
        </div>
        
        <div className={tabNumber == 1 ? 'block ' :'hidden' } >
-        <ProductsTable showMorButton={false}  />
+        <ProductsTable showMorButton={false} showAddBTN={true} />
        </div>
 
        <div className={tabNumber == 2 ? 'block' :'hidden' } >

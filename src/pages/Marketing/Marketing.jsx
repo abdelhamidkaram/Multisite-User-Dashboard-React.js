@@ -8,8 +8,8 @@ import useModal from "../../store/useModal";
 
 const Marketing = () => {
   return (
-    <div className="flex justify-center py-24">   
-      <div className="container xl: w-[1000px] flex flex-wrap justify-start gap-6 text-white ">
+    <div className=" md:flex md:justify-center md:py-24 py-3 ">   
+      <div className="md:container xl:w-[1000px] md:flex md:flex-wrap md:justify-start md:gap-6 text-white ">
         <MarketingItem title={"فيسبوك بيكسل"} icon={Facebook} modalName={'facebook'} />
         <MarketingItem title={"لينكدان بيكسل"} icon={Linkedin} modalName={'linkedin'}/>
         <MarketingItem title={"سناب شات بيكسل"} icon={Snapchat} modalName={'snapchat'} />
@@ -34,7 +34,7 @@ const MarketingItem = ({ icon, title , modalName }) => {
         toggle(!isOpen);
         
       }}
-      className=" w-1/4 rounded-md cursor-pointer bg-white shadow-md flex  justify-start p-8 text-blue-dark gap-2 hover:border hover:border-blue-light  "
+      className="m-5 lg:w-1/4 md700:w-1/2 mb-1 rounded-md cursor-pointer bg-white shadow-md flex  justify-start p-8 text-blue-dark gap-2 hover:border hover:border-blue-light  "
     >
       <img src={icon} className="bg-blue-light w-10 p-2 rounded-md" />
       <h2>{title}</h2>

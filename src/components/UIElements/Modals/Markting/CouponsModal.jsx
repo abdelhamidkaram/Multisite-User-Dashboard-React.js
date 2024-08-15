@@ -64,7 +64,7 @@ const CouponsModal = () => {
         text={FormShow ? "عرض الكل" : "اضافة كوبون"}
         ClickHandler={formShowHandler}
       />
-      <div className=" min-w-[600px] max-h-[500px] overflow-y-scroll mt-4 p-2">
+      <div className=" max-h-[500px] overflow-y-scroll mt-4 p-2">
         {!FormShow ? (
           Coupons.map((item) => (
             <CouponItem
