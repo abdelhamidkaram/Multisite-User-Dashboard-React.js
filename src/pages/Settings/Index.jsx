@@ -18,7 +18,7 @@ const Settings = () => {
       icon: null,
     },
     {
-      name: "المستخدمون والأدوار",
+      name: "العملاء",
       icon: null,
     },
     {
@@ -26,7 +26,7 @@ const Settings = () => {
       icon: null,
     },
     {
-      name: "التوصيل",
+      name: "الشحن",
       icon: null,
     },
   ];
@@ -40,7 +40,7 @@ const Settings = () => {
         />
       </div>
 
-      <div className="bg-white m-10 p-8 overflow-hidden rounded-md ">
+      <div className="bg-white mt-10 md:m-10 p-3 md:p-8 overflow-hidden rounded-md ">
         <div className={tabNumber == 1 ? "block " : "hidden"}>
           <GeneralSettings />
         </div>

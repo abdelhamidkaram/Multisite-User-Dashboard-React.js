@@ -1,82 +1,101 @@
+import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
-import  * as Yup from "yup";
- import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import TextField from '../../../components/UIElements/Form/TextField';
-import { useState } from 'react';
 import CheckBoxField from "../../../components/UIElements/Form/CheckBoxField";
 import MainButton from '../../../components/UIElements/MainButton';
-import Myfatora from '../../../assets/images/CashPayment.png'
+import Myfatora from '../../../assets/images/CashPayment.png';
+import { $api } from '../../../client';
+import PromiseToast from '../../../components/UIElements/Toasts/PromiseToast';
 
 const CashPaymentSetting = () => {
-    const [CashPaymentEnable, setBankEnable] = useState(false);
- 
-  const Schema = Yup.object({
-    CashPayment_title: Yup.string().required("حقل مطلوب"),
-    CashPayment_description: Yup.string().required("حقل مطلوب"),
-  });
+    const [CashPaymentEnable, setCashPaymentEnable] = useState(false);
+    const [initialTitle, setInitialTitle] = useState('');
+    const [initialDescription, setInitialDescription] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver:yupResolver(Schema)
-  });
-  const onSubmit = (data) => {
-    console.log({ CashPaymentEnable: CashPaymentEnable , ...data });
-  };
-  return (
-    <div>
-    <form  onSubmit={handleSubmit(onSubmit)}>
-    <div className=" border-2 border-slate-100 p-4 rounded-md shadow-md ">
-      <div className="flex items-center gap-4 w-full pb-4 ">
-        <img
-          src={Myfatora}
-          className="w-24"
-        />
+    // Schema for form validation using Yup
+    const Schema = Yup.object({
+        CashPayment_title: Yup.string().required("حقل مطلوب"),
+        CashPayment_description: Yup.string().required("حقل مطلوب"),
+    });
 
-        <CheckBoxField
-          name={"Enable_CashPayment_account"}
-          endLabel={ "تفعيل "}
-          label={" الدفع عند الإستلام"}
-          value={CashPaymentEnable}
-          handleChange ={()=>{
-            setBankEnable(!CashPaymentEnable);
-          }}
-        />
-      </div>
-      <hr />
-      <div>
-    
-      <div className="flex flex-wrap">
-      
-      <TextField
-      
-        name={"CashPayment_title"}
-        label={"العنوان"}
-        register={{ ...register("CashPayment_title") }}
-        error={errors.CashPayment_title?.message}
-      />
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(Schema)
+    });
 
-      <TextField
-        name={"CashPayment_description"}
-        label={"الوصف"}
-        register={{ ...register("CashPayment_description"  ) }}
-        error={errors.CashPayment_description?.message}
-        isTextArea={true}
-      />
+    // Fetch COD status, title, and description on component mount
+    useEffect(() => {
+        const fetchCodSettings = async () => {
+            try {
+                const response = await $api.get('wp-json/settings/v1/cash-method-status/');
+                const data = await response.data;
+                setCashPaymentEnable(data.enabled);
+                setInitialTitle(data.title);
+                setInitialDescription(data.description);
+            } catch (error) {
+                console.error('Error fetching COD settings:', error);
+            }
+        };
 
-     </div>
-    <MainButton text={" حفظ "} />
-      </div>
-    </div>
+        fetchCodSettings();
+    }, []);
 
-    
-  </form>
-    </div>
-  )
-}
+    // Handle form submission
+    const onSubmit = async (data) => {
+        try {
+            // Submit form data
+            const callApi = $api.post('wp-json/settings/v1/cash-method-toggle', { 
+                enable: CashPaymentEnable, 
+                CashPayment_title: data.CashPayment_title,
+                CashPayment_description: data.CashPayment_description 
+            });
+            PromiseToast(callApi);
+        } catch (error) {
+            console.error('Error updating settings:', error);
+        }
+    };
 
-export default CashPaymentSetting
+    return (
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="border-2 border-slate-100 p-4 rounded-md shadow-md">
+                    <div className="flex items-center gap-4 w-full pb-4">
+                        <img src={Myfatora} className="w-24" alt="Cash Payment" />
 
+                        <CheckBoxField
+                            name={"Enable_CashPayment_account"}
+                            endLabel={"تفعيل "}
+                            label={" الدفع عند الإستلام"}
+                            value={CashPaymentEnable}
+                            handleChange={() => setCashPaymentEnable(!CashPaymentEnable)}
+                        />
+                    </div>
+                    <hr />
+                    <div>
+                        <div className="flex flex-wrap">
+                            <TextField
+                                name={"CashPayment_title"}
+                                label={"العنوان"}
+                                defaultValue={initialTitle}
+                                register={{ ...register("CashPayment_title") }}
+                                error={errors.CashPayment_title?.message}
+                            />
+                            <TextField
+                                name={"CashPayment_description"}
+                                label={"الوصف"}
+                                defaultValue={initialDescription}
+                                register={{ ...register("CashPayment_description") }}
+                                error={errors.CashPayment_description?.message}
+                                isTextArea={true}
+                            />
+                        </div>
+                        <MainButton text={"حفظ"} />
+                    </div>
+                </div>
+            </form>
+        </div>
+    );
+};
 
+export default CashPaymentSetting;

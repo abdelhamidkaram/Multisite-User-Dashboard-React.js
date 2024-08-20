@@ -9,12 +9,13 @@ import Store from "../pages/Store/Store";
 import Apps from "../pages/Apps/Apps";
 import Analytics from "../pages/Analytics/Analytics";
 import Settings from "../pages/Settings/Index";
+import Login from "../pages/Login/login";
 
 
 const RouterTree = () => {
   return createBrowserRouter([
      {
-      path: 'store-controll/',
+      path: '/app',
       element:<MainLayout/>,
       errorElement:<ErrorPage />,
       children:[
@@ -23,34 +24,39 @@ const RouterTree = () => {
           element:<App />
         },
         {
-          path:'store-controll/orders',
+          path:'/app/orders',
           element:<Orders/>
         } , 
         {
-          path:'store-controll/products',
+          path:'/app/products',
           element:<Products/>
         }, 
         {
-          path:'store-controll/analytics',
+          path:'/app/analytics',
           element:<Analytics />
         },
         {
-          path:'store-controll/marketing',
+          path:'/app/marketing',
           element:<Marketing/>
         },
         {
-          path:'store-controll/store',
+          path:'/app/store',
           element:<Store/>
         },
         {
-          path:'store-controll/apps',
+          path:'/app/apps',
           element:<Apps/>
         },
         {
-          path:'store-controll/settings',
+          path:'/app/settings',
           element:<Settings />
         }
       ]
+     },
+     {
+      path:'/',
+      element:<Login/>,
+      errorElement:<ErrorPage/>,
      }
   ]);
 }

@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+     screens: {
+      'sm': '0px',
+      'md': '480px',
+      'lg': '1100px',
+      'md700':'700px'
+    },
       colors: {
       transparent: 'transparent',
       current: 'currentColor',
@@ -23,6 +29,7 @@ export default {
     fontFamily: {
       base: ["Cairo", "sans-serif"],
     },
+    
   
   },
     

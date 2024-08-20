@@ -6,13 +6,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "../../Form/TextField";
 import useModal from "../../../../store/useModal";
+import {
+  ShimmerDiv,
+  ShimmerTitle,
+} from "shimmer-effects-react";
 
 const CouponsModal = () => {
   const [Coupons, setCoupons] = useState([]);
   const [Loading, setLoading] = useState(true);
   const { toggle } = useModal();
 
-  function callCouponsData(){
+  function callCouponsData() {
     const coupons = $api.get("wp-json/markting/v1/coupons");
     coupons.then((value) => {
       console.log(value.data);
@@ -24,7 +28,7 @@ const CouponsModal = () => {
   useEffect(() => {
     try {
       callCouponsData();
-        } catch (error) {
+    } catch (error) {
       console.log(error);
       setLoading(false);
     }
@@ -47,7 +51,7 @@ const CouponsModal = () => {
     });
     PromiseToast(sendData, "جاري  اضافة الكوبون ");
     formShowHandler();
-    toggle();  
+    toggle();
   };
 
   const [FormShow, setFormShow] = useState(false);
@@ -55,27 +59,41 @@ const CouponsModal = () => {
     setFormShow(!FormShow);
     console.log(FormShow);
   };
-  if (Loading) {
-    return <p>Loading ... </p>;
-  }
+
   return (
     <div>
       <MainButton
         text={FormShow ? "عرض الكل" : "اضافة كوبون"}
         ClickHandler={formShowHandler}
       />
-      <div className=" min-w-[600px] max-h-[500px] overflow-y-scroll mt-4 p-2">
+      <div className=" max-h-[500px] mt-4 p-2">
         {!FormShow ? (
-          Coupons.map((item) => (
+          Coupons.length <1 ?
+          [1 , 2 , 3 ].map((item) => (
             <CouponItem
               key={item.ID}
               code={item.code}
-              expireDate={item.expiry_date  ? item.expiry_date : 'حتي النفاذ'}
+              expireDate={item.expiry_date ? item.expiry_date : "حتي النفاذ"}
               id={item.ID}
               amount={item.amount}
               refreshData={toggle}
               usageCount={item.usage_count}
               usageLimit={item.usage_limit}
+              Loading={!Loading}
+            />
+          ))
+          :
+          Coupons.map((item) => (
+            <CouponItem
+              key={item.ID}
+              code={item.code}
+              expireDate={item.expiry_date ? item.expiry_date : "حتي النفاذ"}
+              id={item.ID}
+              amount={item.amount}
+              refreshData={toggle}
+              usageCount={item.usage_count}
+              usageLimit={item.usage_limit}
+              Loading={!Loading}
             />
           ))
         ) : (
@@ -143,42 +161,77 @@ const CouponsModal = () => {
 
 export default CouponsModal;
 
-function CouponItem({ id, amount, code, expireDate , usageLimit , usageCount , refreshData}) {
+function CouponItem({
+  id,
+  amount,
+  code,
+  expireDate,
+  usageLimit,
+  usageCount,
+  refreshData,
+  Loading,
+}) {
   function deleteHandler() {
     const deleteFun = $api.post("wp-json/markting/v1/coupons/delete/" + id);
     PromiseToast(deleteFun, "جاري حذف العنصر", null, "تم الحذف بنجاح");
   }
   return (
     <div
-      className="flex justify-between flex-wrap 
+      className=" w-64 md:w-[500px]
     mb-2
-    shadow-sm min-h-12 w-full border-2 border-gray-300 rounded-md p-1"
+    shadow-sm min-h-12  border-2 border-gray-300 rounded-md p-1"
     >
       <div>
         <b>الكود</b>
-        <p>{code}</p>
+        {Loading ? (
+          <p>{code}</p>
+        ) : (
+          <ShimmerTitle line={1} mode="light" width={16} />
+        )}
       </div>
       <div>
         <b>نسبة الخصم</b>
-        <p>{amount}</p>
+        {Loading ? (
+          <p>{amount}</p>
+        ) : (
+          <ShimmerTitle line={1} mode="light" width={10} />
+        )}
       </div>
       <div>
         <b>الاستخدام</b>
-        <p>{usageCount}/{usageLimit}</p>
+        {Loading ? (
+          <p>
+            {usageCount}/{usageLimit}
+          </p>
+        ) : (
+          <ShimmerTitle line={1} mode="light" width={10} />
+        )}
       </div>
       <div>
         <b>الانتهاء</b>
-        <p>{expireDate}</p>
+        {Loading ? (
+          <p>{expireDate}</p>
+        ) : (
+          <ShimmerTitle line={1} mode="light" width={10} />
+        )}
       </div>
-      <div className="flex gap-1 justify-around items-center ">
+      <div className=" mt-3 py-3 border-t-2 border-gray-200  ">
         <div
-          onClick={() => {
-            deleteHandler();
-            refreshData();
-          }}
+          onClick={
+            !Loading
+              ? null
+              : () => {
+                  deleteHandler();
+                  refreshData();
+                }
+          }
           className=" p-1 rounded-full  w-8 h-8 cursor-pointer "
         >
-          <img src={DeleteIcon} alt="حذف" />
+          {Loading ? (
+            <img src={DeleteIcon} alt="حذف" />
+          ) : (
+            <ShimmerDiv rounded={1} height={30} width={30} mode="light" />
+          )}
         </div>
         {/**
     

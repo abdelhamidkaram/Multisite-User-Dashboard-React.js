@@ -1,12 +1,13 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { ShimmerBarChart } from "shimmer-effects-react";
 
-const LineCharts = () => {
-  const [chartData] = useState({
+const LineCharts = ({ months, orders , isLoading } ) => {
+  const [chartData, setChartData] = useState({
     series: [
       {
-        name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+        name: "Total Orders",
+        data: [],
       },
     ],
     options: {
@@ -21,42 +22,48 @@ const LineCharts = () => {
         enabled: true,
       },
       stroke: {
-        curve: "straight",
+        curve: "smooth",
       },
-     
       grid: {
         row: {
-          colors: ["#f3f3f3", "transparent"], 
+          colors: ["#f3f3f3", "transparent"],
           opacity: 0.5,
         },
       },
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
+        categories: [],
       },
     },
   });
 
+  useEffect(() => {
+    if (months.length && orders.length>0) {
+      setChartData((prevState) => ({
+        ...prevState,
+        series: [{ name: "Total Orders", data: orders }],
+        options: {
+          ...prevState.options,
+          xaxis: { categories: months },
+        },
+      }));
+    }
+  }, [months, orders]);
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-md">
       <div id="chart">
-        <ReactApexChart
+        {isLoading ?
+
+          <div className="h-[350px]" ><ShimmerBarChart  chartType="random" mode="light" barWidth={'5%'} /></div>
+          
+          
+          : <ReactApexChart
           options={chartData.options}
           series={chartData.series}
           type="line"
           height={350}
-        />
+        />}
       </div>
-      <div id="html-dist"></div>
     </div>
   );
 };

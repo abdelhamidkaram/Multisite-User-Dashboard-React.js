@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./assets/css/index.css";
 import { RouterProvider } from "react-router-dom";
 import RouterTree from "./Router/RouterTree";
-console.log( import.meta.env);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={RouterTree()} />
