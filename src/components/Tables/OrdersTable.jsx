@@ -73,18 +73,18 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
     getOrders();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
+        isLoading={loading}
         data={orders}
         title={changeTitle ?? "الطلبات"}
         CustomHeader={Headers}
         to={showMorButton ? "/orders" : null}
         deleteHandler={handleDeleteOrder}
-        editHandler={handlerStatusOrder}       
+        editHandler={handlerStatusOrder}
       />
     </div>
   );

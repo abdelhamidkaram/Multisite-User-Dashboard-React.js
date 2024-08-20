@@ -22,48 +22,64 @@ const Header = () => {
 
         <div className="block lg:hidden">
           <button onClick={() => setHamburgerOpen(!hamburgerOpen)}>
-            {hamburgerOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
+            {hamburgerOpen ? (
+              <AiOutlineClose size={24} />
+            ) : (
+              <AiOutlineMenu size={24} />
+            )}
           </button>
         </div>
 
-        <div className={`end-nav flex-row gap-8 justify-center items-center
-           lg:flex hidden `}>
-          <div className="video-box flex bg-green-50 flex-row gap-2">
+        <div
+          className={`end-nav flex-row gap-8 justify-center items-center
+           lg:flex hidden `}
+        >
+          <div className="video-box flex  flex-row gap-2">
             <div>
               <img src={Support} className="w-6" />
             </div>
             <span>الدعم الفني</span>
           </div>
-          <div className="video-box flex bg-green-50 flex-row gap-2">
+          <div className="video-box flex flex-row gap-2">
             <div className="video-icon">
               <img src={Video} className="w-8" />
             </div>
             <span>شرح المنصة</span>
           </div>
-          <div className="video-box flex bg-green-50 flex-row gap-2">
+          <div className="video-box flex  flex-row gap-2">
             <div>
               <img src={Survey} className="w-6" />
             </div>
             <span>استطلاع رأي</span>
           </div>
-          <div className="video-box flex bg-green-50 flex-row gap-2 cursor-pointer" onClick={() => {
-            window.location.href = localStorage.getItem('path');
-          }}>
+          <div
+            className="video-box flex  flex-row gap-2 cursor-pointer"
+            onClick={() => {
+              window.location.href = localStorage.getItem("path");
+            }}
+          >
             <div>
               <img src={Show} className="w-6" />
             </div>
             <span>عرض المتجر</span>
           </div>
-          <div className="rounded-full bg-blue-light size-10 cursor-pointer" onClick={() => setPopup(true)}>
+          <div
+            className="rounded-full bg-blue-light size-10 cursor-pointer"
+            onClick={() => setPopup(true)}
+          >
             <img src={Profile} />
             {popup && (
               <div className="fixed w-32 left-1 bg-white shadow-md shadow-gray-400 pt-3 pb-3 pr-3">
                 <ClickAwayListener onClickAway={() => setPopup(false)}>
                   <div className="popup">
-                    <p className="text-sm font-bold cursor-pointer" onClick={() => {
-                      localStorage.clear();
-                      window.location.href = "https://www.motkaml.online/home/";
-                    }}>
+                    <p
+                      className="text-sm font-bold cursor-pointer"
+                      onClick={() => {
+                        localStorage.clear();
+                        window.location.href =
+                          "https://www.motkaml.online/home/";
+                      }}
+                    >
                       تسجيل الخروج
                     </p>
                   </div>
@@ -75,47 +91,61 @@ const Header = () => {
       </nav>
 
       {hamburgerOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ">
-          <ClickAwayListener onClickAway={() => setHamburgerOpen(false)}>
-            <div className="bg-white p-5 rounded-lg w-11/12 max-w-sm mx-auto">
-              <div className="flex flex-col gap-4">
-                <div className="video-box flex bg-green-50 flex-row gap-2">
-                  <div>
-                    <img src={Support} className="w-6" />
-                  </div>
-                  <span>الدعم الفني</span>
+        <div
+          className="fixed inset-0 bg-blue-dark bg-opacity-50 z-50 flex justify-center items-center "
+          onClick={() => setHamburgerOpen(false)}
+        >
+          <div className="bg-white p-5 rounded-lg w-11/12 max-w-sm mx-auto">
+            <div className="flex flex-col gap-4">
+              <div className="video-box flex  flex-row gap-2">
+                <div>
+                  <img src={Support} className="w-6" />
                 </div>
-                <div className="video-box flex bg-green-50 flex-row gap-2">
-                  <div className="video-icon">
-                    <img src={Video} className="w-8" />
-                  </div>
-                  <span>شرح المنصة</span>
+                <span>الدعم الفني</span>
+              </div>
+              <div className="video-box flex  flex-row gap-2">
+                <div className="video-icon">
+                  <img src={Video} className="w-8" />
                 </div>
-                <div className="video-box flex bg-green-50 flex-row gap-2">
-                  <div>
-                    <img src={Survey} className="w-6" />
-                  </div>
-                  <span>استطلاع رأي</span>
+                <span>شرح المنصة</span>
+              </div>
+              <div className="video-box flex  flex-row gap-2">
+                <div>
+                  <img src={Survey} className="w-6" />
                 </div>
-                <div className="video-box flex bg-green-50 flex-row gap-2 cursor-pointer" onClick={() => {
-                  window.location.href = localStorage.getItem('path');
-                }}>
-                  <div>
-                    <img src={Show} className="w-6" />
-                  </div>
-                  <span>عرض المتجر</span>
+                <span>استطلاع رأي</span>
+              </div>
+              <div
+                className="video-box flex  flex-row gap-2 cursor-pointer"
+                onClick={() => {
+                  window.location.href = localStorage.getItem("path");
+                }}
+              >
+                <div>
+                  <img src={Show} className="w-6" />
                 </div>
-                <div className="popup">
-                          <p className="text-sm font-bold cursor-pointer" onClick={() => {
-                            localStorage.clear();
-                            window.location.href = "https://www.motkaml.online/home/";
-                          }}>
-                            تسجيل الخروج
-                          </p>
-                        </div>
+                <span>عرض المتجر</span>
+              </div>
+              <div className="popup">
+                <p
+                  className="text-sm font-bold cursor-pointer"
+                  onClick={() => {
+                    // Clear local storage
+                    localStorage.clear();
+
+                    // Clear session storage (if needed)
+                    sessionStorage.clear();
+
+                    // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
+                    window.location.href =
+                      "https://www.motkaml.online/home/?nocache=true"
+                  }}
+                >
+                  تسجيل الخروخ
+                </p>
               </div>
             </div>
-          </ClickAwayListener>
+          </div>
         </div>
       )}
     </div>

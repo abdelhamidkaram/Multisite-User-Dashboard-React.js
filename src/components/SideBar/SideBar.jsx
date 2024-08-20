@@ -13,7 +13,6 @@ import usePageTitle from "../../store/PageTitle";
 import useSideBarToggle from "../../store/ToggleSidebar";
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import ClickAwayListener from "react-click-away-listener";
 
 const SideBar = ({ onClick }) => {
   const isOpen = useSideBarToggle((state) => state.isOpen);
@@ -81,8 +80,8 @@ const SideBar = ({ onClick }) => {
       </button>
 
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
-          <ClickAwayListener onClickAway={() => setMobileOpen(false)}>
+        <div className="fixed inset-0 bg-blue-dark bg-opacity-50 z-50 flex justify-end" onClick={() => setMobileOpen(false)}>
+         
             <nav className="fixed top-0 right-0 w-60 h-screen bg-blue-dark p-3 transition-transform transform translate-x-0 duration-500 ease-in-out">
               <h1 className="text-lg py-4 font-base font-bold text-blue-light text-center">
                 متكامــل
@@ -98,7 +97,7 @@ const SideBar = ({ onClick }) => {
                 <SideNavLi name={"الإعدادات"} icon={Setting} to={"settings"} />
               </ul>
             </nav>
-          </ClickAwayListener>
+        
         </div>
       )}
     </div>

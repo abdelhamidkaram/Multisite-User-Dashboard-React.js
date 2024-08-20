@@ -87,12 +87,12 @@ const ProductsTable = ({ changeTitle, showMorButton , showAddBTN}) => {
     getProducts();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
+      isLoading={loading}
         data={products}
         title={changeTitle ?? "المنتجات"}
         responseData={responseData}

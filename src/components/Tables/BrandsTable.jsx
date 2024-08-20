@@ -74,7 +74,12 @@ const BrandsTable = ({ changeTitle, showMorButton }) => {
         const brandsData = await fetchBrands();
         setResponseData(brandsData);
         const newData = brandsData.map((item) => {
-          return { id: item.id, name: item.name, description: item.description, slug: item.slug };
+          return {
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            slug: item.slug,
+          };
         });
         setBrands(newData);
       } catch (error) {
@@ -87,12 +92,12 @@ const BrandsTable = ({ changeTitle, showMorButton }) => {
     getBrands();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
+        isLoading={loading}
         data={brands}
         title={changeTitle ?? "Brands"}
         responseData={responseData}
@@ -101,7 +106,7 @@ const BrandsTable = ({ changeTitle, showMorButton }) => {
         deleteHandler={handleDeleteBrand}
         editHandler={handleEditBrand}
         addBTNClickHandler={openAddBrandModal}
-        addBTNTitle={'إضافة علامة تجارية جديدة'}
+        addBTNTitle={"إضافة علامة تجارية جديدة"}
       />
     </div>
   );

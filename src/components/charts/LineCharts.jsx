@@ -1,7 +1,8 @@
 import  { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { ShimmerBarChart } from "shimmer-effects-react";
 
-const LineCharts = ({ months, orders }) => {
+const LineCharts = ({ months, orders , isLoading } ) => {
   const [chartData, setChartData] = useState({
     series: [
       {
@@ -51,12 +52,17 @@ const LineCharts = ({ months, orders }) => {
   return (
     <div className="bg-white p-4 rounded-xl shadow-md">
       <div id="chart">
-        <ReactApexChart
+        {isLoading ?
+
+          <div className="h-[350px]" ><ShimmerBarChart  chartType="random" mode="light" barWidth={'5%'} /></div>
+          
+          
+          : <ReactApexChart
           options={chartData.options}
           series={chartData.series}
           type="line"
           height={350}
-        />
+        />}
       </div>
     </div>
   );

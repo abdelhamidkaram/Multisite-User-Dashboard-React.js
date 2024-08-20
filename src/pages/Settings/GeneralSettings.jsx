@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { $api } from '../../client';
 import PromiseToast from '../../components/UIElements/Toasts/PromiseToast';
+import { ShimmerDiv } from 'shimmer-effects-react';
 
 export const GeneralSettings = () => {
     const [generalSetting, setGeneralSetting] = useState({
@@ -18,7 +19,7 @@ export const GeneralSettings = () => {
         allCurrencies: [],
         enable_coupons: false
     });
-
+   const [Loading, setLoading] = useState(true)
 
   
     useEffect(() => {
@@ -37,6 +38,8 @@ export const GeneralSettings = () => {
           });  
           } catch (error) {
               console.error('Error fetching default settings:', error);
+          }finally{
+            setLoading(false)
           }
       };
 
@@ -64,6 +67,15 @@ export const GeneralSettings = () => {
         setGeneralSetting({ ...generalSetting, enable_coupons: !generalSetting.enable_coupons });
     };
 
+
+    if (Loading) {
+        return <div>
+         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
+         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
+         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
+         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
+        </div>
+    }
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>

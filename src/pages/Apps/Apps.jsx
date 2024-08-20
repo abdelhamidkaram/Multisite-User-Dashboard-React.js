@@ -3,6 +3,7 @@ import { $api } from "../../client";
 import SectionTitle from "../../components/UIElements/SectionTitle";
 import AppItem from "./AppItem";
 import PromiseToast from "../../components/UIElements/Toasts/PromiseToast";
+import { ShimmerButton, ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
 
 const Apps = () => {
   const [Apps, setApps] = useState([]);
@@ -54,10 +55,6 @@ const Apps = () => {
 
   }
 
-
-  if (Loading) {
-    return <p>Loading ... </p>
-  }
   if (error) {
     return <p>{'Error when get data '}</p>
   }
@@ -65,7 +62,7 @@ const Apps = () => {
 
   return (
     <div className="flex flex-col gap-14">
-      <div className=" flex justify-center items-center  h-96 rounded-lg bg-blend-overlay bg-black bg-opacity-60  overflow-hidden bg-[url('https://www.tatbiqati.com/images/news/1687743315.webp')]">
+      <div className=" px-5 flex justify-center items-center  h-96 rounded-lg bg-blend-overlay bg-black bg-opacity-60  overflow-hidden bg-[url('https://www.tatbiqati.com/images/news/1687743315.webp')]">
         <h1 className="text-7xl font-bold text-white"> متجر التطبيقات </h1>
       </div>
 
@@ -74,7 +71,7 @@ const Apps = () => {
         <div className="px-2 p-5 lg:p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6  bg-white rounded-md ">
          {
           
-            Apps.map((item , i )=><AppItem
+          !Loading? Apps.map((item , i )=><AppItem
             key={i}
             app={{
               danger: item.isActive,
@@ -85,7 +82,11 @@ const Apps = () => {
             }}
             actionHandler={()=>actionHandler(item)}
           />)
-          
+          : [1,2,3].map((i)=><div key={i}>
+          <ShimmerDiv className="h-56 mb-4" key={i} mode="light"  />
+          <ShimmerTitle line={1} key={i} mode="light"  />
+          <ShimmerButton mode="light" size="sm" />
+          </div>)
          }
 
         </div>

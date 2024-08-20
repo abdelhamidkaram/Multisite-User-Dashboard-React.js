@@ -1,7 +1,7 @@
 @tailwind base;
 
 .table-wrap{
-  @apply w-full max-w-[900px] shadow-md border my-6  rounded-xl overflow-x-scroll ;
+  @apply w-full max-w-[1440px] shadow-md border my-6  rounded-xl overflow-x-scroll ;
 
 }
 table {

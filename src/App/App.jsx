@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AnalyticsCard from "../components/AnalyticsCard/AnalyticsCard";
 import OrdersTable from "../components/Tables/OrdersTable";
 import ProductsTable from "../components/Tables/ProductsTable";
@@ -13,6 +13,7 @@ const App = () => {
   const [months, setMonthsData] = useState([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,11 +39,11 @@ const App = () => {
         setMonths(newMonths);
         setTotalOrders(summaryData.total_orders);
         setTotalProducts(summaryData.total_products);
-
-      
       } catch (error) {
         console.error("Error fetching data:", error);
         // Handle errors (e.g., show error message)
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,18 +51,22 @@ const App = () => {
     fetchData();
   }, []); // Empty dependency array ensures useEffect runs only once on mount
 
- 
   return (
     <div className="lg:grid gap-6 w-full  ">
       <StarterSteps />
       {/* Show analytics card with fetched data */}
-      <AnalyticsCard itemsList={[{ id: 1, name: "عدد الطلبيات", num: totalOrders },
-      { id: 2, name: "عدد المنتجات", num: totalProducts },]} showTitle={true} />
+      <AnalyticsCard
+        isLoading={loading}
+        itemsList={[
+          { id: 1, name: "عدد الطلبيات", num: totalOrders },
+          { id: 2, name: "عدد المنتجات", num: totalProducts },
+        ]}
+        showTitle={true}
+      />
 
-     
-      <LineCharts months={months} orders={orders} />
+      <LineCharts months={months} orders={orders} isLoading={loading}/>
 
-      <ProductsTable changeTitle={"اخر المنتجات"} showMorButton={true}  />
+      <ProductsTable changeTitle={"اخر المنتجات"} showMorButton={true} />
 
       <OrdersTable changeTitle={"اخر الطلبات"} showMorButton={true} />
     </div>

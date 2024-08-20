@@ -18,7 +18,7 @@ const MediaModal = () => {
       <h2>{image.title}</h2>
       <TextButton text={"حذف"} ClickHandler={onDelete} />
       </div>
-      <img className='max-w-[800px] max-h-[600px]' src={`${image.url}`}/>
+      <img className=' max-w[300px] md:max-w-[800px] max-h-[600px]' src={`${image.url}`}/>
     </div>
   )
 }

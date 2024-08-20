@@ -3,6 +3,7 @@ import { $api } from "../../../../client";
 import PromiseToast from "../../Toasts/PromiseToast";
 import { useEffect, useState } from "react";
 import useModal from "../../../../store/useModal";
+import { ShimmerCategoryItems } from "shimmer-effects-react";
 
 const ReviewsModal = () => {
   const [Reviews, setReviews] = useState([]);
@@ -26,12 +27,9 @@ const ReviewsModal = () => {
     }
   }, []);
 
-  if (Loading) {
-    return <p>Loading ... </p>;
-  }
-  return (
+  return !Loading ? (
     <div>
-      <div className=" min-w-[600px] max-h-[500px] overflow-y-scroll mt-4 p-2">
+      <div className=" min-w-[300px] max-h-[500px] mt-4 p-2">
         {Reviews.map((item) => (
           <ReviewItem
             key={item.comment_ID}
@@ -44,26 +42,29 @@ const ReviewsModal = () => {
         ))}
       </div>
     </div>
+  ) : (
+    <div>
+      <div className=" min-w-[300px] max-h-[500px] mt-4 p-2">
+        <ShimmerCategoryItems items={3} mode="light" hasImage={false} />
+      </div>
+    </div>
   );
 };
 
 export default ReviewsModal;
 
-function ReviewItem({
-  id,
-  content,
-  name,
-  product,
-  toggle
-}) {
+function ReviewItem({ loading, id, content, name, product, toggle }) {
   function deleteHandler() {
+    if (loading) return;
     const deleteFun = $api.post("wp-json/markting/v1/reviews/delete/" + id);
     PromiseToast(deleteFun, "جاري حذف العنصر", null, "تم الحذف بنجاح");
     toggle();
   }
   return (
     <div
-      className="flex justify-between flex-wrap 
+      className="
+      md700:max-w-[1000px]
+      flex justify-between flex-wrap 
         mb-2
         shadow-sm min-h-12 w-full border-2 border-gray-300 rounded-md p-1"
     >
@@ -82,7 +83,8 @@ function ReviewItem({
       <div className="flex gap-1 justify-around items-center ">
         <div
           onClick={() => {
-            deleteHandler()          }}
+            deleteHandler();
+          }}
           className=" p-1 rounded-full  w-8 h-8 cursor-pointer "
         >
           <img src={DeleteIcon} alt="حذف" />

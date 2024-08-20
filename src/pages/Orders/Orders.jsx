@@ -33,7 +33,7 @@ const Orders = () => {
       ),
     },
     {
-      name: "المرتجعات",
+      name: "المرتجع",
       icon: (
         <img
           className="bg-blue-light size-6 p-1 rounded-full"

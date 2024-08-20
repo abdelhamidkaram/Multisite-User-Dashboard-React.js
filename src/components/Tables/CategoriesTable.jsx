@@ -93,12 +93,12 @@ const CategoriesTable = ({ changeTitle }) => {
     getCategories();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
+      isLoading={loading}
         data={categories}
         title={changeTitle ?? "التصنيفات"}
         responseData={responseData}

@@ -21,7 +21,7 @@ import MediaModal from "./Store/MediaModal";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
-    //TODO:
+  
     //START MARKETING PAGE MODAL====================
     facebook: <FacebookModal />,
     snapchat: <SnapModal />,

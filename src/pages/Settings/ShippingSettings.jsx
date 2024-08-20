@@ -1,9 +1,11 @@
 import  { useState, useEffect } from 'react';
 import MainButton from '../../components/UIElements/MainButton';
 import { $api } from '../../client';
+import { ShimmerDiv } from 'shimmer-effects-react';
 
 const ShippingSettings = () => {
   const [price, setPrice] = useState('');
+  const [Loading, setLoading] = useState(true)
   
   useEffect(() => {
     // Fetch the current fixed shipping price when the component mounts
@@ -13,6 +15,8 @@ const ShippingSettings = () => {
         setPrice(response.data.price);
       } catch (error) {
         console.error('Error fetching the current price:', error);
+      }finally{
+        setLoading(false)
       }
     };
     fetchCurrentPrice();
@@ -38,7 +42,11 @@ const ShippingSettings = () => {
       console.error('Error updating the shipping price:', error);
     }
   };
+ 
 
+  if (Loading) {
+    return <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
+  }
   return (
     <div>
       <div className="shadow-md rounded-md p-4 pb-8 mb-14">

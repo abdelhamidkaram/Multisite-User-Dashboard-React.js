@@ -31,7 +31,17 @@ try {
   }, []);
 
   if (!analyticsData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="grid gap-6">
+        <AnalyticsCard itemsList={[1,2,3,4,5]} showMore={false} isLoading={true} />
+        <LineCharts months={months} orders={orders} isLoading={true}/>
+  
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+          <ProductsTable changeTitle={'اخر المنتجات'} showMorButton={true} />
+          <OrdersTable changeTitle={'اخر الطلبات'} />
+        </div>
+      </div>
+    );
   }
 
   const { total_orders, total_products, total_sales, total_customers, average_order_value, total_refunds } = analyticsData.data;
@@ -53,7 +63,7 @@ try {
 
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
         <ProductsTable changeTitle={'اخر المنتجات'} showMorButton={true} />
-        <OrdersTable changeTitle={'اخر الطلبات'} />
+        <OrdersTable changeTitle={'اخر الطلبات'} showMorButton={true} />
       </div>
     </div>
   );
