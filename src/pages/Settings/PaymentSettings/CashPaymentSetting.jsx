@@ -8,9 +8,11 @@ import MainButton from '../../../components/UIElements/MainButton';
 import Myfatora from '../../../assets/images/CashPayment.png';
 import { $api } from '../../../client';
 import PromiseToast from '../../../components/UIElements/Toasts/PromiseToast';
+import { BounceLoader } from 'react-spinners';
 
 const CashPaymentSetting = () => {
     const [CashPaymentEnable, setCashPaymentEnable] = useState(false);
+    const [Loading, setLoading] = useState(false);
     const [initialTitle, setInitialTitle] = useState('');
     const [initialDescription, setInitialDescription] = useState('');
 
@@ -26,7 +28,9 @@ const CashPaymentSetting = () => {
 
     // Fetch COD status, title, and description on component mount
     useEffect(() => {
+        
         const fetchCodSettings = async () => {
+            setLoading(true);
             try {
                 const response = await $api.get('wp-json/settings/v1/cash-method-status/');
                 const data = await response.data;
@@ -35,6 +39,8 @@ const CashPaymentSetting = () => {
                 setInitialDescription(data.description);
             } catch (error) {
                 console.error('Error fetching COD settings:', error);
+            }finally{
+                setLoading(false)
             }
         };
 
@@ -57,7 +63,12 @@ const CashPaymentSetting = () => {
     };
 
     return (
-        <div>
+        <div className='relative'>
+        {Loading ? <div className='absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ' >
+              
+            <BounceLoader className='m-auto' />
+           
+         </div> : null }
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="border-2 border-slate-100 p-4 rounded-md shadow-md">
                     <div className="flex items-center gap-4 w-full pb-4">
@@ -77,14 +88,14 @@ const CashPaymentSetting = () => {
                             <TextField
                                 name={"CashPayment_title"}
                                 label={"العنوان"}
-                                defaultValue={initialTitle}
+                                value={initialTitle}
                                 register={{ ...register("CashPayment_title") }}
                                 error={errors.CashPayment_title?.message}
                             />
                             <TextField
                                 name={"CashPayment_description"}
                                 label={"الوصف"}
-                                defaultValue={initialDescription}
+                                value={initialDescription}
                                 register={{ ...register("CashPayment_description") }}
                                 error={errors.CashPayment_description?.message}
                                 isTextArea={true}

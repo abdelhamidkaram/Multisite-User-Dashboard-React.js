@@ -75,9 +75,15 @@ const Header = () => {
                     <p
                       className="text-sm font-bold cursor-pointer"
                       onClick={() => {
+                        // Clear local storage
                         localStorage.clear();
+
+                        // Clear session storage (if needed)
+                        sessionStorage.clear();
+
+                        // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                         window.location.href =
-                          "https://www.motkaml.online/home/";
+                          "https://www.motkaml.online/home/?nocache=true";
                       }}
                     >
                       تسجيل الخروج
@@ -138,7 +144,7 @@ const Header = () => {
 
                     // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                     window.location.href =
-                      "https://www.motkaml.online/home/?nocache=true"
+                      "https://www.motkaml.online/home/?nocache=true";
                   }}
                 >
                   تسجيل الخروخ

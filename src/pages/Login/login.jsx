@@ -2,13 +2,12 @@ import {useNavigate, useSearchParams } from 'react-router-dom';
 import { $api } from '../../client';
 import { Fragment, useEffect, useState } from 'react';
 import usePath from '../../store/auth';
-import loadingAnimation2 from '../../assets/json/loading2.json'
-import Lottie from 'lottie-react';
+import { HashLoader } from 'react-spinners';
 const Login = () => {
   const [searchParams] = useSearchParams();
   const paramValue = searchParams.get('t');
   const [loading, setLoading] = useState(true);
-  const { setPath, setToken } = usePath();
+  const {setPath, setToken } = usePath();
   const navigate = useNavigate();
   const localToken = localStorage.getItem('token');
 
@@ -28,7 +27,10 @@ const Login = () => {
         const res = await $api.post('https://www.motkaml.online/wp-json/api/v1/to-dash', {
           token: paramValue
         });
+         console.log(res.data['site_url']);
+         
         if (res.data && res.data['site_url']) {
+           localStorage.clear();
           setPath(res.data['site_url']);
           setToken(paramValue);
           navigate("/app");
@@ -47,7 +49,7 @@ const Login = () => {
 
   if (loading) {
     return <div className='flex justify-center items-center h-lvh bg-white'>
-    <Lottie animationData={loadingAnimation2} loop={true}/>
+    <HashLoader color="#14428e" />
     </div>;
   }
 

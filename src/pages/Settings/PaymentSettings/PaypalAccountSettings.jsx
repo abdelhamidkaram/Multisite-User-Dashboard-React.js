@@ -82,14 +82,14 @@ const PaypalAccountSettings = () => {
                             <TextField
                                 name={"paypal_title"}
                                 label={"العنوان"}
-                                defaultValue={initialSettings.paypal_title}
+                                value={initialSettings.paypal_title}
                                 register={{ ...register("paypal_title") }}
                                 error={errors.paypal_title?.message}
                             />
                             <TextField
                                 name={"paypal_description"}
                                 label={"الوصف"}
-                                defaultValue={initialSettings.paypal_description}
+                                value={initialSettings.paypal_description}
                                 register={{ ...register("paypal_description") }}
                                 error={errors.paypal_description?.message}
                                 isTextArea={true}
@@ -97,14 +97,14 @@ const PaypalAccountSettings = () => {
                             <TextField
                                 name={"paypal_account_email"}
                                 label={"البريد الإلكتروني"}
-                                defaultValue={initialSettings.paypal_account_email}
+                                value={initialSettings.paypal_account_email}
                                 register={{ ...register("paypal_account_email") }}
                                 error={errors.paypal_account_email?.message}
                             />
                             <TextField
                                 name={"paypal_account_number"}
                                 label={"رقم الحساب"}
-                                defaultValue={initialSettings.paypal_account_number}
+                                value={initialSettings.paypal_account_number}
                                 register={{ ...register("paypal_account_number") }}
                                 error={errors.paypal_account_number?.message}
                             />

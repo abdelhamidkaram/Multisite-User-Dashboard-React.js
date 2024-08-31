@@ -29,8 +29,8 @@ const App = () => {
         const summaryData = summaryResponse.data;
 
         // Process monthly data
-        const newOrders = monthlyData.map((item) => item.total_orders);
-        const newMonths = monthlyData.map((item) => item.month);
+        const newOrders = monthlyData ?  monthlyData.map((item) => item.total_orders) : {};
+        const newMonths = monthlyData ? monthlyData.map((item) => item.month) : {} ;
 
         // Update state with fetched data
         setOrdersData(newOrders);

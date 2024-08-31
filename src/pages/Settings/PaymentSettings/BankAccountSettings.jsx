@@ -7,9 +7,11 @@ import CheckBoxField from "../../../components/UIElements/Form/CheckBoxField";
 import MainButton from '../../../components/UIElements/MainButton';
 import { $api } from '../../../client';
 import PromiseToast from '../../../components/UIElements/Toasts/PromiseToast';
+import { BounceLoader } from 'react-spinners';
 
 const BankAccountSettings = () => {
     const [bankEnable, setBankEnable] = useState(false);
+    const [Loading, SetLoading] = useState(false);
     const [initialSettings, setInitialSettings] = useState({
         bank_title: '',
         bank_description: '',
@@ -36,6 +38,7 @@ const BankAccountSettings = () => {
 
     useEffect(() => {
         const fetchBacsSettings = async () => {
+            SetLoading(true);
             try {
                 const response = await $api.get('wp-json/settings/v1/bacs-method-status/');
                 const data = await response.data;
@@ -51,6 +54,8 @@ const BankAccountSettings = () => {
                 });
             } catch (error) {
                 console.error('Error fetching BACS settings:', error);
+            }finally{
+                SetLoading(false);
             }
         };
 
@@ -70,7 +75,13 @@ const BankAccountSettings = () => {
     };
 
     return (
-        <div>
+
+        <div className=' relative '>
+            {Loading ? <div className='absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ' >
+              
+               <BounceLoader className='m-auto' />
+              
+            </div> : null }
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="border-2 border-slate-100 p-4 rounded-md shadow-md">
                     <div className="flex items-center gap-4 w-full pb-4">
@@ -90,14 +101,14 @@ const BankAccountSettings = () => {
                             <TextField
                                 name={"bank_title"}
                                 label={"العنوان"}
-                                defaultValue={initialSettings.bank_title}
+                                value={initialSettings.bank_title}
                                 register={{ ...register("bank_title") }}
                                 error={errors.bank_title?.message}
                             />
                             <TextField
                                 name={"bank_description"}
                                 label={"الوصف"}
-                                defaultValue={initialSettings.bank_description}
+                                value={initialSettings.bank_description}
                                 register={{ ...register("bank_description") }}
                                 error={errors.bank_description?.message}
                                 isTextArea={true}
@@ -105,35 +116,35 @@ const BankAccountSettings = () => {
                             <TextField
                                 name={"bank_account_name"}
                                 label={"اسم الحساب"}
-                                defaultValue={initialSettings.bank_account_name}
+                                value={initialSettings.bank_account_name}
                                 register={{ ...register("bank_account_name") }}
                                 error={errors.bank_account_name?.message}
                             />
                             <TextField
                                 name={"bank_account_number"}
                                 label={"رقم الحساب"}
-                                defaultValue={initialSettings.bank_account_number}
+                                value={initialSettings.bank_account_number}
                                 register={{ ...register("bank_account_number") }}
                                 error={errors.bank_account_number?.message}
                             />
                             <TextField
                                 name={"bank_account_bank_name"}
                                 label={"اسم المصرف"}
-                                defaultValue={initialSettings.bank_account_bank_name}
+                                value={initialSettings.bank_account_bank_name}
                                 register={{ ...register("bank_account_bank_name") }}
                                 error={errors.bank_account_bank_name?.message}
                             />
                             <TextField
                                 name={"bank_account_iban"}
                                 label={"IBAN رقم الآيبان"}
-                                defaultValue={initialSettings.bank_account_iban}
+                                value={initialSettings.bank_account_iban}
                                 register={{ ...register("bank_account_iban") }}
                                 error={errors.bank_account_iban?.message}
                             />
                             <TextField
                                 name={"bank_account_swift"}
                                 label={"رمز Swift / BIC"}
-                                defaultValue={initialSettings.bank_account_swift}
+                                value={initialSettings.bank_account_swift}
                                 register={{ ...register("bank_account_swift") }}
                                 error={errors.bank_account_swift?.message}
                             />

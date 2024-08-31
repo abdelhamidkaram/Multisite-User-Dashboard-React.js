@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { $api } from '../../client';
 import PromiseToast from '../../components/UIElements/Toasts/PromiseToast';
-import { ShimmerDiv } from 'shimmer-effects-react';
+import { BounceLoader } from 'react-spinners';
 
 export const GeneralSettings = () => {
     const [generalSetting, setGeneralSetting] = useState({
@@ -67,17 +67,13 @@ export const GeneralSettings = () => {
         setGeneralSetting({ ...generalSetting, enable_coupons: !generalSetting.enable_coupons });
     };
 
-
-    if (Loading) {
-        return <div>
-         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
-         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
-         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
-         <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
-        </div>
-    }
     return (
-        <div>
+        <div className="relative">
+        {Loading ? (
+          <div className="absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ">
+            <BounceLoader className="m-auto" />
+          </div>
+        ) : null}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                     label={"اسم الموقع"}
@@ -122,3 +118,5 @@ export const GeneralSettings = () => {
         </div>
     )
 }
+
+

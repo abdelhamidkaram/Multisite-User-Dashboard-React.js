@@ -1,5 +1,8 @@
+import useSWR from "swr";
 import axios from "axios";
 import NProgress from "nprogress";
+
+
 const path = localStorage.getItem('path');
 
 const axiosInstance = (baseUrl) => {
@@ -32,3 +35,21 @@ const axiosInstance = (baseUrl) => {
 };
 
 export const $api = axiosInstance(path);
+
+
+const fetcher = (url) => $api.get(url).then((res) => res.data);
+
+
+export const useData = (url) => {
+  const { data, error, mutate } = useSWR(url, fetcher, {
+    revalidateOnFocus: false, 
+    revalidateOnReconnect: false, 
+  });
+
+  return {
+    data,
+    error,
+    isLoading: !error && !data,
+    mutate, 
+  };
+};
