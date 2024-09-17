@@ -52,17 +52,15 @@ const Header = () => {
             </div>
             <span>استطلاع رأي</span>
           </div>
-          <div
-            className="video-box flex  flex-row gap-2 cursor-pointer"
-            onClick={() => {
-              window.location.href = localStorage.getItem("path");
-            }}
-          >
-            <div>
-              <img src={Show} className="w-6" />
+          <a href={localStorage.getItem("path")} target="_blank" >
+            <div className="video-box flex  flex-row gap-2 cursor-pointer">
+              <div>
+                <img src={Show} className="w-6" />
+              </div>
+              <span>عرض المتجر</span>
             </div>
-            <span>عرض المتجر</span>
-          </div>
+          </a>
+
           <div
             className="rounded-full bg-blue-light size-10 cursor-pointer"
             onClick={() => setPopup(true)}

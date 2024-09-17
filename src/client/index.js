@@ -7,6 +7,7 @@ const path = localStorage.getItem('path');
 
 const axiosInstance = (baseUrl) => {
 
+
   const instance = axios.create({
     baseURL: baseUrl,
     withCredentials: false,
@@ -22,7 +23,16 @@ const axiosInstance = (baseUrl) => {
 
   instance.interceptors.response.use(
     (response) => {
+
+      if(response.data.new_token != null ){
+
+        localStorage.setItem('token' , response.data.new_token );
+        localStorage.setItem('old_path' , path );
+  
+      }
       NProgress.done();
+
+
       return response;
     },
     (error) => {

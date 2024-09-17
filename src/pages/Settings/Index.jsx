@@ -4,9 +4,13 @@ import { GeneralSettings } from "./GeneralSettings";
 import UserSettings from "./UserSettings";
 import PaymentSettings from "./PaymentSettings/index";
 import ShippingSettings from "./ShippingSettings";
+import { AddDomain } from "./AddDomainSettings";
+import { useSearchParams } from "react-router-dom";
 
 const Settings = () => {
-  const [tabNumber, setTabNumber] = useState(1);
+  const [searchParams] = useSearchParams();
+  const paramValue = searchParams.get('p');
+  const [tabNumber, setTabNumber] = useState(paramValue ?? 1);
 
   const handelClick = (num) => {
     setTabNumber(num);
@@ -15,6 +19,10 @@ const Settings = () => {
   const tabs = [
     {
       name: "الإعدادات العامة",
+      icon: null,
+    },
+    {
+      name: "النطاق",
       icon: null,
     },
     {
@@ -46,14 +54,18 @@ const Settings = () => {
         </div>
 
         <div className={tabNumber == 2 ? "block " : "hidden"}>
+          <AddDomain />
+        </div>
+
+        <div className={tabNumber == 3 ? "block " : "hidden"}>
           <UserSettings />
         </div>
 
-        <div className={tabNumber == 3 ? "block" : "hidden"}>
+        <div className={tabNumber == 4 ? "block" : "hidden"}>
          <PaymentSettings />
         </div>
 
-        <div className={tabNumber == 4 ? "block" : "hidden"}>
+        <div className={tabNumber == 5 ? "block" : "hidden"}>
         <ShippingSettings />
         </div>
 

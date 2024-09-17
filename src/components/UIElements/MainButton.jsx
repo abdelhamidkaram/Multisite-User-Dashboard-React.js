@@ -1,7 +1,9 @@
+import { PropagateLoader } from "react-spinners"
 
-const MainButton = ({ isActive , text , ClickHandler  , danger}) => {
+const MainButton = ({ isActive , text , ClickHandler  , danger , loading}) => {
 
   return (
+
     <button
     onClick={()=>{
      
@@ -11,7 +13,7 @@ const MainButton = ({ isActive , text , ClickHandler  , danger}) => {
     } ${danger ? 'bg-red-600' : null} py-2 px-4 rounded-md text-white font-bold `}
     disabled={isActive}
   >
-    {text}
+    {loading ? <PropagateLoader color="white" size={10} /> : text}
   </button>
   )
 }
