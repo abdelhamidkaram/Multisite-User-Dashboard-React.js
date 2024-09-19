@@ -1,9 +1,10 @@
 import  { useState, useEffect } from 'react';
-import MainButton from '../../components/UIElements/MainButton';
-import { $api } from '../../client';
-import { ShimmerDiv } from 'shimmer-effects-react';
+import MainButton from '../../../components/UIElements/MainButton';
+import { $api } from '../../../client';
+import FormLoading from '../../../components/UIElements/Form/FormLoading';
+import PromiseToast from '../../../components/UIElements/Toasts/PromiseToast';
 
-const ShippingSettings = () => {
+const FixedShippingSettings = () => {
   const [price, setPrice] = useState('');
   const [Loading, setLoading] = useState(true)
   
@@ -28,27 +29,22 @@ const ShippingSettings = () => {
 
   const saveEditHandler = async () => {
     try {
-      const response = await $api.post('/wp-json/custom-shipping/v1/set-fixed-price',{
+      let response ; 
+       response =  $api.post('/wp-json/custom-shipping/v1/set-fixed-price',{
         'price':price
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update the shipping price');
-      }
-
-      const result = await response.json();
-      console.log('Shipping price updated successfully:', result);
+      PromiseToast(response);
     } catch (error) {
       console.error('Error updating the shipping price:', error);
     }
   };
  
 
-  if (Loading) {
-    return <ShimmerDiv className='w-full h-14 m-4' mode='light'  />
-  }
   return (
-    <div>
+
+    <div className='relative'>
+      <FormLoading Loading={Loading} />
       <div className="shadow-md rounded-md p-4 pb-8 mb-14">
         <div>
           <h2 className="text-lg font-semibold">إعدادات الشحن</h2>
@@ -71,4 +67,4 @@ const ShippingSettings = () => {
   );
 };
 
-export default ShippingSettings;
+export default FixedShippingSettings;

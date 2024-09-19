@@ -8,7 +8,7 @@ import MainButton from "../../../components/UIElements/MainButton";
 import Myfatora from "../../../assets/images/myfatora.svg";
 import { $api } from "../../../client";
 import PromiseToast from "../../../components/UIElements/Toasts/PromiseToast";
-import { BounceLoader } from "react-spinners";
+import FormLoading from "../../../components/UIElements/Form/FormLoading";
 
 const MyfatoraAccountSettings = () => {
   // State variables for loading, enabling features, and data management
@@ -78,11 +78,7 @@ const MyfatoraAccountSettings = () => {
 
   return (
     <div className="relative">
-      {loading && (
-        <div className="absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md flex items-center justify-center">
-          <BounceLoader />
-        </div>
-      )}
+      <FormLoading Loading={loading} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`border-2 p-4 rounded-md shadow-md ${

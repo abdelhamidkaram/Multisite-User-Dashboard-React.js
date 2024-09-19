@@ -8,7 +8,7 @@ import MainButton from "../../../components/UIElements/MainButton";
 import SadadLogo from "../../../assets/images/sadad.png"; 
 import { $api } from "../../../client";
 import PromiseToast from "../../../components/UIElements/Toasts/PromiseToast";
-import { BounceLoader } from "react-spinners";
+import FormLoading from "../../../components/UIElements/Form/FormLoading";
 
 const SadadAccountSettings = () => {
   const [sadadEnable, setSadadEnable] = useState(false);
@@ -75,12 +75,8 @@ const SadadAccountSettings = () => {
 
   return (
     <div className="relative">
-      {loading && (
-        <div className="absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md flex items-center justify-center">
-          <BounceLoader />
-        </div>
-      )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+     <FormLoading loading={loading} />
+    <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`border-2 p-4 rounded-md shadow-md ${
             sadadEnable ? "border-green-500 shadow-green-500" : "border-slate-100"

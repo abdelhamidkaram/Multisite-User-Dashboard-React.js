@@ -8,7 +8,7 @@ import MainButton from '../../../components/UIElements/MainButton';
 import Myfatora from '../../../assets/images/CashPayment.png';
 import { $api } from '../../../client';
 import PromiseToast from '../../../components/UIElements/Toasts/PromiseToast';
-import { BounceLoader } from 'react-spinners';
+import FormLoading from '../../../components/UIElements/Form/FormLoading';
 
 const CashPaymentSetting = () => {
     const [CashPaymentEnable, setCashPaymentEnable] = useState(false);
@@ -64,11 +64,7 @@ const CashPaymentSetting = () => {
 
     return (
         <div className='relative'>
-        {Loading ? <div className='absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ' >
-              
-            <BounceLoader className='m-auto' />
-           
-         </div> : null }
+        <FormLoading Loading={Loading} />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="border-2 border-slate-100 p-4 rounded-md shadow-md">
                     <div className="flex items-center gap-4 w-full pb-4">

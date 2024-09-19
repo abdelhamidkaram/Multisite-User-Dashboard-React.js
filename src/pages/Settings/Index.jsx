@@ -3,9 +3,9 @@ import TabsHeader from "../../components/UIElements/TabsHeader";
 import { GeneralSettings } from "./GeneralSettings";
 import UserSettings from "./UserSettings";
 import PaymentSettings from "./PaymentSettings/index";
-import ShippingSettings from "./ShippingSettings";
 import { AddDomain } from "./AddDomainSettings";
 import { useSearchParams } from "react-router-dom";
+import ShippingSettings from "./ShippingSettings";
 
 const Settings = () => {
   const [searchParams] = useSearchParams();
