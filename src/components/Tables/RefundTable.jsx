@@ -1,6 +1,5 @@
 import CustomTable from "./CustomTable";
-import { $api } from "../../client";
-import { useEffect, useState } from "react";
+import { $api, useData } from "../../client";
 import useModal from "../../store/useModal";
 import useOrderModal from "../../store/modals/OrderModal";
 
@@ -8,16 +7,7 @@ const RefundTable = ({ changeTitle }) => {
   const { toggle, changeName } = useModal();
   const { changeOrder } = useOrderModal();
 
-  // Fetch all orders
-  const fetchOrders = async () => {
-    try {
-      const response = await $api.get("wp-json/products/v1/refunded-orders");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
+  const { data: orders, error, isLoading, mutate } = useData("wp-json/products/v1/refunded-orders");
 
   const handleDeleteOrder = async (orderId) => {
     const confirmDelete = window.confirm(
@@ -35,8 +25,7 @@ const RefundTable = ({ changeTitle }) => {
         }
 
         alert(response.data.message);
-        let newData = orders.filter((item) => item.id != orderId);
-        setOrders(newData);
+        mutate(orders.filter((item) => item.id !== orderId), false);
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
         alert("Failed to delete the order. Please try again.");
@@ -53,33 +42,15 @@ const RefundTable = ({ changeTitle }) => {
     changeName("order");
     toggle();
   }
+
   const Headers = ["رقم الطلب", "العميل", "الحالة", "الإجمالي", "تاريخ الطلب"];
 
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const getOrders = async () => {
-      setLoading(true);
-      try {
-        const ordersData = await fetchOrders();
-        setOrders(ordersData);
-      } catch (error) {
-        setError("Failed to fetch orders");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getOrders();
-  }, []);
-
-  if (error) return <p>{error}</p>;
+  if (error) return <p>Failed to fetch orders</p>;
 
   return (
     <div>
       <CustomTable
-        isLoading={loading}
+        isLoading={isLoading}
         data={orders}
         title={changeTitle ?? "المرتجع"}
         CustomHeader={Headers}

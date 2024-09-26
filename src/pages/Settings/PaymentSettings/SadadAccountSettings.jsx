@@ -5,16 +5,22 @@ import { useEffect, useState } from "react";
 import TextField from "../../../components/UIElements/Form/TextField";
 import CheckBoxField from "../../../components/UIElements/Form/CheckBoxField";
 import MainButton from "../../../components/UIElements/MainButton";
-import SadadLogo from "../../../assets/images/sadad.png"; 
-import { $api } from "../../../client";
+import SadadLogo from "../../../assets/images/sadad.png";
+import { $api, useData } from "../../../client";
 import PromiseToast from "../../../components/UIElements/Toasts/PromiseToast";
 import FormLoading from "../../../components/UIElements/Form/FormLoading";
 
 const SadadAccountSettings = () => {
   const [sadadEnable, setSadadEnable] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [sadadTestMode, setSadadTestMode] = useState(false);
-  const [data, setData] = useState({});
+
+  const {
+    data: data,
+    error: error,
+    mutate: mutate,
+    isLoading: loading,
+  } = useData("https://www.motkaml.online/wp-json/sadad/v1/settings");
+
   const schema = Yup.object().shape({
     sadad_title: Yup.string().required("حقل مطلوب"),
     sadad_description: Yup.string().required("حقل مطلوب"),
@@ -26,48 +32,44 @@ const SadadAccountSettings = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const res = await $api.get("wp-json/sadad/v1/settings");
-        if (res.status) {
-          const fetchedData = res.data.data;
-          setData(fetchedData);
-           // Update form values directly using setValue
-           setValue("sadad_title", fetchedData.title || "");
-           setValue("sadad_description", fetchedData.description || "");
-           setValue("sadad_client_key", fetchedData.client_key || "");
-           setValue("sadad_client_secret", fetchedData.client_secret || "");
+    if (data) {
+      setValue("sadad_title", data.data.title || "");
+      setValue("sadad_description", data.data.description || "");
+      setValue("sadad_client_key", data.data.client_key || "");
+      setValue("sadad_client_secret", data.data.client_secret || "");
 
-          setSadadEnable(fetchedData.enable === "0");
-          setSadadTestMode(fetchedData.test_mode === "0");
-        }
-      } catch (error) {
-        console.error("Error fetching Sadad data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
-
+      setSadadEnable(data.data.enable === "0");
+      setSadadTestMode(data.data.test_mod === "0");
+    }
+    if (error) {
+      console.error("Error fetching Sadad data:", error);
+    }
+  }, [data, error, setValue]);
 
   const onSubmit = async (formData) => {
     try {
-      const res = $api.post("wp-json/sadad/v1/settings/", {
+      const res =  $api.post("https://www.motkaml.online/wp-json/sadad/v1/settings/", {
         sadad_enable: sadadEnable,
         sadad_test_mode: sadadTestMode,
         order_status: "processing",
-        path:localStorage.getItem('path'),
+        path: localStorage.getItem("path"),
         ...formData,
       });
-      PromiseToast(res, "جاري إرسال البيانات إلى سداد");
+      PromiseToast(
+        res,
+        "جاري إرسال البيانات إلى سداد",
+        "فشل في إرسال البيانات",
+        "تم إرسال البيانات بنجاح",
+        () => {
+          mutate();
+        }
+      );
     } catch (error) {
       console.error("Error submitting Sadad form:", error);
     }
@@ -75,11 +77,13 @@ const SadadAccountSettings = () => {
 
   return (
     <div className="relative">
-     <FormLoading loading={loading} />
-    <form onSubmit={handleSubmit(onSubmit)}>
+      <FormLoading Loading={loading} />
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`border-2 p-4 rounded-md shadow-md ${
-            sadadEnable ? "border-green-500 shadow-green-500" : "border-slate-100"
+            sadadEnable
+              ? "border-green-500 shadow-green-500"
+              : "border-slate-100"
           }`}
         >
           <div className="flex items-center gap-4 w-full pb-4">
@@ -105,14 +109,12 @@ const SadadAccountSettings = () => {
               name="sadad_title"
               label="العنوان"
               register={register("sadad_title")}
-              value={data.title || ""}
               error={errors.sadad_title?.message}
             />
             <TextField
               name="sadad_description"
               label="الوصف"
               register={register("sadad_description")}
-              value={data.description || ""}
               error={errors.sadad_description?.message}
               isTextArea
             />
@@ -120,21 +122,17 @@ const SadadAccountSettings = () => {
               name="sadad_client_key"
               label="مفتاح العميل"
               register={register("sadad_client_key")}
-              value={data.client_key || ""}
               error={errors.sadad_client_key?.message}
             />
             <TextField
               name="sadad_client_secret"
               label="سر العميل"
               register={register("sadad_client_secret")}
-              value={data.client_secret || ""}
               error={errors.sadad_client_secret?.message}
             />
           </div>
           <MainButton text="حفظ" />
-          <p>
-            * سيتم تفعيل بوابة الدفع خلال ساعات قليلة بعد إرسال الطلب *
-          </p>
+          <p>* سيتم تفعيل بوابة الدفع خلال ساعات قليلة بعد إرسال الطلب *</p>
         </div>
       </form>
     </div>

@@ -1,16 +1,33 @@
-import { $api } from '../../../../client';
+import { $api, useData } from '../../../../client';
 import useImageModal from '../../../../store/modals/ImageModal'
+import useModal from '../../../../store/useModal';
 import TextButton from '../../TextButton';
 import PromiseToast from '../../Toasts/PromiseToast';
 
 const MediaModal = () => {
-    const {image} = useImageModal();
+  const {mutate:mutate} = useData("wp-json/store/v1/media");
+    const {image } = useImageModal();
+    const {toggle} = useModal();
     const onDelete = ()=>{
-        let res  ;
-        res = $api.post(`wp-json/Store/v1/media/delete/${image.id}`)
-        PromiseToast(
-            res,
-        )
+        try {
+          let res  ;
+          res = $api.post(`wp-json/Store/v1/media/delete/${image.id}`)
+          PromiseToast(
+              res,
+              "جاري حذف الصورة",
+              "فشل حذف الصورة حاول لاحقا",
+              "تم حذف الصورة بنجاح",
+              ()=>{
+                mutate();
+                toggle();
+              }
+              
+          );
+          
+        } catch (error) {
+          console.log(error);
+        }
+        
     }
   return (
     <div className='flex flex-col gap-4 mt-5'>

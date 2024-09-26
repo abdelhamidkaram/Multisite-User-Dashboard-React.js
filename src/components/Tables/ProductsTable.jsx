@@ -1,22 +1,15 @@
 import CustomTable from "./CustomTable";
-import { $api } from "../../client";
+import { $api, useData } from "../../client"; // استبدال $api بـ useData
 import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useProductModal from "../../store/modals/ProductModal";
-const ProductsTable = ({ changeTitle, showMorButton , showAddBTN}) => {
+import PromiseToast from "../UIElements/Toasts/PromiseToast";
+
+const ProductsTable = ({ changeTitle, showMorButton, showAddBTN }) => {
   const { toggle, changeName } = useModal();
   const { changeProduct } = useProductModal();
 
-  // Fetch all products
-  const fetchProducts = async () => {
-    try {
-      const response = await $api.get("wp-json/products/v1/all-products");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      throw error;
-    }
-  };
+  const { data: productsData, error, isLoading , mutate } = useData("wp-json/products/v1/all-products");
 
   const handleDeleteProduct = async (productId) => {
     const confirmDelete = window.confirm(
@@ -25,22 +18,24 @@ const ProductsTable = ({ changeTitle, showMorButton , showAddBTN}) => {
 
     if (confirmDelete) {
       try {
-        const response = await $api.post(
+        let response ;
+        
+        response =  $api.post(
           `wp-json/products/v1/delete-product/${productId}`
         );
 
-        if (response.status !== 200) {
-          throw new Error(
-            "Network response was not ok" + response.data.message
-          );
-        }
-
-        alert("تم الحذف");
-        let newData = products.filter((item) => item.id !== productId);
-        setProducts(newData);
+         PromiseToast(
+           response,
+           "جاري تحديث البيانات...",
+           "فشلت العملية حاول لاحقًا",
+           "تم الحذف بنجاح!",
+           () => {
+             mutate();
+           }
+         );
+        
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
-        alert("Failed to delete the product. Please try again.");
       }
     }
   };
@@ -53,55 +48,47 @@ const ProductsTable = ({ changeTitle, showMorButton , showAddBTN}) => {
   function openModal() {
     changeName("product");
     toggle();
-  } 
-  
+  }
+
   function openAddProductModal() {
     changeName("addProduct");
     toggle();
   }
 
-  const Headers = ["رقم المنتج", "اسم المنتج", "السعر","عدد المبيعات", "الحالة"];
+  const Headers = ["رقم المنتج", "اسم المنتج", "السعر", "عدد المبيعات", "الحالة"];
 
   const [products, setProducts] = useState([]);
-  const [responseData, setResponseData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getProducts = async () => {
-      setLoading(true);
-      try {
-        const productsData = await fetchProducts();
-        setResponseData(productsData);
-        const newData = productsData.map((item) => {
-          return { id: item.id, name: item.name, price: item.price , totalSales:item.total_sales , status:item.stock_status };
-        });
-        setProducts(newData);
-      } catch (error) {
-        setError("Failed to fetch products");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getProducts();
-  }, []);
+    if (productsData) {
+      const newData = productsData.map((item) => {
+        return {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          totalSales: item.total_sales,
+          status: item.stock_status,
+        };
+      });
+      setProducts(newData);
+    }
+  }, [productsData]);
 
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
-      isLoading={loading}
+        isLoading={isLoading}
         data={products}
         title={changeTitle ?? "المنتجات"}
-        responseData={responseData}
+        responseData={productsData}
         CustomHeader={Headers}
         to={showMorButton ? "/products" : null}
         deleteHandler={handleDeleteProduct}
         editHandler={handleEditProduct}
         addBTNClickHandler={openAddProductModal}
-        addBTNTitle={showAddBTN ? 'اضافة منتج جديد' : null }
+        addBTNTitle={showAddBTN ? "اضافة منتج جديد" : null}
       />
     </div>
   );

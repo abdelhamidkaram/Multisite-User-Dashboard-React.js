@@ -11,8 +11,6 @@ const FacebookModal = () => {
    } = useForm();
 
   const onSubmit = (data) => {
-   
-   
     console.log(data);
     const sendData = $api.post('wp-json/pixels/v1/add-fc-code' , {
       code:data.code

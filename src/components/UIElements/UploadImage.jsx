@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import MainButton from "./MainButton";
 import DeleteIcon from "../../assets/icons/delete.svg";
-import { $api } from "../../client";
+import { $api, useData } from "../../client";
+import PromiseToast from "./Toasts/PromiseToast";
 
 const UploadImage = () => {
+  const { mutate: mutate } = useData("wp-json/store/v1/media");
+
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
   const [dragOver, setDragOver] = useState(false);
@@ -22,17 +25,27 @@ const UploadImage = () => {
     });
 
     try {
-      const response = await $api.post("wp-json/store/v1/media/upload", formData, {
+      let response ; 
+      response =  $api.post("wp-json/store/v1/media/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      alert("Upload successful!");
-      console.log(response.data);
-      setFiles([]);
+
+      PromiseToast(
+        response,
+        "جاري رفع الصورة",
+        "فشل رفع الصورة حاول لاحقا",
+        "تم رفع الصورة بنجاح",
+        ()=>{
+          console.log(response.data);
+          setFiles([]);
+          mutate();
+        }
+      );
+      
     } catch (error) {
       console.error("Error uploading files:", error);
-      alert("Upload failed. Please try again.");
     }
   };
 

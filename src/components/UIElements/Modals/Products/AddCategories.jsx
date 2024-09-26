@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { $api } from '../../../../client';
+import { $api, useData } from '../../../../client';
 import MainButton from '../../MainButton';
 import PromiseToast from '../../Toasts/PromiseToast';
 import TextField from '../../Form/TextField';
@@ -15,6 +15,7 @@ const AddCategoryModal = () => {
       parent: 0
     }
   });
+  const {mutate:mutate} =useData('wp-json/categories/v1/all-categories');
 
   const onSubmit = async (data) => {
     let apiCall;
@@ -23,7 +24,10 @@ const AddCategoryModal = () => {
       apiCall,
       "جاري إضافة التصنيف...",
       "فشلت العملية حاول لاحقًا",
-      "تم إضافة التصنيف بنجاح!"
+      "تم إضافة التصنيف بنجاح!",
+      () => {
+        mutate();
+      }
     );
 
     toggle();

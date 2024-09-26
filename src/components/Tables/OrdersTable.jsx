@@ -1,22 +1,15 @@
 import CustomTable from "./CustomTable";
-import { $api } from "../../client";
+import { $api, useData } from "../../client"; // استبدال $api بـ useData
 import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useOrderModal from "../../store/modals/OrderModal";
+import PromiseToast from "../UIElements/Toasts/PromiseToast";
+
 const OrdersTable = ({ changeTitle, showMorButton }) => {
   const { toggle, changeName } = useModal();
   const { changeOrder } = useOrderModal();
 
-  // Fetch all orders
-  const fetchOrders = async () => {
-    try {
-      const response = await $api.get("wp-json/products/v1/orders");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
+  const { data: ordersData, error, isLoading  , mutate} = useData("wp-json/products/v1/orders");
 
   const handleDeleteOrder = async (orderId) => {
     const confirmDelete = window.confirm(
@@ -25,20 +18,23 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
 
     if (confirmDelete) {
       try {
-        const response = await $api.post(
+        let response ;
+
+        response =  $api.post(
           `wp-json/products/v1/delete-order/${orderId}`
         );
 
-        if (response.status !== 200) {
-          throw new Error("Network response was not ok" + response.statusText);
-        }
-
-        alert(response.data.message);
-        let newData = orders.filter((item) => item.id != orderId);
-        setOrders(newData);
+        PromiseToast(
+          response,
+          "جاري تحديث البيانات...",
+          "فشلت العملية حاول لاحقًا",
+          "تم الحذف بنجاح!",
+          () => {
+            mutate();
+          }
+        );
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
-        alert("Failed to delete the order. Please try again.");
       }
     }
   };
@@ -52,33 +48,23 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
     changeName("order");
     toggle();
   }
+
   const Headers = ["رقم الطلب", "العميل", "الحالة", "الإجمالي", "تاريخ الطلب"];
 
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const getOrders = async () => {
-      setLoading(true);
-      try {
-        const ordersData = await fetchOrders();
-        setOrders(ordersData);
-      } catch (error) {
-        setError("Failed to fetch orders");
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    getOrders();
-  }, []);
+  useEffect(() => {
+    if (ordersData) {
+      setOrders(ordersData);
+    }
+  }, [ordersData]);
 
   if (error) return <p>{error}</p>;
 
   return (
     <div>
       <CustomTable
-        isLoading={loading}
+        isLoading={isLoading}
         data={orders}
         title={changeTitle ?? "الطلبات"}
         CustomHeader={Headers}

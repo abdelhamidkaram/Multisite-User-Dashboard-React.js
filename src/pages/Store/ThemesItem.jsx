@@ -3,10 +3,11 @@ import MainButton from "../../components/UIElements/MainButton";
 import TextButton from "../../components/UIElements/TextButton";
 import useModal from "../../store/useModal";
 import useThemeModal from "../../store/modals/ThemeModal";
-import { $api } from "../../client";
+import { $api, useData } from "../../client";
 import PromiseToast from "../../components/UIElements/Toasts/PromiseToast";
 
 const ThemesItem = ({ themeObj }) => {
+  const { mutate: mutate  } = useData("wp-json/store/v1/themes");
   const { toggle, changeName } = useModal();
   const { changeTheme } = useThemeModal();
   const { imgUrl, title, description, is_active } = themeObj;
@@ -29,7 +30,7 @@ const ThemesItem = ({ themeObj }) => {
                   action: is_active ? "deactivate" : "activate",
                   theme_slug: themeObj.theme_slug,
                 });
-                PromiseToast(callApi);
+                PromiseToast(callApi , 'جاري أكمال العملية', 'لم تكتمل العملية، حاول لاحقًا', 'تم بنجاح' , () => mutate());
               }}
             />
 

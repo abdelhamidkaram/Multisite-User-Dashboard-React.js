@@ -9,7 +9,7 @@ import Menus from "./MenusItem";
 import MediaItem from "./MediaItem";
 import UploadImage from "../../components/UIElements/UploadImage";
 import PageItem from "./PageItem";
-import { $api } from "../../client";
+import { $api, useData } from "../../client"; 
 import SectionTitle from "../../components/UIElements/SectionTitle";
 import useModal from "../../store/useModal";
 import useMenuModal from "../../store/modals/MenuModal";
@@ -19,20 +19,11 @@ const Store = () => {
   const { toggle, changeName } = useModal();
   const { changeLocations } = useMenuModal();
   const [tabNumber, setTabNumber] = useState(1);
-  const [themes, setThemes] = useState([]);
-  const [menus, setMenus] = useState([]);
-  const [pages, setPages] = useState([]);
-  const [images, setImages] = useState([]);
-  const [Loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   const handelClick = (num) => {
-    /*     if(num == 4 ){
-      open(`${localStorage.getItem('path')}/wp-admin/customize.php` , '_blank');
-      return;
- } */
     setTabNumber(num);
   };
+
   const tabs = [
     {
       name: "الثيمات",
@@ -52,12 +43,6 @@ const Store = () => {
         <img className="bg-blue-light size-6 p-1 rounded-full" src={Gallery} />
       ),
     },
-    // {
-    //   name: "الواجهة",
-    //   icon: (
-    //     <img className="bg-blue-light size-6 p-1 rounded-full" src={Settings} />
-    //   ),
-    // },
     {
       name: " الصفحات ",
       icon: (
@@ -66,140 +51,62 @@ const Store = () => {
     },
   ];
 
-  const fetchThemesData = async () => {
-    try {
-      const response = await $api.get("wp-json/store/v1/themes");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
+  const { data: themes, isLoading: themesLoading } = useData("wp-json/store/v1/themes");
+  const { data: menusData, isLoading: menusLoading , mutate: MenusMutate } = useData("wp-json/store/v1/menus");
+  const { data: pages, isLoading: pagesLoading , mutate: pagesMutate } = useData("wp-json/store/v1/pages");
+  const { data: images, isLoading: imagesLoading} = useData("wp-json/store/v1/media");
 
-  const fetchMenusData = async () => {
-    try {
-      const response = await $api.get("wp-json/store/v1/menus");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
-
-  const fetchPagesData = async () => {
-    try {
-      const response = await $api.get("wp-json/store/v1/pages");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
-  const fetchImagesData = async () => {
-    try {
-      const response = await $api.get("wp-json/store/v1/media");
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      throw error;
-    }
-  };
   useEffect(() => {
-    const getData = async () => {
-      setLoading(true);
-      try {
-        //get themes data
-        const data = await fetchThemesData();
-        setThemes(data);
-        //get menus data
-        const menusData = await fetchMenusData();
-        setMenus(menusData["menus"]);
-        changeLocations(menusData["locations"]);
-        //get pages data
-        const pagesData = await fetchPagesData();
-        setPages(pagesData);
-        //get all images
-        const imagesData = await fetchImagesData();
-        setImages(imagesData);
-      } catch (error) {
-        setError("Failed to fetch data");
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, []);
+    if (menusData) {
+      changeLocations(menusData.locations);
+    }
+  }, [menusData, changeLocations]);
 
   const handleDeleteMenu = async (menuId) => {
     const confirmDelete = window.confirm("هل أنت متأكد من حذف القائمة؟");
-
     if (confirmDelete) {
       try {
-        const response = await $api.post(
-          `wp-json/store/v1/delete-menu/${menuId}`
-        );
-
+        const response = await $api.post(`wp-json/store/v1/delete-menu/${menuId}`);
         if (response.status !== 200) {
-          throw new Error(
-            "الاستجابة من الشبكة لم تكن على ما يرام: " + response.data.message
-          );
+          throw new Error("فشل في حذف القائمة.");
         }
-
         alert("تم الحذف بنجاح");
-        let newData = menus.filter((item) => item.id !== menuId);
-        setMenus(newData);
+        MenusMutate();
       } catch (error) {
         console.error("كانت هناك مشكلة في عملية الجلب:", error);
         alert("فشل في حذف القائمة. يرجى المحاولة مرة أخرى.");
       }
     }
   };
+
   const handleDeletePage = async (id) => {
     const confirmDelete = window.confirm("هل أنت متأكد من حذف الصفحة ؟");
-
     if (confirmDelete) {
       try {
         const response = await $api.post(`wp-json/store/v1/pages/delete/${id}`);
-
         if (response.status !== 200) {
-          throw new Error(
-            "الاستجابة من الشبكة لم تكن على ما يرام: " + response.data.message
-          );
+          throw new Error("فشل في حذف الصفحة.");
         }
-
         alert("تم الحذف بنجاح");
-        let newData = pages.filter((item) => item.id !== id);
-        setPages(newData);
+        pagesMutate();
       } catch (error) {
         console.error("كانت هناك مشكلة في عملية الجلب:", error);
-        alert("فشل في حذف القائمة. يرجى المحاولة مرة أخرى.");
+        alert("فشل في حذف الصفحة. يرجى المحاولة مرة أخرى.");
       }
     }
   };
 
-  if (error) {
-    return "Error when get data";
-  }
 
   return (
     <div>
       <TabsHeader tabs={tabs} handelClick={handelClick} tabNumber={tabNumber} />
-      <main className="my-10  ">
-        <div className={tabNumber == 1 ? "block " : "hidden"}>
-          {!Loading ? (
-            themes.map((themeObj, i) => {
-              return <ThemesItem themeObj={themeObj} key={i} />;
-            })
-          ) : (
-            <ShimmerCategoryItems
-              mode="light"
-              items={3}
-              imageWidth={300}
-              imageHeight={150}
-            />
-          )}
+       {
+         
+         <main className="my-10">
+        <div className={tabNumber == 1 ? "block" : "hidden"}>
+          { themesLoading ? <ShimmerCategoryItems mode="light" items={3} imageWidth={300} imageHeight={150} /> : themes.map((themeObj, i) => (
+            <ThemesItem themeObj={themeObj} key={i} />
+          ))}
         </div>
 
         <div className={tabNumber == 2 ? "block" : "hidden"}>
@@ -211,51 +118,26 @@ const Store = () => {
               toggle();
             }}
           />
-          {!Loading
-            ? menus.map((item, i) => {
-                return (
-                  <Menus
-                    menuObj={item}
-                    key={i}
-                    deleteHandler={() => handleDeleteMenu(item.id)}
-                    loading={false}
-                  />
-                );
-              })
-            : [1, 2, 3].map((item, i) => {
-                return (
-                  <Menus
-                    menuObj={item}
-                    key={i}
-                    deleteHandler={() => {}}
-                    loading={true}
-                  />
-                );
-              })}
+          {
+            menusLoading ? [1, 2, 3].map((item, i) => <Menus menuObj={item} key={i} deleteHandler={() => {}} loading={true} />)
+            : menusData.menus.map((item, i) => (
+            <Menus
+              menuObj={item}
+              key={i}
+              deleteHandler={() => handleDeleteMenu(item.id)}
+              loading={false}
+            />
+          ))}
         </div>
-        <div
-          className={
-            tabNumber == 3
-              ? " grid grid-flow-column  md:grid-cols-3 xl:grid-cols-6 gap-8  bg-white mt-10 p-10  "
-              : "hidden"
-          }
-        >
+
+        <div className={tabNumber == 3 ? "grid grid-flow-column md:grid-cols-3 xl:grid-cols-6 gap-8 bg-white mt-10 p-10" : "hidden"}>
           <div className="col-span-2 bg-red-50">
             <UploadImage />
           </div>
-
-          {!Loading
-            ? images.map((item, i) => <MediaItem imgObj={item} key={i} />)
-            : [1, 2, 3, 4].map((item, i) => {
-                return (
-                  <ShimmerDiv className="md:h-52 h-11" key={i} mode="light" />
-                );
-              })}
+          {imagesLoading ? [1, 2, 3, 4].map((item, i) => <ShimmerDiv className="md:h-52 h-11" key={i} mode="light" />) :
+          images.map((item, i) => <MediaItem imgObj={item} key={i} />)}
         </div>
-        {/* <div className={tabNumber == 4 ? "block" : "hidden"}>
-          {" "}
-          <h1> {tabNumber} </h1>
-        </div> */}
+
         <div className={tabNumber == 4 ? "block" : "hidden"}>
           <SectionTitle
             title={"الصفحات"}
@@ -265,27 +147,19 @@ const Store = () => {
               toggle();
             }}
           />
-          {!Loading
-            ? pages.map((page) => (
-                <PageItem
-                  key={page.id}
-                  pageObj={page}
-                  deleteHandler={() => handleDeletePage(page.id)}
-                  loading={false}
-                />
-              ))
-            : [1, 2, 3].map((page, i) => {
-                return (
-                  <PageItem
-                    key={i}
-                    pageObj={page}
-                    deleteHandler={() => {}}
-                    loading={true}
-                  />
-                );
-              })}
+          {pagesLoading ? [1, 2, 3].map((page, i) => <PageItem key={i} pageObj={page} deleteHandler={() => {}} loading={true} />) : pages.map((page) => (
+            <PageItem
+              key={page.id}
+              pageObj={page}
+              deleteHandler={() => handleDeletePage(page.id)}
+              loading={false}
+            />
+          ))}
         </div>
       </main>
+      }
+    
+      
     </div>
   );
 };

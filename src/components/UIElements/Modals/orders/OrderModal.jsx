@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { $api } from "../../../../client";
+import { $api, useData } from "../../../../client";
 import SelectField from "../../Form/SelectField";
 import MainButton from "../../MainButton";
 import PromiseToast from "../../Toasts/PromiseToast";
@@ -14,6 +14,10 @@ const OrderModal = () => {
     handleSubmit,
    
   } = useForm();
+  const {mutate:mutate} =useData('wp-json/products/v1/orders');
+  const {mutate:refundedMutate } = useData("wp-json/products/v1/refunded-orders");
+
+
 
   const onSubmit = async (data) => {
     PromiseToast(
@@ -22,7 +26,11 @@ const OrderModal = () => {
       }),
       "جاري تعديل الحالة",
       "لم تتغير الحالة حاول لاحقا",
-      "تم تغيير الحالة بنجاح"
+      "تم تغيير الحالة بنجاح",
+      ()=>{
+        mutate();
+        refundedMutate();
+      }
     );
     toggle();
     

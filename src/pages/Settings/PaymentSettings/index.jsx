@@ -37,10 +37,10 @@ const PaymentSettings = () => {
       <BankAccountSettings />
       <SectionTitle title=":بوابات الدفع الخارجية المفعلة" />
       <BeatLoader color="#448ace" loading={isLoading} />
+      {tapPlugin && <TapAccountSettings />} 
       {myFatoorahPlugin && <MyfatoraAccountSettings />}
       {sadadPlugin && <SadadAccountSettings />} 
       {uPaymentsPlugin && <UPaymentsAccountSettings />} 
-      {tapPlugin && <TapAccountSettings />} 
     </div>
   );
 };

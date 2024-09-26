@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useUserModal from "../../store/modals/UserModals";
 import CustomTable from "./CustomTable";
-import { $api } from "../../client";
+import {useData} from "../../client";
+
 const UsersTable = ({ changeTitle }) => {
   const headers = ["المعرف", "الاسم", "البريد الالكتروني"];
   const { toggle, changeName } = useModal();
@@ -18,49 +18,21 @@ const UsersTable = ({ changeTitle }) => {
     toggle();
   }
 
- 
 
-  const  fetchCustomers = async ()=>{ 
-  try {
-    const response = await $api.get('wp-json/products/v1/get-customers');
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching orders:', error);
-    throw error;
-  }
+  const { data: customers, error, isLoading, mutate } = useData("wp-json/products/v1/get-customers");
 
-  }
-  const [customers, setCustomers] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    const getCustomers = async () => {
-      console.log(customers);
-      setLoading(true);
-      try {
-        const customersData = await fetchCustomers();
-        setCustomers(customersData);
-      } catch (error) {
-        setError("Failed to fetch customers");
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    getCustomers();
-  }, []);
   function deleteHandler(user) {
-    const newData = customers.filter((item) => item.id != user.id);
-    setCustomers(newData);
+    const newData = customers.filter((item) => item.id !== user.id);
+    mutate(newData, false);
   }
 
-
-  if (error) return <p>{error}</p>;
+  if (error) return <p>Failed to fetch customers</p>;
 
   return (
     <div>
       <CustomTable
-      isLoading={loading}
+        isLoading={isLoading}
         data={customers}
         title={changeTitle ?? "العملاء"}
         CustomHeader={headers}

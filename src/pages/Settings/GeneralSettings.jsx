@@ -6,7 +6,7 @@ import SelectField from "../../components/UIElements/Form/SelectField";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { $api } from '../../client';
+import { $api, useData } from '../../client'; 
 import PromiseToast from '../../components/UIElements/Toasts/PromiseToast';
 import { BounceLoader } from 'react-spinners';
 
@@ -19,48 +19,57 @@ export const GeneralSettings = () => {
         allCurrencies: [],
         enable_coupons: false
     });
-   const [Loading, setLoading] = useState(true)
 
-  
-    useEffect(() => {
-      // Fetch default settings from the custom API endpoint
-      const fetchDefaultSettings = async () => {
-          try {
-             const res =  await $api.get('wp-json/settings/v1/settings');
-             const data = res.data;
-             setGeneralSetting({
-              siteName: data.site_name,
-              site_description: data.site_description,
-              email: data.email,
-              currency: data.currency,
-              allCurrencies: data.allCurrencies,
-              enable_coupons: data.enable_coupons
-          });  
-          } catch (error) {
-              console.error('Error fetching default settings:', error);
-          }finally{
-            setLoading(false)
-          }
-      };
-
-      fetchDefaultSettings();
-  }, []);
-
-    const Schema = Yup.object({
+    const [loading, setLoading] = useState(true);
+    const { data, error , mutate: mutateSettings } = useData('wp-json/settings/v1/settings'); 
+   const Schema = Yup.object({
         site_name: Yup.string().required('لايمكن ترك هذا الحقل فارغاً').min(2, 'لايمكن أن يكون الاسم أقل من حرفين'),
         site_description: Yup.string().required("لايمكن ترك هذا الحقل فارغاً"),
         email: Yup.string().email('ادخل بريد الكتروني صحيح').required('لايمكن ترك هذا الحقل فارغاً'),
         currency: Yup.string().required('لايمكن ترك هذا الحقل فارغاً ')
     });
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors  } , setValue } = useForm({
         resolver: yupResolver(Schema)
     });
 
-    const onSubmit =  (data) => {
-      let callData ;
-      callData = $api.post('wp-json/settings/v1/update-settings' , data);
-      PromiseToast(callData);
+    useEffect(() => {
+        if (data) {
+            setGeneralSetting({
+                siteName: data.site_name,
+                site_description: data.site_description,
+                email: data.email,
+                currency: data.currency,
+                allCurrencies: data.allCurrencies,
+                enable_coupons: data.enable_coupons
+            });
+            
+            setValue('site_name', data.site_name);
+            setValue('site_description', data.site_description);
+            setValue('email', data.email);
+            setValue('currency', data.currency);
+            setValue('enable_coupons', data.enable_coupons);
+            setLoading(false);
+        }
+
+        if (error) {
+            console.error('Error fetching default settings:', error);
+            setLoading(false);
+        }
+    }, [data, error]);
+
+ 
+    const onSubmit = (data) => {
+        const callData = $api.post('wp-json/settings/v1/update-settings', data);
+        PromiseToast(callData,
+            "جاري تحديث البيانات...",
+            "فشلت العملية حاول لاحقًا",
+            "تم تحديث البيانات بنجاح!",
+            () => { 
+                mutateSettings();
+            }
+
+        );
     };
 
     const handleChange = () => {
@@ -69,11 +78,11 @@ export const GeneralSettings = () => {
 
     return (
         <div className="relative">
-        {Loading ? (
-          <div className="absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ">
-            <BounceLoader className="m-auto" />
-          </div>
-        ) : null}
+            {loading ? (
+                <div className="absolute top-0 bottom-0 w-full bg-blue-dark bg-opacity-60 rounded-md content-center ">
+                    <BounceLoader className="m-auto" />
+                </div>
+            ) : null}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                     label={"اسم الموقع"}
@@ -85,6 +94,7 @@ export const GeneralSettings = () => {
                 <TextField
                     label={"وصف الموقع"}
                     value={generalSetting.site_description}
+                    defaultValue={generalSetting.site_description}
                     isTextArea={true}
                     register={{ ...register("site_description") }}
                     error={errors.site_description?.message} />
@@ -108,15 +118,16 @@ export const GeneralSettings = () => {
 
                 <CheckBoxField
                     register={{ ...register('enable_coupons') }}
-                    label={"تمكين قسائم الشراء"} value={generalSetting.enable_coupons} name='enable_coupons' handleChange={handleChange} />
+                    label={"تمكين قسائم الشراء"}
+                    value={generalSetting.enable_coupons}
+                    name='enable_coupons'
+                    handleChange={handleChange}
+                />
 
                 <div className="pt-11">
                     <MainButton text={'حفظ التعديلات'} />
                 </div>
-
             </form>
         </div>
     )
 }
-
-

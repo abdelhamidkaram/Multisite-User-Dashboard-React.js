@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { $api } from "../../../../client";
+import { $api, useData } from "../../../../client";
 import MainButton from "../../MainButton";
 import PromiseToast from "../../Toasts/PromiseToast";
 import useModal from "../../../../store/useModal";
@@ -7,6 +7,8 @@ import useCategoryModal from "../../../../store/modals/CategoryModal";
 import TextField from "../../Form/TextField";
 
 const CategoryModal = () => {
+  const {mutate:mutate} =useData('wp-json/categories/v1/all-categories');
+
   const { category } = useCategoryModal();
   const { toggle } = useModal();
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -29,7 +31,10 @@ const CategoryModal = () => {
       apiCall,
       "جاري تحديث البيانات...",
       "فشلت العملية حاول لاحقًا",
-      category.id ? "تم التحديث بنجاح!" : "تمت الإضافة بنجاح!"
+      category.id ? "تم التحديث بنجاح!" : "تمت الإضافة بنجاح!",
+      () => {
+        mutate();
+      }
     );
 
     toggle();

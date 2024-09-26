@@ -10,7 +10,6 @@ const MediaItem = ({imgObj}) => {
         ()=>{
           changeImage(imgObj);  
           changeName('mediaView') ; 
-
             toggle(!isOPen);
         }
     } className="md:w-44 bg-black  rounded-md overflow-hidden shadow-md border ">

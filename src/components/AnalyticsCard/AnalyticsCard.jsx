@@ -27,7 +27,7 @@ const AnalyticsCard = ({ itemsList, showTitle, isLoading }) => {
         {itemsList.map((item, index) => (
           <div
             key={index}
-            className=" shadow-sm hover:drop-shadow-md h-28 space-x-3 border rounded-md p-2 bg-white cursor-move"
+            className=" shadow-sm hover:drop-shadow-md h-28 space-x-3 border rounded-md p-2 bg-white "
             // draggable
             // onDragStart={() => (dragPerson.current = index)}
             // onDragEnter={() => (draggedOverPerson.current = index)}

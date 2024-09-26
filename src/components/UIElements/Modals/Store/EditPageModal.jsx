@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { $api } from '../../../../client';
+import { $api, useData } from '../../../../client';
 import MainButton from '../../MainButton';
 import PromiseToast from '../../Toasts/PromiseToast';
 import TextField from '../../Form/TextField';
@@ -8,6 +8,8 @@ import usePageModal from '../../../../store/modals/PageModal'; // Adjust the imp
 
 
 const EditPageModal = () => {
+  const {mutate: pagesMutate } = useData("wp-json/store/v1/pages");
+
   const { page } = usePageModal(); 
   console.log(page);
   const { toggle } = useModal();
@@ -26,7 +28,10 @@ const EditPageModal = () => {
         apiCall,
       "جاري تحديث الصفحة",
       "فشل تحديث الصفحة حاول لاحقا",
-      "تم تحديث الصفحة بنجاح!"
+      "تم تحديث الصفحة بنجاح!",
+      () => {
+        pagesMutate();
+      }
     );
 
     toggle();

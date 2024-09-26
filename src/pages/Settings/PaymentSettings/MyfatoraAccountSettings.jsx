@@ -6,16 +6,15 @@ import TextField from "../../../components/UIElements/Form/TextField";
 import CheckBoxField from "../../../components/UIElements/Form/CheckBoxField";
 import MainButton from "../../../components/UIElements/MainButton";
 import Myfatora from "../../../assets/images/myfatora.svg";
-import { $api } from "../../../client";
+import { $api, useData } from "../../../client"; // استخدام useData
 import PromiseToast from "../../../components/UIElements/Toasts/PromiseToast";
 import FormLoading from "../../../components/UIElements/Form/FormLoading";
 
 const MyfatoraAccountSettings = () => {
-  // State variables for loading, enabling features, and data management
+  // State variables for enabling features
   const [myfatoraEnable, setMyfatoraEnable] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [myfatoraTestMod, setMyfatoraTestMod] = useState(false);
-  const [data, setData] = useState({});
+
   // Validation schema using Yup
   const schema = Yup.object().shape({
     myfatoorah_title: Yup.string().required("حقل مطلوب"),
@@ -34,43 +33,45 @@ const MyfatoraAccountSettings = () => {
     resolver: yupResolver(schema),
   });
 
-  // Fetch initial data on component mount
+  // استخدام useData لجلب بيانات الإعدادات
+  const { data:data,error: error, mutate:mutate, isLoading: loading } = useData("https://www.motkaml.online/wp-json/myfatoorah/v1/settings/");
+
+  // تحديث الحقول بناءً على البيانات المحملة
   useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const res = await $api.get("wp-json/myfatoorah/v1/settings/");
-        if (res.status) {
-          const fetchedData = res.data.data;
-          setData(fetchedData);
-          setValue("myfatoorah_title", fetchedData.title || "");
-          setValue("myfatoorah_description", fetchedData.description || "");
-          setValue("myfatoorah_api_Key", fetchedData.api_key || "");
-          setValue("myfatoorah_account_number", fetchedData.account_number || "");
+    if (data) {
+      console.log(data);
+      
+      setValue("myfatoorah_title", data.data.title || "");
+      setValue("myfatoorah_description", data.data.description || "");
+      setValue("myfatoorah_api_Key", data.data.api_key || "");
+      setValue("myfatoorah_account_number", data.data.account_number || "");
 
-          setMyfatoraEnable(fetchedData.enable === "0");
-          setMyfatoraTestMod(fetchedData.test_mod === "0");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getData();
-  }, []);
+      setMyfatoraEnable(data.enable === "0");
+      setMyfatoraTestMod(data.test_mod === "0");
+    }
 
+    if (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [data, error , setValue]);
 
   // Form submission handler
   const onSubmit = async (formData) => {
     try {
-      const res = $api.post("wp-json/myfatoorah/v1/settings/", {
+      const res = $api.post("https://www.motkaml.online/wp-json/myfatoorah/v1/settings/", {
         myfatoorah_enable: myfatoraEnable,
         myfatoorah_test_mode: myfatoraTestMod,
         path: localStorage.getItem("path"),
         ...formData,
       });
-      PromiseToast(res, "جاري ارسال البيانات");
+
+      PromiseToast(
+        res, 
+        "جاري ارسال البيانات", 
+        "فشل في ارسال البيانات", 
+        "تم إرسال البيانات بنجاح",
+        () => mutate() 
+      );
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -78,7 +79,7 @@ const MyfatoraAccountSettings = () => {
 
   return (
     <div className="relative">
-      <FormLoading Loading={loading} />
+      <FormLoading Loading={loading} /> 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`border-2 p-4 rounded-md shadow-md ${
@@ -108,30 +109,26 @@ const MyfatoraAccountSettings = () => {
               name="myfatoorah_title"
               label="العنوان"
               register={register("myfatoorah_title")}
-              value={data.title || ""}
-              error={errors.myfatora_title?.message}
+              error={errors.myfatoorah_title?.message}
             />
             <TextField
               name="myfatoorah_description"
               label="الوصف"
               register={register("myfatoorah_description")}
-              value={data.description || ""}
-              error={errors.myfatora_description?.message}
+              error={errors.myfatoorah_description?.message}
               isTextArea
             />
             <TextField
               name="myfatoorah_api_Key"
               label="(API Key)رمز التكامل"
               register={register("myfatoorah_api_Key")}
-              value={data.api_key || ""}
-              error={errors.myfatora_api_Key?.message}
+              error={errors.myfatoorah_api_Key?.message}
             />
             <TextField
               name="myfatoorah_account_number"
               label="رقم الحساب"
               register={register("myfatoorah_account_number")}
-              value={data.account_number || ""}
-              error={errors.myfatora_account_number?.message}
+              error={errors.myfatoorah_account_number?.message}
             />
           </div>
           <MainButton text="حفظ" />
