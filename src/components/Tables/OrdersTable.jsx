@@ -8,8 +8,27 @@ import PromiseToast from "../UIElements/Toasts/PromiseToast";
 const OrdersTable = ({ changeTitle, showMorButton }) => {
   const { toggle, changeName } = useModal();
   const { changeOrder } = useOrderModal();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(7);
+  const {
+    data: ordersData,
+    error,
+    isLoading,
+    mutate,
+  } = useData(
+    `wp-json/products/v1/orders?page=${currentPage}&per_page=${itemsPerPage}`
+  );
+  const totalPages = ordersData
+    ? Math.ceil(ordersData.total_orders / itemsPerPage)
+    : 1;
+ /**
+   * Handles the page change event
+   * @param {Object} data The data from the page change event
+   */
+ const handlePageClick = (data) => {
+  setCurrentPage(data.selected + 1);
+};
 
-  const { data: ordersData, error, isLoading  , mutate} = useData("wp-json/products/v1/orders");
 
   const handleDeleteOrder = async (orderId) => {
     const confirmDelete = window.confirm(
@@ -55,7 +74,7 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
 
   useEffect(() => {
     if (ordersData) {
-      setOrders(ordersData);
+      setOrders(ordersData.data);
     }
   }, [ordersData]);
 
@@ -71,6 +90,8 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
         to={showMorButton ? "/orders" : null}
         deleteHandler={handleDeleteOrder}
         editHandler={handlerStatusOrder}
+        handlePageClick={handlePageClick}
+        totalPages={totalPages}
       />
     </div>
   );

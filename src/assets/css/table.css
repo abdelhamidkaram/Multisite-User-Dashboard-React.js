@@ -25,3 +25,28 @@ td {
   @apply px-3 text-sm min-h-fit;
 }
 
+.pagination {
+  @apply flex items-center justify-center p-0 list-none;
+}
+
+.pagination li {
+  @apply cursor-pointer mx-1 ;
+}
+
+.pagination li a {
+  @apply  rounded-lg border border-gray-300  text-blue-light px-4 py-2     ;
+}
+
+.pagination li.active a {
+  @apply bg-blue-light text-white border-blue-light  border ;
+
+}
+
+.pagination li.disabled a {
+  
+  @apply  bg-gray-50 text-gray-400 border-gray-300  border pointer-events-none ;
+}
+
+.pagination li a:hover:not(.active) {
+  @apply bg-gray-50 text-blue-light ;
+}

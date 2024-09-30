@@ -2,6 +2,7 @@ import useModal from "../../store/useModal";
 import useUserModal from "../../store/modals/UserModals";
 import CustomTable from "./CustomTable";
 import {useData} from "../../client";
+import { useState } from "react";
 
 const UsersTable = ({ changeTitle }) => {
   const headers = ["المعرف", "الاسم", "البريد الالكتروني"];
@@ -18,8 +19,27 @@ const UsersTable = ({ changeTitle }) => {
     toggle();
   }
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(7);
+  const {
+    data: customers,
+    error,
+    isLoading,
+    mutate,
+  } = useData(
+    `wp-json/products/v1/get-customers?page=${currentPage}&per_page=${itemsPerPage}`
+  );
+  const totalPages = customers
+    ? Math.ceil(customers.total_products / itemsPerPage)
+    : 1;
+ /**
+   * Handles the page change event
+   * @param {Object} data The data from the page change event
+   */
+ const handlePageClick = (data) => {
+  setCurrentPage(data.selected + 1);
+};
 
-  const { data: customers, error, isLoading, mutate } = useData("wp-json/products/v1/get-customers");
 
 
   function deleteHandler(user) {
@@ -32,8 +52,10 @@ const UsersTable = ({ changeTitle }) => {
   return (
     <div>
       <CustomTable
+        handlePageClick={handlePageClick}
+        totalPages={totalPages}
         isLoading={isLoading}
-        data={customers}
+        data={customers?.data}
         title={changeTitle ?? "العملاء"}
         CustomHeader={headers}
         deleteHandler={deleteHandler}

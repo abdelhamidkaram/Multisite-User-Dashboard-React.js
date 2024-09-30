@@ -9,27 +9,40 @@ const CategoriesTable = ({ changeTitle }) => {
   const { toggle, changeName } = useModal();
   const { changeCategory } = useCategoryModal();
 
-  const { data: categoriesData, error, isLoading, mutate } = useData("wp-json/categories/v1/all-categories");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(7); 
+
+  const { data: categoriesData, error, isLoading, mutate } = useData(
+    `wp-json/categories/v1/all-categories?page=${currentPage}&per_page=${itemsPerPage}`
+  );
+
+  const totalPages = categoriesData
+    ? Math.ceil(categoriesData.total_categories / itemsPerPage)
+    : 1;
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected + 1);
+  };
 
   const handleDeleteCategory = async (categoryId) => {
     const confirmDelete = window.confirm("هل انت متأكد من حذف التصنيف؟");
 
     if (confirmDelete) {
       try {
-        let response ; 
-        response =  $api.post(
+        let response;
+        response = $api.post(
           `wp-json/categories/v1/delete-category/${categoryId}`
         );
 
-       PromiseToast(
-         response,
-         "جاري تحديث البيانات...",
-         "فشلت العملية حاول لاحقًا",
-         "تم الحذف بنجاح!",
-         () => {
-           mutate();
-         }
-       );
+        PromiseToast(
+          response,
+          "جاري تحديث البيانات...",
+          "فشلت العملية حاول لاحقًا",
+          "تم الحذف بنجاح!",
+          () => {
+            mutate();
+          }
+        );
       } catch (error) {
         console.error("There was a problem with the fetch operation:", error);
       }
@@ -43,7 +56,6 @@ const CategoriesTable = ({ changeTitle }) => {
 
   function openModal() {
     changeName("category");
-    
     toggle();
   }
 
@@ -58,7 +70,7 @@ const CategoriesTable = ({ changeTitle }) => {
 
   useEffect(() => {
     if (categoriesData) {
-      const newData = categoriesData.map((item) => {
+      const newData = categoriesData.data.map((item) => {
         return {
           id: item.id,
           name: item.name,
@@ -83,6 +95,8 @@ const CategoriesTable = ({ changeTitle }) => {
         editHandler={handleEditCategory}
         addBTNClickHandler={openAddCategoryModal}
         addBTNTitle={"اضافة تصنيف جديد"}
+        totalPages={totalPages} 
+        handlePageClick={handlePageClick}
       />
     </div>
   );

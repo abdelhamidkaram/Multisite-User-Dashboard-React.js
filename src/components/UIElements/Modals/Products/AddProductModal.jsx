@@ -45,7 +45,10 @@ const AddProductModal = () => {
       apiCall,
       "جاري إضافة المنتج...",
       "فشلت العملية حاول لاحقًا",
-      "تم إضافة المنتج بنجاح!"
+      "تم إضافة المنتج بنجاح!",
+      () => {
+        localStorage.setItem('starterStep2', true);
+      }
     );
 
     toggle();

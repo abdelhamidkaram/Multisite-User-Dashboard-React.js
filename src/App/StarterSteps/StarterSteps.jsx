@@ -7,9 +7,9 @@ const StarterSteps = () => {
   return (
     <div className="md700:flex md700:gap-2 lg:grid lg:grid-flow-row lg:grid-cols-3 lg:gap-2  ">
       <StepsItem
-        to={'/app/products'}
+        to={'/app/settings'}
         number={1}
-        title={"أضف منتجاتك"}
+        title={"أضف الوجو والهوية"}
         des={
           "الرجاء إضافة منتجات إلى متجرك لبدء البيع ، يمكنك إضافة متغيرات مختلفة: الألوان والأحجام ... شاهد هذا الفيديو للحصول على المساعدة:        "
         }
@@ -18,7 +18,7 @@ const StarterSteps = () => {
       <StepsItem
         to={'/app/products'}
         number={2}
-        title={"اضف الفئات "}
+        title={"اضف المنتجات والأسعار "}
         des={
           "يمكنك إضافة الفئات لإظهار المنتجات المختلفة الموجودة في متجرك ... شاهد هذا الفيديو للحصول على المساعدة:"
         
@@ -26,9 +26,9 @@ const StarterSteps = () => {
         icon={Step2}
       />
       <StepsItem
-        to={'/app/store'}
+        to={'/app/settings/?p=4'}
         number={3}
-        title={"تخصيص المتجر "}
+        title={"اربط بوابة الدفع والشحن"}
         des={
           "يمكنك تخصيص القالب العام لمتجرك وتعديل الألوان الكتابة والأقسام والمزيد. شاهد هذا الفيديو للمساعدة:"
         }
@@ -41,8 +41,7 @@ const StarterSteps = () => {
 export default StarterSteps;
 
 const StepsItem = ({ title, des, number, icon , to }) => {
-  const current = useStarterSteps((state) => state.currentStep);
-  const isCompleted = current > number;
+  const isCompleted = localStorage.getItem('starterStep'+number) ?? false;
   return (
     <Link to={to} className=" cursor-pointer  " >
       <div

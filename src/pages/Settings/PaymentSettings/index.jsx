@@ -7,6 +7,8 @@ import SadadAccountSettings from "./SadadAccountSettings";
 import SectionTitle from "../../../components/UIElements/SectionTitle";
 import UPaymentsAccountSettings from "./UPaymentsAccountSettings";
 import TapAccountSettings from "./TapAccountSettings";
+import NoteBox from "../../../components/UIElements/NoteBox";
+import MainButton from "../../../components/UIElements/MainButton";
 
 const PaymentSettings = () => {
   const { data: apps, isLoading } = useData("wp-json/store/v1/apps");
@@ -37,6 +39,12 @@ const PaymentSettings = () => {
       <BankAccountSettings />
       <SectionTitle title=":بوابات الدفع الخارجية المفعلة" />
       <BeatLoader color="#448ace" loading={isLoading} />
+      {(tapPlugin || myFatoorahPlugin || sadadPlugin || uPaymentsPlugin) ? null : <NoteBox type="error">
+        
+        <h3 className="text-lg font-bold">لا يوجد بوابات مفعلة</h3>
+         <p> اذهب الى متجر التطبيقات لتفعيل بوابة الدفع الخاص بك  </p>
+         <MainButton text={' متجر التطبيقات '} to={'/app/apps'}/>
+        </NoteBox>}
       {tapPlugin && <TapAccountSettings />} 
       {myFatoorahPlugin && <MyfatoraAccountSettings />}
       {sadadPlugin && <SadadAccountSettings />} 

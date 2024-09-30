@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import SectionTitle from "../UIElements/SectionTitle";
 import MainButton from "../UIElements/MainButton";
 import { ShimmerTable } from "shimmer-effects-react";
+import Pagination from "./Pagination";
 
 const CustomTable = ({
   data,
@@ -15,6 +16,8 @@ const CustomTable = ({
   addBTNTitle,
   addBTNClickHandler,
   isLoading,
+  totalPages,
+  handlePageClick,
 }) => {
   const buildItem = (data) => {
     return data.map != null
@@ -87,13 +90,13 @@ const CustomTable = ({
             </table>
             <ShimmerTable
               mode="light"
-              row={3}
-              col={CustomHeader.length +1}
+              row={7}
+              col={CustomHeader.length + 1}
               border={1}
               borderColor={"#cbd5e1"}
               rounded={0.25}
               rowGap={16}
-              colPadding={[10, 5, 10, 5]}
+              colPadding={[20, 5, 20, 5]}
             />
           </div>
         ) : (
@@ -103,7 +106,12 @@ const CustomTable = ({
           </table>
         )}
 
-        <div className="h-14"></div>
+        <div className="h-16 p-4">
+          <Pagination
+            totalPages={totalPages}
+            handlePageClick={handlePageClick}
+          />
+        </div>
       </div>
     </Fragment>
   );
