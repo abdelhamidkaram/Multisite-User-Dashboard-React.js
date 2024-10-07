@@ -36,7 +36,7 @@ const AnalyticsCard = ({ itemsList, showTitle, isLoading }) => {
           >
             {isLoading ? (
               <div className="flex justify-between items-center"> 
-              <ShimmerCategoryItems className='w-36' hasText={false} hasImage={false}  mode="light"  hasButton={true} />
+              <ShimmerCategoryItems className='w-36' hasText={false} hasImage={false}  mode="light"  hasButton={true} items={1} />
               <ShimmerDiv mode="light" height={40}  width={40} rounded={50} />
               </div>
              

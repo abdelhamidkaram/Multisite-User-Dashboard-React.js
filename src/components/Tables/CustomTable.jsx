@@ -20,10 +20,10 @@ const CustomTable = ({
   handlePageClick,
 }) => {
   const buildItem = (data) => {
-    return data.map != null
+    return (data != null && data != undefined && data != [])
       ? data.map((item, i) => (
           <tr key={i}>
-            {Object.keys(item).map((key) => {
+            {Object.keys(item ).map((key) => {
               const value = item[key];
               if (typeof value != "object") {
                 return <td key={key + i}>{value}</td>;
@@ -34,8 +34,8 @@ const CustomTable = ({
                 <div className="flex gap-4">
                   {editHandler ? (
                     <MainButton
-                      ClickHandler={() => {
-                        editHandler(responseData ? responseData[i] : item);
+                      ClickHandler={() => {                        
+                        editHandler(responseData != null ? responseData.data[i] : item);
                       }}
                       text={"تعديل "}
                     />
@@ -55,7 +55,7 @@ const CustomTable = ({
             {ControllerComponent ? <td>{ControllerComponent}</td> : null}
           </tr>
         ))
-      : null;
+      : (<div className="w-full flex justify-center p-9 "><p>لا يوجد بيانات</p></div>);
   };
   const buildHeader = (
     <tr>

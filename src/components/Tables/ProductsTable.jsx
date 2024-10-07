@@ -1,6 +1,6 @@
 import CustomTable from "./CustomTable";
 import { $api, useData } from "../../client";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import useModal from "../../store/useModal";
 import useProductModal from "../../store/modals/ProductModal";
 import PromiseToast from "../UIElements/Toasts/PromiseToast";
@@ -78,7 +78,7 @@ const ProductsTable = ({ changeTitle, showMorButton, showAddBTN }) => {
    * Handles the editing of a product
    * @param {Object} product The product to edit
    */
-  const handleEditProduct = (product) => {
+  const handleEditProduct = (product) => {  
     changeProduct(product);
     openModal();
   };
@@ -107,24 +107,19 @@ const ProductsTable = ({ changeTitle, showMorButton, showAddBTN }) => {
     "الحالة",
   ];
 
-  const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    if (productsData) {
-      const newData = productsData.data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        totalSales: item.total_sales,
-        status: item.stock_status,
-      }));
-      setProducts(newData);
-    }
-  }, [productsData]);
 
   if (error) return <p>{error}</p>;
-
- 
+  
+   if(productsData){
+    var products = productsData.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      totalSales: item.total_sales,
+      status: item.stock_status,
+    }));
+   }
   return (
     <div>
       <CustomTable

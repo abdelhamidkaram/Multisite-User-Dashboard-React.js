@@ -17,7 +17,7 @@ const ProductModal = () => {
       sale_price: product.sale_price,
       stock_status: product.stock_status,
       short_description: product.short_description,
-      categories: product.categories[0],
+      categories: product.categories,
     }
   });
 
