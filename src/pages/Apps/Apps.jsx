@@ -3,6 +3,7 @@ import SectionTitle from "../../components/UIElements/SectionTitle";
 import AppItem from "./AppItem";
 import PromiseToast from "../../components/UIElements/Toasts/PromiseToast";
 import { ShimmerButton, ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
+import NoteBox from "../../components/UIElements/NoteBox";
 
 const Apps = () => {
   const { data: apps, error, isLoading, mutate } = useData("wp-json/store/v1/apps");
@@ -24,9 +25,8 @@ const Apps = () => {
   }
 
   if (error) {
-    return <p>{'Error when fetching data'}</p>
+    return <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p></NoteBox>;
   }
-
   return (
     <div className="flex flex-col gap-14">
       <div className="px-5 flex justify-center items-center h-96 rounded-lg bg-blend-overlay bg-black bg-opacity-60 overflow-hidden bg-[url('https://www.tatbiqati.com/images/news/1687743315.webp')]">

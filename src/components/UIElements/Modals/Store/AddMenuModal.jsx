@@ -68,7 +68,7 @@ const AddMenuModal = () => {
 
         <h2 className="text-xl mb-3">عناصر القائمة</h2>
         {fields.map((item, index) => (
-          <div key={item.id} className="mb-4">
+          <div key={item.id} className="mb-4 shadow p-3 border">
             <div className="mb-2">
               <label className="block" htmlFor={`items.${index}.title`}>
                 عنوان العنصر
@@ -111,13 +111,13 @@ const AddMenuModal = () => {
                 </span>
               )}
             </div>
-            <button
+            { fields.length > 1 && <button
               type="button"
               onClick={() => remove(index)}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
             >
               إزالة العنصر
-            </button>
+            </button>}
           </div>
         ))}
         <div className="flex justify-between ps-3 pe-3">
@@ -129,7 +129,7 @@ const AddMenuModal = () => {
             إضافة عنصر جديد
           </button>
 
-          <MainButton text="إضافة" />
+          <MainButton text="حفظ القائمة" />
         </div>
       </form>
     </div>

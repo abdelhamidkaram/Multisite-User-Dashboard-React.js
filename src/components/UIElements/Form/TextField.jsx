@@ -25,6 +25,16 @@ const TextField = forwardRef(({
             defaultValue={value}
             disabled={disable}
             {...register}
+            onKeyDown={(e) => {
+              if (e.key === "-" || e.key === "e") {
+                e.preventDefault();
+              }
+            }}
+            onInput={(e) => {
+              if (e.target.value < 0) {
+                e.target.value = 0;
+              }
+            }}
           />
           <InputError error={error} />
         </div>

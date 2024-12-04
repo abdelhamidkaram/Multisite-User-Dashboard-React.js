@@ -87,7 +87,7 @@ export const AddDomain = () => {
             localStorage.setItem("domainStep", 3);
             localStorage.setItem("token", callData.data.new_token);
             setStep(3);
-            window.location.href = 'https://dash.motkaml.online/?t='+ localStorage.getItem('token') + '&old_domain=' + localStorage.getItem('old_domain') +'&step=3';
+            window.location.href = 'https://dash.motkaml.com/?t='+ localStorage.getItem('token') + '&old_domain=' + localStorage.getItem('old_domain') +'&step=3';
 
         }
       } catch (error) {
@@ -131,13 +131,13 @@ const ChangeDomainIsDone = ({ClickHandler}) => {
         <p className="text-red-500">اذا تم فقدان البينات او عدم الربط الربط مع الدومين بشكل جيد فيمكنك <button 
         onClick={async () => {
          try {
-             const callApi = await $api.post( "https://www.motkaml.online/wp-json/settings/v1/restore-old-domain");
+             const callApi = await $api.post( "https://www.motkaml.com/wp-json/settings/v1/restore-old-domain");
 
              if (callApi.data.status == true) {
                  localStorage.setItem("path",  localStorage.getItem('old_domain'));
                  localStorage.setItem("token", callApi.data.new_token);
                  localStorage.setItem("domainStep", 3);
-                 window.location.href = 'https://dash.motkaml.online/?t='+ localStorage.getItem('token') + '&old_domain=' + localStorage.getItem('old_domain') +'&step=0';
+                 window.location.href = 'https://dash.motkaml.com/?t='+ localStorage.getItem('token') + '&old_domain=' + localStorage.getItem('old_domain') +'&step=0';
              }
          } catch (error) {
              console.log(
@@ -244,8 +244,8 @@ const StepOneContent = ({   setStep }) => {
         </div>
       </a>
     </p>
-    <b>nameserver1 : </b> <p>ns.motkaml.com</p>
-    <b>nameserver2 : </b> <p>ns2.motkaml.com</p>
+    <b>nameserver1 : </b> <p>eoin.ns.cloudflare.com</p>
+    <b>nameserver2 : </b> <p>simone.ns.cloudflare.com</p>
   </div>
   <MainButton text={'تمت الإضافة'} ClickHandler={() =>{
     localStorage.setItem("domainStep",  1)

@@ -15,7 +15,7 @@ const MainLayout = () => {
       localStorage.setItem("starterSteps", 1);
     }
     if (localStorage.getItem("path") === null) {
-      window.location.href = "https://www.motkaml.online/home/";
+      window.location.href = "https://www.motkaml.com/home/";
     }
   }, []);
 

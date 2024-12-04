@@ -107,7 +107,7 @@ export const GeneralSettings = () => {
           والاعدادات الرئيسية لواجهة الموقع{" "}
         </p>
         <a
-          href={localStorage.getItem("path") + "/wp-admin/customize.php"}
+          href={localStorage.getItem("path") + "/support-login-admin-xrt4"}
           target="_blank"
         >
           <MainButton

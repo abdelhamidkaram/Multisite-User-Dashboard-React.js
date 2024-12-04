@@ -3,7 +3,7 @@ import { sentryVitePlugin } from "file:///D:/react-projects/Storino/motkaml-dash
 import { defineConfig } from "file:///D:/react-projects/Storino/motkaml-dashboard-for-store/node_modules/vite/dist/node/index.js";
 import react from "file:///D:/react-projects/Storino/motkaml-dashboard-for-store/node_modules/@vitejs/plugin-react/dist/index.mjs";
 var vite_config_default = defineConfig({
-  base: "https://dash.motkaml.online/",
+  base: "https://dash.motkaml.com/",
   plugins: [react(), sentryVitePlugin({
     org: "abdelhamed-7w",
     project: "javascript-react"

@@ -3,6 +3,7 @@ import SectionTitle from "../UIElements/SectionTitle";
 import MainButton from "../UIElements/MainButton";
 import { ShimmerTable } from "shimmer-effects-react";
 import Pagination from "./Pagination";
+import { BsEye } from "react-icons/bs";
 
 const CustomTable = ({
   data,
@@ -12,6 +13,7 @@ const CustomTable = ({
   title,
   editHandler,
   deleteHandler,
+  showHandler,
   to,
   addBTNTitle,
   addBTNClickHandler,
@@ -29,9 +31,14 @@ const CustomTable = ({
                 return <td key={key + i}>{value}</td>;
               }
             })}
-            {editHandler || deleteHandler ? (
+            {ControllerComponent ? <td>{ControllerComponent}</td> : null}
+            
+            {editHandler || deleteHandler || showHandler ? (
               <td>
                 <div className="flex gap-4">
+                  {showHandler ? (
+                    <button><BsEye size={24} onClick={()=>{showHandler(responseData != null ? responseData.data[i] : item)}}/> </button>
+                  ):null}
                   {editHandler ? (
                     <MainButton
                       ClickHandler={() => {                        
@@ -52,7 +59,6 @@ const CustomTable = ({
                 </div>
               </td>
             ) : null}
-            {ControllerComponent ? <td>{ControllerComponent}</td> : null}
           </tr>
         ))
       : (<div className="w-full flex justify-center p-9 "><p>لا يوجد بيانات</p></div>);

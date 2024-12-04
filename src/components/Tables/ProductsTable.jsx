@@ -110,16 +110,24 @@ const ProductsTable = ({ changeTitle, showMorButton, showAddBTN }) => {
 
 
   if (error) return <p>{error}</p>;
+
   
-   if(productsData){
+   if(productsData?.data?.length > 0){
     var products = productsData.data.map((item) => ({
       id: item.id,
       name: item.name,
       price: item.price,
       totalSales: item.total_sales,
       status: item.stock_status,
+
     }));
    }
+
+   const handleShowProduct = (product) => {
+    changeProduct(product);
+    changeName("showProduct");
+    toggle();
+  }
   return (
     <div>
       <CustomTable
@@ -134,6 +142,7 @@ const ProductsTable = ({ changeTitle, showMorButton, showAddBTN }) => {
         deleteHandler={handleDeleteProduct}
         editHandler={handleEditProduct}
         addBTNClickHandler={openAddProductModal}
+        showHandler={handleShowProduct}
         addBTNTitle={showAddBTN ? "اضافة منتج جديد" : null}
       />
     </div>

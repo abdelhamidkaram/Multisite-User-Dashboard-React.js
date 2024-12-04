@@ -19,7 +19,7 @@ const SadadAccountSettings = () => {
     error: error,
     mutate: mutate,
     isLoading: loading,
-  } = useData("https://www.motkaml.online/wp-json/sadad/v1/settings");
+  } = useData("https://www.motkaml.com/wp-json/sadad/v1/settings");
 
   const schema = Yup.object().shape({
     sadad_title: Yup.string().required("حقل مطلوب"),
@@ -54,7 +54,7 @@ const SadadAccountSettings = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const res =  $api.post("https://www.motkaml.online/wp-json/sadad/v1/settings/", {
+      const res =  $api.post("https://www.motkaml.com/wp-json/sadad/v1/settings/", {
         sadad_enable: sadadEnable,
         sadad_test_mode: sadadTestMode,
         order_status: "processing",

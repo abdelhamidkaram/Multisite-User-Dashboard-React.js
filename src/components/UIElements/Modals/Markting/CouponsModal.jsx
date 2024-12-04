@@ -5,8 +5,9 @@ import MainButton from "../../MainButton";
 import { useForm } from "react-hook-form";
 import TextField from "../../Form/TextField";
 import useModal from "../../../../store/useModal";
-import { ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
+import {  ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
 import { useState } from "react";
+import NoteBox from "../../NoteBox";
 
 const CouponsModal = () => {
   const { toggle } = useModal();
@@ -37,7 +38,11 @@ const CouponsModal = () => {
     setFormShow(!FormShow);
   };
 
-  if (error) return <p>Failed to fetch coupons</p>;
+  if (error){
+    
+    return <div className="p-4" > <NoteBox type="error" > <h3 className="text-center w-80"> حدث خطأ ما , أو أن اشتراكك الحالى لايدعم تلك الميزة </h3> </NoteBox> </div>;
+
+  }
 
   return (
     <div>
@@ -61,19 +66,7 @@ const CouponsModal = () => {
               Loading={!isLoading}
             />
           ))
-          : [1, 2, 3].map((item) => (
-            <CouponItem
-              key={item}
-              code={"loading..."}
-              expireDate={"loading..."}
-              id={item}
-              amount={"loading..."}
-              refreshData={mutate}
-              usageCount={"loading..."}
-              usageLimit={"loading..."}
-              Loading={!isLoading}
-            />
-          ))
+          : <h3 className="text-center w-80">لا يوجد كوبونات</h3>
         ) : (
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>

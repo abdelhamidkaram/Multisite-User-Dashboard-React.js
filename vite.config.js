@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'https://dash.motkaml.online/',
+  base: 'https://dash.motkaml.com/',
 
   plugins: [react(), sentryVitePlugin({
     org: "abdelhamed-7w",

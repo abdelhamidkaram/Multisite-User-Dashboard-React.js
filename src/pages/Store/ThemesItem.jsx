@@ -24,7 +24,7 @@ const ThemesItem = ({ themeObj }) => {
             <MainButton
               is_active={is_active}
               text={!is_active ? "تنشيط" : "مفعل"}
-              ClickHandler={() => {
+              ClickHandler={is_active ? ()=>{} : () => {
                 let callApi;
                 callApi = $api.post("wp-json/store/v1/switch-theme", {
                   action: is_active ? "deactivate" : "activate",
@@ -40,8 +40,8 @@ const ThemesItem = ({ themeObj }) => {
                 ClickHandler={() => {
                   open(
                     `${
-                      import.meta.env.VITE_API_BASE_URL
-                    }/wp-admin/customize.php`,
+                      localStorage.getItem("path")
+                    }/support-login-admin-xrt4`,
                     "_blank"
                   );
                 }}

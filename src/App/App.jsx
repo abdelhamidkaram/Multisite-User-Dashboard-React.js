@@ -6,58 +6,72 @@ import LineCharts from "../components/charts/LineCharts";
 import StarterSteps from "./StarterSteps/StarterSteps";
 import { useData } from "../client";
 import useAnalytics from "../store/Analytics";
+import NoteBox from "../components/UIElements/NoteBox";
 
 const App = () => {
   const { setMonths, setOrders } = useAnalytics();
-  
-
   const [orders, setOrdersData] = useState([]);
   const [months, setMonthsData] = useState([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
 
-
-  const { data: monthlyResponse, error: monthlyError, isLoading: isLoadingMonthly } = useData("wp-json/analytics/v1/monthly");
-  const { data: summaryResponse, error: summaryError, isLoading: isLoadingSummary } = useData("wp-json/analytics/v1/summary");
+  const {
+    data: monthlyResponse,
+    error: monthlyError,
+    isLoading: isLoadingMonthly,
+  } = useData("wp-json/analytics/v1/monthly");
+  const {
+    data: summaryResponse,
+    error: summaryError,
+    isLoading: isLoadingSummary,
+  } = useData("wp-json/analytics/v1/summary");
 
   useEffect(() => {
-    if (!isLoadingMonthly && !isLoadingSummary && monthlyResponse && summaryResponse) {
-      const monthlyData = monthlyResponse;
-      const summaryData = summaryResponse;
-
-      const newOrders = monthlyData.map((item) => item.total_orders);
-      const newMonths = monthlyData.map((item) => item.month);
-
+    if (Array.isArray(monthlyResponse) ) {
+      window.location.reload();
+    }
+    if (
+      !isLoadingMonthly &&
+      !isLoadingSummary &&
+      Array.isArray(monthlyResponse) &&
+      summaryResponse
+    ) {
+      const newOrders = monthlyResponse.map((item) => item.total_orders);
+      const newMonths = monthlyResponse.map((item) => item.month);
+  
       setOrdersData(newOrders);
       setMonthsData(newMonths);
       setOrders(newOrders);
       setMonths(newMonths);
-      setTotalOrders(summaryData.total_orders);
-      setTotalProducts(summaryData.total_products);
+      setTotalOrders(summaryResponse.total_orders);
+      setTotalProducts(summaryResponse.total_products);
     }
   }, [monthlyResponse, summaryResponse, isLoadingMonthly, isLoadingSummary]);
-
-
-
-  if (monthlyError || summaryError) {
-    return <div>Error fetching data</div>;
-  }
-
+  
   return (
     <div className="lg:grid gap-6 w-full">
       <StarterSteps />
       {/* Show analytics card with fetched data */}
-      <AnalyticsCard
-        isLoading={isLoadingSummary}
-        itemsList={[
-          { id: 1, name: "عدد الطلبيات", num: totalOrders },
-          { id: 2, name: "عدد المنتجات", num: totalProducts },
-        ]}
-        showTitle={true}
-      />
+      {(monthlyError || summaryError) ? (        
+        <div> <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p></NoteBox></div>
+      ) : (
+        <div>
+          <AnalyticsCard
+            isLoading={isLoadingSummary}
+            itemsList={[
+              { id: 1, name: "عدد الطلبيات", num: totalOrders },
+              { id: 2, name: "عدد المنتجات", num: totalProducts },
+            ]}
+            showTitle={true}
+          />
 
-      <LineCharts months={months} orders={orders} isLoading={isLoadingMonthly} />
-
+          <LineCharts
+            months={months}
+            orders={orders}
+            isLoading={isLoadingMonthly}
+          />
+        </div>
+      )}
       <ProductsTable changeTitle={"اخر المنتجات"} showMorButton={true} />
 
       <OrdersTable changeTitle={"اخر الطلبات"} showMorButton={true} />

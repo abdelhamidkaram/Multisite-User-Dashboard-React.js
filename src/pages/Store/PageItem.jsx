@@ -6,6 +6,7 @@ import { BiLink } from "react-icons/bi";
 import { ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
 
 const PageItem = ({ pageObj, deleteHandler, loading }) => {
+  const defaultPagesSlug = ['my-account' , 'checkout' , 'cart' , 'shop'];
   const { changePage } = usePageModal();
   const { name, url } = pageObj;
   const { isOpen, toggle, changeName } = useModal();
@@ -52,9 +53,10 @@ const PageItem = ({ pageObj, deleteHandler, loading }) => {
           >
             <img src={EditIcon} />
           </button>
-          <button className=" w-8  p-1">
+          { !defaultPagesSlug.includes(url.split("/")[url.split("/").length - 2]) && <button className=" w-8  p-1">
             <img src={DeleteIcon} onClick={deleteHandler} />
-          </button>
+            
+          </button>}
         </div>
       )}
     </div>

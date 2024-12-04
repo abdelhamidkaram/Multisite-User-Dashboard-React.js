@@ -50,20 +50,19 @@ const BankAccountSettings = () => {
 
     // Submit handler for the form
     const onSubmit = async (data) => {
-        try {
+     
             const callApi = $api.post('wp-json/settings/v1/bacs-method-toggle', {
                 enable: bankEnable,
                 ...data
             });
             PromiseToast(callApi ,
                 "جاري تحديث الاعدادات",
-                "فشل تحديث الاعدادات",
+                'd',
                 "تم تحديث الاعدادات بنجاح",
                 ()=>{mutate()}
             );
-        } catch (error) {
-            console.error('Error updating BACS settings:', error);
-        }
+       
+       
     };
  
 

@@ -3,10 +3,12 @@ import AnalyticsCard from '../../components/AnalyticsCard/AnalyticsCard';
 import OrdersTable from '../../components/Tables/OrdersTable';
 import ProductsTable from '../../components/Tables/ProductsTable';
 import { useData } from '../../client';
+import NoteBox from '../../components/UIElements/NoteBox';
 
 const Analytics = () => {
  
-  const { data: analyticsData, error, isLoading } = useData('wp-json/analytics/v1/summary'); 
+  const { data: analyticsData, error, isLoading } = 
+  useData('wp-json/analytics/v1/summary'); 
 
   const { data: monthlyResponse, isLoading: isLoadingMonthly } = useData("wp-json/analytics/v1/monthly");
 
@@ -25,7 +27,7 @@ const Analytics = () => {
   }
 
   if (error) {
-    return <p>Error fetching analytics data: {error.message}</p>;
+    return <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p></NoteBox>;
   }
 
 
@@ -37,7 +39,7 @@ const Analytics = () => {
     { id: 1, name: "عدد الطلبيات", num: total_orders },
     { id: 2, name: "عدد المنتجات", num: total_products },
     { id: 3, name: "اجمالي المبيعات", num: total_sales },
-    { id: 4, name: "اجمالي الارباح", num: total_sales - total_refunds }, // assuming profits is sales - refunds
+    { id: 4, name: "اجمالي الارباح", num: total_sales - total_refunds },
     { id: 5, name: "عدد العملاء", num: total_customers },
     { id: 6, name: "متوسط قيمة الطلب", num: average_order_value },
     { id: 7, name: "اجمالي المسترجعات", num: total_refunds },

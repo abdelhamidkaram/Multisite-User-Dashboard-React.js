@@ -18,6 +18,8 @@ import EditMenuModal from "./Store/EditMenuModal";
 import AddPageModal from "./Store/AddPageModal";
 import EditPageModal from "./Store/EditPageModal";
 import MediaModal from "./Store/MediaModal";
+import OrderDetailsModal from "./orders/orderDetails";
+import ProductDetailsModal from "./Products/productDetails";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
@@ -32,9 +34,11 @@ const Modal = ({ onClose }) => {
     // Order PAGE MODAL=================================
     order: <OrderModal/>,
     user: <UserModal />,
+    showOrder:<OrderDetailsModal/>,
     // Product PAGE MODAL===============================
     product:<ProductModal/> ,
     addProduct:<AddProductModal /> ,
+    showProduct:<ProductDetailsModal /> ,
     // Categories
     category:<CategoryModal />,
     addCategory:<AddCategoryModal/>,

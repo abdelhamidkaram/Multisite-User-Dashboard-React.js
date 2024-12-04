@@ -7,6 +7,7 @@ import Support from "../../assets/icons/support.svg";
 import ClickAwayListener from "react-click-away-listener";
 import { useState } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const pageTitle = usePageTitle((state) => state.pageTitle);
@@ -34,24 +35,26 @@ const Header = () => {
           className={`end-nav flex-row gap-8 justify-center items-center
            lg:flex hidden `}
         >
+          <Link to="https://www.motkaml.com/home/contact-us/" >
           <div className="video-box flex  flex-row gap-2">
             <div>
               <img src={Support} className="w-6" />
             </div>
             <span>الدعم الفني</span>
           </div>
+          </Link>
           <div className="video-box flex flex-row gap-2">
             <div className="video-icon">
               <img src={Video} className="w-8" />
             </div>
             <span>شرح المنصة</span>
           </div>
-          <div className="video-box flex  flex-row gap-2">
+          {/* <div className="video-box flex  flex-row gap-2">
             <div>
               <img src={Survey} className="w-6" />
             </div>
             <span>استطلاع رأي</span>
-          </div>
+          </div> */}
           <a href={localStorage.getItem("path")} target="_blank" >
             <div className="video-box flex  flex-row gap-2 cursor-pointer">
               <div>
@@ -81,7 +84,7 @@ const Header = () => {
 
                         // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                         window.location.href =
-                          "https://www.motkaml.online/home/?nocache=true";
+                          "https://www.motkaml.com/home/?nocache=true";
                       }}
                     >
                       تسجيل الخروج
@@ -142,7 +145,7 @@ const Header = () => {
 
                     // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                     window.location.href =
-                      "https://www.motkaml.online/home/?nocache=true";
+                      "https://www.motkaml.com/home/?nocache=true";
                   }}
                 >
                   تسجيل الخروخ

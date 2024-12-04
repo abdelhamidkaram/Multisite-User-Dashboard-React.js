@@ -8,15 +8,19 @@ import usePageModal from '../../../../store/modals/PageModal'; // Adjust the imp
 
 
 const EditPageModal = () => {
-  const {mutate: pagesMutate } = useData("wp-json/store/v1/pages");
+  function removeHtmlTags(input) {
+    return input.replace(/<[^>]*>/g, '');
+}
 
+  const {mutate: pagesMutate } = useData("wp-json/store/v1/pages");
+  const defaultPagesSlug = ['my-account' , 'checkout' , 'cart' , 'shop'];
   const { page } = usePageModal(); 
   console.log(page);
   const { toggle } = useModal();
   const { register, handleSubmit,reset } = useForm({
     defaultValues: {
       name: page?.name ?? '',
-      content: page?.content ?? ''
+      content: removeHtmlTags(page?.content ?? '')
     }
   });
 
@@ -48,11 +52,11 @@ const EditPageModal = () => {
           
         />
 
-        <TextField
+        {!defaultPagesSlug.includes(page.url.split("/")[page.url.split("/").length - 2]) && <TextField
           label="المحتوى"
           register={{...register('content', { required: true })}}
           isTextArea={true}
-        />
+        />}
 
         <MainButton text="تحديث" />
       </form>

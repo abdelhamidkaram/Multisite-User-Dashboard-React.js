@@ -17,7 +17,7 @@ const RefundTable = ({ changeTitle }) => {
     isLoading,
     mutate,
   } = useData(
-    `wp-json/products/v1/orders?page=${currentPage}&per_page=${itemsPerPage}`
+    `wp-json/products/v1/refunded-orders?page=${currentPage}&per_page=${itemsPerPage}`
   );
 
   const totalPages = ordersData
@@ -36,7 +36,7 @@ const RefundTable = ({ changeTitle }) => {
     const confirmDelete = window.confirm(
       "هل أنت متأكد أنك تريد حذف هذا الطلب؟"
     );
-
+   
     if (confirmDelete) {
       try {
         const response = await $api.post(
@@ -60,7 +60,12 @@ const RefundTable = ({ changeTitle }) => {
     changeOrder(order);
     openModal();
   };
-
+  const handlerShowOrderDetails = (order) => {    
+    changeOrder(order);
+    changeName('showOrder');
+    toggle();
+  };
+  
   function openModal() {
     changeName("order");
     toggle();
@@ -81,6 +86,7 @@ const RefundTable = ({ changeTitle }) => {
         CustomHeader={Headers}
         deleteHandler={handleDeleteOrder}
         editHandler={handlerStatusOrder}
+        showHandler={handlerShowOrderDetails}
       />
     </div>
   );

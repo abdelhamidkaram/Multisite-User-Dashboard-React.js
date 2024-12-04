@@ -1,5 +1,5 @@
 import CustomTable from "./CustomTable";
-import { $api, useData } from "../../client"; // استبدال $api بـ useData
+import { $api, useData } from "../../client"; 
 import { useEffect, useState } from "react";
 import useModal from "../../store/useModal";
 import useOrderModal from "../../store/modals/OrderModal";
@@ -62,6 +62,13 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
     changeOrder(order);
     openModal();
   };
+  
+  const handlerShowOrderDetails = (order) => {    
+    changeOrder(order);
+    changeName('showOrder');
+    toggle();
+  };
+  
 
   function openModal() {
     changeName("order");
@@ -91,6 +98,7 @@ const OrdersTable = ({ changeTitle, showMorButton }) => {
         deleteHandler={handleDeleteOrder}
         editHandler={handlerStatusOrder}
         handlePageClick={handlePageClick}
+        showHandler={handlerShowOrderDetails}
         totalPages={totalPages}
       />
     </div>

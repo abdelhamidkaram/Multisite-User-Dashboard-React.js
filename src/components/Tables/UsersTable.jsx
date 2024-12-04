@@ -1,11 +1,12 @@
 import useModal from "../../store/useModal";
 import useUserModal from "../../store/modals/UserModals";
 import CustomTable from "./CustomTable";
-import {useData} from "../../client";
+import {$api, useData} from "../../client";
 import { useState } from "react";
+import PromiseToast from "../UIElements/Toasts/PromiseToast";
 
 const UsersTable = ({ changeTitle }) => {
-  const headers = ["المعرف", "الاسم", "البريد الالكتروني"];
+  const headers = ["المعرف", "الاسم", "البريد الالكتروني" , "رقم الهاتف"];
   const { toggle, changeName } = useModal();
   const { changeUser } = useUserModal();
 
@@ -42,10 +43,33 @@ const UsersTable = ({ changeTitle }) => {
 
 
 
-  function deleteHandler(user) {
-    const newData = customers.filter((item) => item.id !== user.id);
-    mutate(newData, false);
+const handleDeleteUser = async (userId) => {
+  const confirmDelete = window.confirm(
+    "هل أنت متأكد أنك تريد حذف هذالعميل؟"
+  );
+
+  if (confirmDelete) {
+    try {
+      let response ;
+
+      response =  $api.post(
+        `wp-json/products/v1/delete-user/${userId}`
+      );
+
+      PromiseToast(
+        response,
+        "جاري تحديث البيانات...",
+        "فشلت العملية حاول لاحقًا",
+        "تم الحذف بنجاح!",
+        () => {
+          mutate();
+        }
+      );
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
   }
+};
 
   if (error) return <p>Failed to fetch customers</p>;
 
@@ -58,7 +82,7 @@ const UsersTable = ({ changeTitle }) => {
         data={customers?.data}
         title={changeTitle ?? "العملاء"}
         CustomHeader={headers}
-        deleteHandler={deleteHandler}
+        deleteHandler={handleDeleteUser}
         editHandler={editHandler}
       />
     </div>
