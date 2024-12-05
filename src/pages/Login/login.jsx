@@ -22,6 +22,7 @@ const Login = () => {
       window.location.href = 'https://www.motkaml.com/home/register';
       return;
     }
+    
 
     if (!paramValue && localToken) {
       navigate("/app");

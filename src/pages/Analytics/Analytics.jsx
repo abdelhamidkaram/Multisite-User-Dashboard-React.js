@@ -1,4 +1,4 @@
-import LineCharts from '../../components/charts/LineCharts';
+import LineCharts from '../../components/charts/LineCharts'
 import AnalyticsCard from '../../components/AnalyticsCard/AnalyticsCard';
 import OrdersTable from '../../components/Tables/OrdersTable';
 import ProductsTable from '../../components/Tables/ProductsTable';
