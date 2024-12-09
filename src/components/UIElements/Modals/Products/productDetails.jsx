@@ -51,7 +51,7 @@ const ProductDetailsModal = () => {
           {product.categories?.join(", ") || "غير متوفر"}
         </p>
       </div>
-
+{/* {
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           {"الصورة"}
@@ -65,7 +65,7 @@ const ProductDetailsModal = () => {
         ) : (
           <p className="text-gray-900">{"لا توجد صورة"}</p>
         )}
-      </div>
+      </div>} */}
 
       <button
         onClick={toggle}

@@ -9,7 +9,7 @@ const TextField = forwardRef(({
   isTextArea,
   type,
   register,
-  error
+  error,
 }, ref) => {
   return (
     <div className="flex my-2 gap-1 items-center">
@@ -26,7 +26,7 @@ const TextField = forwardRef(({
             disabled={disable}
             {...register}
             onKeyDown={(e) => {
-              if (e.key === "-" || e.key === "e") {
+              if (type === "number" && (e.key === "-" || e.key === "e")) {
                 e.preventDefault();
               }
             }}

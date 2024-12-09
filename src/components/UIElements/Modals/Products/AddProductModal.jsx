@@ -14,7 +14,9 @@ const AddProductModal = () => {
   const { data: categoriesData } = useData(
     "wp-json/categories/v1/all-categories?page=-1"
   );
-
+  const { mutate } = useData(
+    `wp-json/products/v1/all-products?page=1&per_page=7`
+  );
   // Update `cats` once categoriesData is available
   useEffect(() => {
     if (categoriesData?.data?.length > 0) {
@@ -68,6 +70,7 @@ const AddProductModal = () => {
       "تم إضافة المنتج بنجاح!",
       () => {
         localStorage.setItem("starterStep2", true);
+        mutate();
       }
     );
 
@@ -87,7 +90,7 @@ const AddProductModal = () => {
         <TextField
           label="الوصف"
           isTextArea
-          register={{ ...register("short_description", { required: true }) }}
+          register={{ ...register("short_description") }}
           error={errors.short_description?.message}
         />
         <TextField

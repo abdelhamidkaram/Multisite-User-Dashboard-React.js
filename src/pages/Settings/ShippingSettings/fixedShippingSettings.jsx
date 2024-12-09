@@ -47,11 +47,11 @@ const FixedShippingSettings = () => {
       <FormLoading Loading={Loading} />
       <div className="shadow-md rounded-md p-4 pb-8 mb-14">
         <div>
-          <h2 className="text-lg font-semibold">إعدادات الشحن</h2>
+          <h2 className="text-lg font-semibold">توصيل عبر مندوبك الخاص</h2>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-            سعر الشحن الثابت
+            تكلفة الشحن المضافة على سعر المنتج : 
           </label>
           <input
             type="text"
