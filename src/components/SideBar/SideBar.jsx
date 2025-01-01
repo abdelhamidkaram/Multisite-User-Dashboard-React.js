@@ -70,7 +70,7 @@ const SideBar = ({ onClick }) => {
             to={"settings"}
             className={"fixed bottom-10"}
           />
-        <SubscriptionItem />
+        <SubscriptionItem isOpen={isOpen}/>
 
         </ul>
       </nav>
@@ -98,8 +98,8 @@ const SideBar = ({ onClick }) => {
                 <SideNavLi name={"التطبيقات"} icon={Apps} to={"apps"} />
                 <SideNavLi name={"الإحصائيات"} icon={Analytics} to={"analytics"} />
                 <SideNavLi name={"الإعدادات"} icon={Setting} to={"settings"} />
-                <SubscriptionItem />
-
+                <SubscriptionItem  isOpen={isOpen}/>
+                
               </ul>
             </nav>
         
