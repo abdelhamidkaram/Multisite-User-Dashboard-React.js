@@ -18,7 +18,7 @@ const Apps = () => {
     $api
       .post("wp-json/api/v1/get-my-plan")
       .then((res) => {
-        setIsAllowed(res.data.subscription_id >=2);
+        setIsAllowed(res.data.subscription_id >=2 && res.data.subscription_status == 3 );
       })
       .catch((err) => {
         console.log(err);

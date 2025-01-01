@@ -19,9 +19,9 @@ const PromiseToast = (promiseFunction, loadingMSG, errorMSG, successMSG , succes
         return 'حدث خطأ ما' ; 
       
       },
-      success: ()=>{
+      success: (data)=>{
         reloadAfterSuccess ? window.location.reload() : null
-        successFunctions ? successFunctions() : null
+        successFunctions ? successFunctions(data) : null
         return successMSG ?? "تم بنجاح" ; 
       },
     },

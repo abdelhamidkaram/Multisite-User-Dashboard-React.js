@@ -148,7 +148,7 @@ const Header = () => {
                       "https://www.motkaml.com/home/?nocache=true";
                   }}
                 >
-                  تسجيل الخروخ
+                  تسجيل الخروج
                 </p>
               </div>
             </div>

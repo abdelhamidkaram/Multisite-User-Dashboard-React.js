@@ -27,9 +27,7 @@ const App = () => {
   } = useData("wp-json/analytics/v1/summary");
 
   useEffect(() => {
-    if (Array.isArray(monthlyResponse) ) {
-      window.location.reload();
-    }
+
     if (
       !isLoadingMonthly &&
       !isLoadingSummary &&
@@ -46,7 +44,7 @@ const App = () => {
       setTotalOrders(summaryResponse.total_orders);
       setTotalProducts(summaryResponse.total_products);
     }
-  }, [monthlyResponse, summaryResponse, isLoadingMonthly, isLoadingSummary]);
+  }, [summaryResponse, monthlyResponse, isLoadingMonthly, isLoadingSummary]);
   
   return (
     <div className="lg:grid gap-6 w-full">

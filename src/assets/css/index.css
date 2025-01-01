@@ -89,6 +89,13 @@
   padding: 0.5rem;
   border-radius: 8px;
 }
+.sub-icon:hover{
+  background: linear-gradient(
+    -118deg,
+    rgba(92, 150, 252, 1),
+    rgba(92, 150, 252, 0.7)
+  );
+}
 h4 {
   @apply font-bold text-blue-dark;
 }

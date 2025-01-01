@@ -16,7 +16,6 @@ const AnalyticsCard = ({ itemsList, showTitle, isLoading }) => {
   //   setPeople(peopleClone);
   // }
 
-  console.log(itemsList);
 
   return (
     <div className="py-10 ">

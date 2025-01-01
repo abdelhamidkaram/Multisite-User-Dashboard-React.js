@@ -1,6 +1,9 @@
 import MainButton from "../../components/UIElements/MainButton";
+import useModal from "../../store/useModal";
 
 const AppItem = ({ app, actionHandler, isAllowed }) => {
+  const {toggle , changeName} = useModal();
+
   return (
     <div className="flex flex-col justify-between pb-2 rounded-md border-2 border-gray-100 overflow-hidden shadow-lg">
       <div>
@@ -27,7 +30,10 @@ const AppItem = ({ app, actionHandler, isAllowed }) => {
       ) : (
         <div>
           <p className="text-sm line-clamp-3 px-3 mb-3 text-red-500 ">لا يمكنك تفعيل هذا التطبيق</p>
-          <MainButton text={"ترقية الباقة"} to="https://www.motkaml.com/home/prices/" />
+          <MainButton text={"ترقية الباقة"} ClickHandler={()=>{
+            changeName('subscription');
+            toggle();
+          }}/>
         </div>
       )}
     </div>

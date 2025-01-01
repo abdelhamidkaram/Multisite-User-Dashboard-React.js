@@ -20,6 +20,7 @@ import EditPageModal from "./Store/EditPageModal";
 import MediaModal from "./Store/MediaModal";
 import OrderDetailsModal from "./orders/orderDetails";
 import ProductDetailsModal from "./Products/productDetails";
+import SubscriptionModal from "./Subscription/SubscriptionModal";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
@@ -56,6 +57,7 @@ const Modal = ({ onClose }) => {
     apps: <p>Apps</p>,
     shippingZone: <p>ShippingZone</p>,
     method: <p>method</p>,
+    subscription: <SubscriptionModal />,
   };
   const handleClose = () => {
     toggle(false);

@@ -13,6 +13,7 @@ import usePageTitle from "../../store/PageTitle";
 import useSideBarToggle from "../../store/ToggleSidebar";
 import { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import SubscriptionItem from "./SubscriptionItem";
 
 const SideBar = ({ onClick }) => {
   const isOpen = useSideBarToggle((state) => state.isOpen);
@@ -33,7 +34,7 @@ const SideBar = ({ onClick }) => {
   return (
     <div>
       <nav
-        className={`p-3 fixed z-50 bottom-0 lg:start-0 end-0 ${
+        className={`p-3 fixed z-50 bottom-0 lg:start-0 end-0 over ${
           isOpen ? "w-60" : "w-20"
         } h-screen bg-blue-dark duration-700 hidden lg:block`}
       >
@@ -55,7 +56,7 @@ const SideBar = ({ onClick }) => {
 
         <div className="bg-slate-500 h-px align-middle items-center mb-3 "></div>
 
-        <ul className={"h-full "}>
+        <ul className={"h-full overflow-x-scroll "}>
           <SideNavLi name={"لوحة التحكم "} icon={HomeIcon} to={"/app"} />
           <SideNavLi name={"المنتجات"} icon={BagIcon} to={"products"} />
           <SideNavLi name={"الطلبات"} icon={OrdersIcon} to={"orders"} />
@@ -69,6 +70,8 @@ const SideBar = ({ onClick }) => {
             to={"settings"}
             className={"fixed bottom-10"}
           />
+        <SubscriptionItem />
+
         </ul>
       </nav>
 
@@ -95,6 +98,8 @@ const SideBar = ({ onClick }) => {
                 <SideNavLi name={"التطبيقات"} icon={Apps} to={"apps"} />
                 <SideNavLi name={"الإحصائيات"} icon={Analytics} to={"analytics"} />
                 <SideNavLi name={"الإعدادات"} icon={Setting} to={"settings"} />
+                <SubscriptionItem />
+
               </ul>
             </nav>
         
