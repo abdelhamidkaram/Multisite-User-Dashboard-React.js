@@ -7,6 +7,8 @@ import StarterSteps from "./StarterSteps/StarterSteps";
 import { useData } from "../client";
 import useAnalytics from "../store/Analytics";
 import NoteBox from "../components/UIElements/NoteBox";
+import useModal from "../store/useModal";
+import MainButton from "../components/UIElements/MainButton";
 
 const App = () => {
   const { setMonths, setOrders } = useAnalytics();
@@ -14,7 +16,7 @@ const App = () => {
   const [months, setMonthsData] = useState([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
-
+  const { toggle, changeName } = useModal();
   const {
     data: monthlyResponse,
     error: monthlyError,
@@ -51,7 +53,13 @@ const App = () => {
       <StarterSteps />
       {/* Show analytics card with fetched data */}
       {(monthlyError || summaryError) ? (        
-        <div> <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p></NoteBox></div>
+        <div> <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p><MainButton
+        ClickHandler={() => {
+          changeName("subscription");
+          toggle();
+        }}
+        text={"ترقية الباقة"}
+      /></NoteBox></div>
       ) : (
         <div>
           <AnalyticsCard

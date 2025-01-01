@@ -99,7 +99,6 @@ const SideBar = ({ onClick }) => {
                 <SideNavLi name={"الإحصائيات"} icon={Analytics} to={"analytics"} />
                 <SideNavLi name={"الإعدادات"} icon={Setting} to={"settings"} />
                 <SubscriptionItem  isOpen={isOpen}/>
-                
               </ul>
             </nav>
         
