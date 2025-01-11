@@ -79,7 +79,7 @@ const CustomTable = ({
 
   return (
     <Fragment>
-      <div className="ps-4 pe-4" style={{ maxWidth: "1440px" }}>
+      <div className="ps-4 pe-4 max-w-[350px] md:max-w-[1440px] " >
         <SectionTitle
           title={title}
           to={to}
@@ -88,7 +88,7 @@ const CustomTable = ({
         />
       </div>
 
-      <div className="table-wrap ">
+      <div className="table-wrap max-w-[350px] md:max-w-[1440px] ">
         {isLoading ? (
           <div>
             <table>

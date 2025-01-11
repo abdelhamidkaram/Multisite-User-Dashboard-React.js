@@ -53,7 +53,8 @@ const App = () => {
       <StarterSteps />
       {/* Show analytics card with fetched data */}
       {(monthlyError || summaryError) ? (        
-        <div> <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p><MainButton
+        <div className="flex  w-full"> <NoteBox type="info"><p>اشتراكك الحالي لا يدعم التحليلات</p>
+        <MainButton 
         ClickHandler={() => {
           changeName("subscription");
           toggle();

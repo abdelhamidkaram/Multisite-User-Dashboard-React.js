@@ -6,7 +6,7 @@ import { BiLink } from "react-icons/bi";
 import { ShimmerDiv, ShimmerTitle } from "shimmer-effects-react";
 
 const PageItem = ({ pageObj, deleteHandler, loading }) => {
-  const defaultPagesSlug = ['my-account' , 'checkout' , 'cart' , 'shop'];
+  const defaultPagesSlug = ['my-account' , 'checkout' , 'cart' , 'shop' , '%d8%a5%d8%aa%d9%85%d8%a7%d9%85-%d8%a7%d9%84%d8%b7%d9%84%d8%a8' , '%d8%b3%d9%84%d8%a9-%d8%a7%d9%84%d9%85%d8%b4%d8%aa%d8%b1%d9%8a%d8%a7%d8%aa'];
   const { changePage } = usePageModal();
   const { name, url } = pageObj;
   const { isOpen, toggle, changeName } = useModal();

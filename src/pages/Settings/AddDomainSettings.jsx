@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { $api } from "../../client";
 import { useState } from "react";
 import {
+  BiArrowBack,
   BiCheck,
 
   BiPlus,
@@ -91,13 +92,24 @@ export const AddDomain = () => {
 
         }
       } catch (error) {
-          setLinkError('حدث خطأ ما .. اعد المحاولة مرة أخرى او تواصل مع الدعم الفني ');
+          setLinkError( error.response.data.message ||'حدث خطأ ما .. اعد المحاولة مرة أخرى او تواصل مع الدعم الفني ' );
   
       } finally {
         setLoading(false);
       }
   };
   return (
+    <diV className="">
+          {step > 0 && <div className=" cursor-pointer flex items-center justify-end gap-2" 
+           onClick={() => {
+             setStep((prv) => prv - 1)
+             localStorage.setItem("domainStep", step - 1);
+          }}
+          >
+            <p className=" font-bold" >تراجع</p>
+          <BiArrowBack   />
+          </div>}
+
    <div className="relative m-9">
    {step < 3 && <div className="flex  items-center w-full ">
         <HeaderStep num={1} isDone={step > 0} isCurrent={step == 0} />
@@ -112,7 +124,7 @@ export const AddDomain = () => {
       {step > 2 && <ChangeDomainIsDone ClickHandler={() => setStep(0) } />}
    
       
-    </div>
+    </div></diV>
   );
 };
 
@@ -175,7 +187,7 @@ const StepThreeContent = ({LinkDomainHandler , error}) => {
       </p>
       <p className="text-red-500">         *يرجى العلم أنه في حال تأكيد تغيير النطاق قبل التحقق من اكتمال الربط قد يؤدي الي توقف موقعك مؤقتا لحين اكتمال الاعداد من مضيف النطاقات الخاص بك *      </p>
       <p>موقع التحقق : </p>
-     <p className="mb-11"> <a className="text-blue-500" href={'https://dnschecker.org/#NS/'+localStorage.getItem('domain')}> dnschecker.org </a>
+     <p className="mb-11"> <a className="text-blue-500" href={'https://dnschecker.org/#A/'+localStorage.getItem('domain')}> dnschecker.org </a>
 </p>
 
 <MainButton   text={" لقد تم التحقق وأريد تغيير النطاق الان" }  ClickHandler={LinkDomainHandler} />
@@ -235,7 +247,7 @@ const StepOneContent = ({   setStep }) => {
 
     <p>
       {" "}
-      لإعداد النطاق بشكل صحيح يجب عليك ادخال اسماء السيرفرات التالية في
+      لإعداد النطاق بشكل صحيح يجب عليك ادخال ip متكامل  في
       اعدادات نطاقك علي جودادي او نيمشيب او مستضيف النطاقات الذي تتعامل معه{" "}
       <a className="text-blue-500" href="#">
         {" "}
@@ -244,8 +256,7 @@ const StepOneContent = ({   setStep }) => {
         </div>
       </a>
     </p>
-    <b>nameserver1 : </b> <p>eoin.ns.cloudflare.com</p>
-    <b>nameserver2 : </b> <p>simone.ns.cloudflare.com</p>
+    <b> motkaml-ip : </b> <p>145.223.21.159</p>
   </div>
   <MainButton text={'تمت الإضافة'} ClickHandler={() =>{
     localStorage.setItem("domainStep",  1)

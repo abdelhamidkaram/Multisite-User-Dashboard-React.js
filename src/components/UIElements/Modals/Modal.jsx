@@ -21,6 +21,7 @@ import MediaModal from "./Store/MediaModal";
 import OrderDetailsModal from "./orders/orderDetails";
 import ProductDetailsModal from "./Products/productDetails";
 import SubscriptionModal from "./Subscription/SubscriptionModal";
+import TikTokPixelModal from "./Markting/TiktokModal";
 const Modal = ({ onClose }) => {
   const { isOpen, toggle, name } = useModal();
   const modals = {
@@ -29,9 +30,11 @@ const Modal = ({ onClose }) => {
     facebook: <FacebookModal />,
     snapchat: <SnapModal />,
     google: <GoogleModal />,
+    tiktok: <TikTokPixelModal/>,
     linkedin: <LinkedinModal />,
     coupons: <CouponsModal />,
     reviews: <ReviewsModal />,
+
     // Order PAGE MODAL=================================
     order: <OrderModal/>,
     user: <UserModal />,

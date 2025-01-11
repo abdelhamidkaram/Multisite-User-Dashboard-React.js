@@ -22,9 +22,9 @@ const AddPageModal = () => {
     apiCall = $api.post('wp-json/store/v1/pages', data);
     PromiseToast(
       apiCall,
-      "جاري إضافة القائمة...",
+      "جاري إضافة الصفحة...",
       "فشلت العملية حاول لاحقًا",
-      "تم إضافة القائمة بنجاح!",
+      "تم إضافة الصفحة بنجاح!",
       () => {
         pagesMutate();
       }

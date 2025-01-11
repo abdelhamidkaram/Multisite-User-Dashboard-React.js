@@ -31,7 +31,7 @@ export const GeneralSettings = () => {
     site_name: Yup.string()
       .required("لايمكن ترك هذا الحقل فارغاً")
       .min(2, "لايمكن أن يكون الاسم أقل من حرفين"),
-    site_description: Yup.string().required("لايمكن ترك هذا الحقل فارغاً"),
+    site_description: Yup.string(),
     email: Yup.string()
       .email("ادخل بريد الكتروني صحيح")
       .required("لايمكن ترك هذا الحقل فارغاً"),
