@@ -89,9 +89,9 @@ Contributions, issues, and feature requests are welcome! Feel free to fork the r
 
 If you’re interested in working with me or have any questions, feel free to reach out:
 
-- **Portfolio**: [YourWebsite.com](https://abdelhamid.dev/)
+- **Portfolio**: [abdelhamid.dev](https://abdelhamid.dev/)
 - **Email**: [contact@abdelhamid.dev](mailto\:contact@abdelhamid.dev)
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/abdelhamidkaram/)
+- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/abdelhamidkaram/)
 
 ---
 
