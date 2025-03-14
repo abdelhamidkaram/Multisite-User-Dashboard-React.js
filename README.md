@@ -12,10 +12,9 @@ This project is a **custom React.js dashboard** designed for **WordPress Multisi
 - **Secure Authentication**: Uses JWT-based authentication for user login and session handling.
 
 ## Tech Stack
-- **Frontend**: React.js, TailwindCSS, Redux (for state management)
+- **Frontend**: React.js, TailwindCSS, Zustand (for state management)
 - **Backend**: WordPress REST API (Multisite setup)
 - **Authentication**: JWT-based authentication
-- **Deployment**: Can be hosted on Vercel, Netlify, or any static hosting provider
 
 ## Installation & Setup
 1. **Clone the Repository:**  
