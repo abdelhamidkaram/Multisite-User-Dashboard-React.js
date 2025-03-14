@@ -19,7 +19,7 @@ const Login = () => {
   // Redirect user based on token availability
   const redirectUser = useCallback(() => {
     if (!paramValue && !localToken) {
-      window.location.href = 'https://www.motkaml.com/home/register';
+      window.location.href = import.meta.env.VITE_Main_Site_URL + '/register';
       return;
     }
 
@@ -32,7 +32,7 @@ const Login = () => {
   // Handle API call and token processing
   const handleToken = useCallback(async () => {
     try {
-      const res = await $api.post('https://www.motkaml.com/wp-json/api/v1/to-dash', {
+      const res = await $api.post(import.meta.env.VITE_Main_Site_URL+ '/wp-json/api/v1/to-dash', {
         token: paramValue,
       });
   

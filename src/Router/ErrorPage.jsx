@@ -22,7 +22,7 @@ const ErrorPage = ({ msg }) => {
         <p className="mt-4 mb-11 text-lg font-medium">{msg}</p>
 
         <MainButton  danger={false} text={'الذهاب الى الرئيسية'} ClickHandler={()=>{
-          window.location.href = 'https://www.motkaml.com/home/?nocache=true' ; 
+          window.location.href = import.meta.env.VITE_Main_Site_URL + '/?nocache=true' ; 
         }} />
       
       </div>

@@ -35,7 +35,7 @@ const Header = () => {
           className={`end-nav flex-row gap-8 justify-center items-center
            lg:flex hidden `}
         >
-          <Link to="https://www.motkaml.com/home/contact-us/" >
+          <Link to={import.meta.env.VITE_Main_Site_URL + "/home/contact-us/"} >
           <div className="video-box flex  flex-row gap-2">
             <div>
               <img src={Support} className="w-6" />
@@ -84,7 +84,7 @@ const Header = () => {
 
                         // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                         window.location.href =
-                          "https://www.motkaml.com/home/?nocache=true";
+                          import.meta.env.VITE_Main_Site_URL + "/?nocache=true";
                       }}
                     >
                       تسجيل الخروج
@@ -145,7 +145,7 @@ const Header = () => {
 
                     // Force the browser to fetch the latest version of the page by appending a cache-busting query parameter
                     window.location.href =
-                      "https://www.motkaml.com/home/?nocache=true";
+                      import.meta.env.VITE_Main_Site_URL+"/?nocache=true";
                   }}
                 >
                   تسجيل الخروج

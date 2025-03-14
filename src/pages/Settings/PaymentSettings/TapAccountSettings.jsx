@@ -18,7 +18,7 @@ const TapAccountSettings = () => {
     error: error,
     mutate: mutate,
     isLoading: isLoading,
-  } = useData("https://www.motkaml.com/wp-json/tap/v1/settings/");
+  } = useData(import.meta.env.VITE_Main_Site_URL+"/wp-json/tap/v1/settings/");
 
   const schema = Yup.object().shape({
     title: Yup.string().required("حقل مطلوب"),

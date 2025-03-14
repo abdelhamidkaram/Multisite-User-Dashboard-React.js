@@ -13,7 +13,7 @@ const SubscriptionModal = () => {
   const [changePlanMSG, setChangePlanMSG] = useState(null);
   const { toggle } = useModal();
   const { data: plans } = useData(
-    "https://www.motkaml.com/wp-json/wp/v2/plans/all"
+    import.meta.env.VITE_Main_Site_URL + "/wp-json/wp/v2/plans/all"
   );
 
   useEffect(() => {

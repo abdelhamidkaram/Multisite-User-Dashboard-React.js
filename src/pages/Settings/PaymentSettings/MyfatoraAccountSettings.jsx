@@ -34,7 +34,7 @@ const MyfatoraAccountSettings = () => {
   });
 
   // استخدام useData لجلب بيانات الإعدادات
-  const { data:data,error: error, mutate:mutate, isLoading: loading } = useData("https://www.motkaml.com/wp-json/myfatoorah/v1/settings/");
+  const { data:data,error: error, mutate:mutate, isLoading: loading } = useData(import.meta.env.VITE_Main_Site_URL+"/wp-json/myfatoorah/v1/settings/");
 
   // تحديث الحقول بناءً على البيانات المحملة
   useEffect(() => {
@@ -58,7 +58,7 @@ const MyfatoraAccountSettings = () => {
   // Form submission handler
   const onSubmit = async (formData) => {
     try {
-      const res = $api.post("https://www.motkaml.com/wp-json/myfatoorah/v1/settings/", {
+      const res = $api.post(import.meta.env.VITE_Main_Site_URL + "/wp-json/myfatoorah/v1/settings/", {
         myfatoorah_enable: myfatoraEnable,
         myfatoorah_test_mode: myfatoraTestMod,
         path: localStorage.getItem("path"),
