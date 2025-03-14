@@ -18,34 +18,46 @@ This project is a **custom React.js dashboard** designed for **WordPress Multisi
 - **Performance Optimized**: Efficient data fetching and state management to ensure a fast and reliable dashboard.
 - **Secure Authentication**: Uses JWT-based authentication for user login and session handling.
 
+## Authentication & Access
+
+The dashboard is accessed using a **token-based authentication system**. Users must include their authentication token (`t`) in the URL to log in automatically:
+
+```
+https://localhost/?t=YOUR_JWT_TOKEN
+```
+
+This ensures a seamless login experience without the need for a separate login page.
+
+## WordPress Plugin Integration
+
+A dedicated **WordPress plugin** has been developed to handle the **backend setup** for this dashboard. The plugin automates API integration, authentication, and data management for multisite networks. However, **this plugin is not included in this repository**.
+
 ## Screenshots
 
 Here are some screenshots of the dashboard interface:
 
-![Screenshot 1](screenshoot/screenshot-1.png)
-![Screenshot 2](screenshoot/screenshot-2.png)
-![Screenshot 3](screenshoot/screenshot-3.png)
-![Screenshot 4](screenshoot/screenshot-4.png)
-![Screenshot 5](screenshoot/screenshot-5.png)
-![Screenshot 6](screenshoot/screenshot-6.png)
-![Screenshot 7](screenshoot/screenshot-7.png)
-![Screenshot 8](screenshoot/screenshot-8.png)
-![Screenshot 9](screenshoot/screenshot-9.png)
-![Screenshot 10](screenshoot/screenshot-10.png)
+
+
+
+
+
+
+
+
+
 
 ## Tech Stack
 
 - **Frontend**: React.js, TailwindCSS, Zustand (for state management)
 - **Backend**: WordPress REST API (Multisite setup)
 - **Authentication**: JWT-based authentication
-- **Deployment**: Can be hosted on Vercel, Netlify, or any static hosting provider
 
 ## Installation & Setup
 
 1. **Clone the Repository:**
 
    ```sh
-   git clone https://github.com/your-username/Multisite-User-Dashboard-React.js.git
+   git clone https://github.com/abdelhamidkaram/Multisite-User-Dashboard-React.js
    cd Multisite-User-Dashboard-React.js
    ```
 
@@ -77,9 +89,9 @@ Contributions, issues, and feature requests are welcome! Feel free to fork the r
 
 If you’re interested in working with me or have any questions, feel free to reach out:
 
-- **Portfolio**: [abdelhamid.dev](https://abdelhamid.dev/)
-- **Email**: [contact@abdelhamid.dev](mailto:contact@abdelhamid.dev)
-- **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/abdelhamidkaram/)
+- **Portfolio**: [YourWebsite.com](https://abdelhamid.dev/)
+- **Email**: [contact@abdelhamid.dev](mailto\:contact@abdelhamid.dev)
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/abdelhamidkaram/)
 
 ---
 
