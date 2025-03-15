@@ -71,8 +71,8 @@ Here are some screenshots of the dashboard interface:
    Create a `.env` file in the root directory and add:
 
    ```env
-   REACT_APP_API_URL=https://your-wordpress-site.com/wp-json
-   REACT_APP_AUTH_TOKEN=your-jwt-token
+  VITE_Main_Site_URL=https://your-wordpress-site.com
+  VITE_Dash_Site_URL=https://dash.your-wordpress-site.com
    ```
 
 4. **Run the Project:**

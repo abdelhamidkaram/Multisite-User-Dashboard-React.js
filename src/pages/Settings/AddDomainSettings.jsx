@@ -256,7 +256,7 @@ const StepOneContent = ({   setStep }) => {
         </div>
       </a>
     </p>
-    <b> motkaml-ip : </b> <p>145.223.21.159</p>
+    <b> server-ip : </b> <p>000.00.00.00</p>
   </div>
   <MainButton text={'تمت الإضافة'} ClickHandler={() =>{
     localStorage.setItem("domainStep",  1)
