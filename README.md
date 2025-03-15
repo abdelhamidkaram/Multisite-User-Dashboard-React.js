@@ -36,12 +36,16 @@ A dedicated **WordPress plugin** has been developed to handle the **backend setu
 
 Here are some screenshots of the dashboard interface:
 
-
-
-
-
-
-
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-1.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-2.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-3.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-4.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-5.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-6.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-7.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-8.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-9.png)
+![screenshot](../Multisite-User-Dashboard-React.js/screenshot/screenshot-10.png)
 
 
 
